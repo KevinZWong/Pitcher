@@ -10,7 +10,7 @@ from twilio.twiml.voice_response import VoiceResponse, Connect, Say, Stream
 import uvicorn
 import sys
 from dotenv import load_dotenv
-from Pitcher.rag import get_relevant_info
+from rag import get_relevant_info
 
 load_dotenv()
 
