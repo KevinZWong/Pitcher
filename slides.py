@@ -1,6 +1,6 @@
 from typing import Dict, List, Optional
 from langchain_core.messages import HumanMessage, SystemMessage
-from langgraph.graph import Graph, MessageGraph, START, END
+from langgraph.graph import Graph, MessageGraph, START, END, StateGraph
 from langchain_groq import ChatGroq
 import asyncio
 from dataclasses import dataclass
@@ -69,6 +69,7 @@ class PresentationPlanner:
                 }}
             ]
         }}
+        Do not respond with anything apart from this
         """
         
         # Use the LLM to generate structured output
@@ -79,6 +80,8 @@ class PresentationPlanner:
         
         try:
             # Parse the response into the PresentationPlan model
+            print(response.content)
+            response.content = response.content.replace("```json", "").replace("```", "")
             plan = PresentationPlan.parse_raw(response.content)
             state.slides = [Slide(**slide.dict(), content="") for slide in plan.slides]
             state.current_state = "generating"
@@ -105,7 +108,7 @@ class SlideGenerator:
         If content_type is "d3", create a D3.js visualization code.
         If content_type is "text", create formatted HTML content.
 
-        Return only the content code without any explanation.
+        Return only the content code without any explanation without ```html, just the code as text.
         """
         
         response = await self.llm.ainvoke(
