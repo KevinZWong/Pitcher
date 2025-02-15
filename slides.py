@@ -1,6 +1,7 @@
-from typing import Dict, List, Optional
+import time
+from typing import List, Optional, Union, Literal
 from langchain_core.messages import HumanMessage, SystemMessage
-from langgraph.graph import Graph, MessageGraph, START, END, StateGraph
+from langgraph.graph import Graph, START, END
 from langchain_groq import ChatGroq
 import asyncio
 from dataclasses import dataclass
@@ -9,38 +10,87 @@ import os
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
+'''
+Approach: 
+-> Have an LLM create a layout of each slide
+-> search for relevant images using some image search api (works concurrently) 
+-> 
+'''
+
+
+start_time = time.time()
+
 load_dotenv()
 
 # Data structures
 @dataclass
 class Slide:
-    index: int
     title: str
-    content_type: str  # "text", "mermaid", "d3"
     content: str
     layout: str
 
 @dataclass
 class PresentationState:
     topic: str
-    description: str
+    context: str
     num_slides: int
     slides: List[Slide]
     current_state: str  # "planning", "generating", "combining"
 
-# Pydantic model for structured output
+# Nested models for layout components
+class Position(BaseModel):
+    x: str
+    y: str
+
+class Size(BaseModel):
+    width: str
+    height: str
+
+class TextElement(BaseModel):
+    content: str
+    position: Literal["left", "right", "center", "top", "bottom"]
+    char_limit: int
+    style: Literal["heading", "body", "bullet"]
+
+class VisualElement(BaseModel):
+    type: Literal["chart", "diagram", "icon", "photo"]
+    position: Position
+    size: Size
+    description: str
+    visualization_type: Literal["pie", "bar", "line", "mermaid", "image"]
+
+class Animation(BaseModel):
+    element: str
+    type: Literal["fade", "slide", "zoom"]
+    trigger: Literal["auto", "click"]
+    duration: Literal["fast", "medium", "slow"]
+
+class Background(BaseModel):
+    color: str
+    gradient: bool
+
+class Layout(BaseModel):
+    text_elements: List[TextElement]
+    visual_elements: List[VisualElement]
+    animations: List[Animation]
+    background: Background
+
+class GlobalStyle(BaseModel):
+    color_scheme: List[str]
+    font_family: str
+    transition: str
+
 class SlidePlan(BaseModel):
-    index: int = Field(..., description="The index of the slide")
     title: str = Field(..., description="The title of the slide")
-    content_type: str = Field(..., description="The type of content (text, mermaid, d3)")
-    layout: str = Field(..., description="The layout of the slide")
+    layout: Layout = Field(..., description="The layout of the slide")
 
 class PresentationPlan(BaseModel):
     slides: List[SlidePlan] = Field(..., description="List of slides in the presentation")
+    global_style: GlobalStyle
 
 # Agent definitions
 class PresentationPlanner:
-    def __init__(self, model="qwen-2.5-coder-32b"):
+    def __init__(self, model="llama-3.3-70b-versatile"):
         self.llm = ChatGroq(
             model=model,
             groq_api_key=os.getenv("GROQ_API_KEY")
@@ -48,28 +98,82 @@ class PresentationPlanner:
     
     async def plan_presentation(self, state: PresentationState) -> PresentationState:
         prompt = f"""
-        Create a detailed slide layout plan for a presentation on {state.topic}.
-        Description: {state.description}
-        Number of slides: {state.num_slides}
+        Create a detailed slide layout plan for a presentation on {state.topic} using {state.num_slides} slides. Extract ALL KEY information from the given context.
+
+        Context: {state.context} 
 
         For each slide, provide:
         1. Slide title
-        2. Content type (text, mermaid diagram, or d3 visualization)
-        3. Brief description of what should be included
-        4. Layout suggestions
+        2. Detailed Layout Plan including:
+            - Text content locations with character limits
+            - Image/visual specifications:
+                - Type (chart/diagram/icon/photo)
+                - Position (x,y coordinates or grid position)
+                - Size (width/height in %)
+                - Description of what the image should show
+            - Animations/transitions (if any)
+            - Color scheme suggestions
 
         Format your response as JSON with the following structure:
         {{
             "slides": [
                 {{
-                    "index": 0,
                     "title": "string",
-                    "content_type": "string",
-                    "layout": "string"
+                    "layout": {{
+                        "text_elements": [
+                            {{
+                                "content": "string",
+                                "position": "left|right|center|top|bottom",
+                                "char_limit": integer,
+                                "style": "heading|body|bullet"
+                            }}
+                        ],
+                        "visual_elements": [
+                            {{
+                                "type": "chart|diagram|icon|photo",
+                                "position": {{
+                                    "x": "string",
+                                    "y": "string"
+                                }},
+                                "size": {{
+                                    "width": "string",
+                                    "height": "string"
+                                }},
+                                "description": "Detailed description of what this visual should show",
+                                "visualization_type": "pie|bar|line|mermaid|image"
+                            }}
+                        ],
+                        "animations": [
+                            {{
+                                "element": "reference to text/visual element",
+                                "type": "fade|slide|zoom",
+                                "trigger": "auto|click",
+                                "duration": "fast|medium|slow"
+                            }}
+                        ],
+                        "background": {{
+                            "color": "string",
+                            "gradient": boolean
+                        }}
+                    }}
                 }}
-            ]
+            ],
+            "global_style": {{
+                "color_scheme": ["primary", "secondary", "accent"],
+                "font_family": "string",
+                "transition": "string"
+            }}
         }}
-        Do not respond with anything apart from this
+
+        Instructions:
+        1. Minimize text - keep it concise and impactful
+        2. Prioritize visuals - use charts, diagrams, and images strategically
+        3. Ensure all position values are in percentages for responsive design
+        4. Provide specific visualization types for charts/diagrams
+        5. Include detailed descriptions for each visual element
+        6. Maintain consistent style across slides
+
+        Do not respond with anything apart from the JSON.
         """
         
         # Use the LLM to generate structured output
@@ -80,10 +184,13 @@ class PresentationPlanner:
         
         try:
             # Parse the response into the PresentationPlan model
-            print(response.content)
-            response.content = response.content.replace("```json", "").replace("```", "")
-            plan = PresentationPlan.parse_raw(response.content)
+            
+            response.content = response.content.replace("```json", "").replace("```", "") #weeding out response bs
+            with open("presentation_plan.json", "w") as file:
+                file.write(response.content)
+            plan = PresentationPlan.model_validate_json(response.content)
             state.slides = [Slide(**slide.dict(), content="") for slide in plan.slides]
+            print(state.slides[0])
             state.current_state = "generating"
         except Exception as e:
             raise ValueError(f"Invalid response from LLM: {e}")
@@ -91,7 +198,7 @@ class PresentationPlanner:
         return state
 
 class SlideGenerator:
-    def __init__(self, model="qwen-2.5-coder-32b"):
+    def __init__(self, model="llama-3.3-70b-versatile"):
         self.llm = ChatGroq(
             model=model,
             groq_api_key=os.getenv("GROQ_API_KEY")
@@ -99,14 +206,9 @@ class SlideGenerator:
     
     async def generate_slide(self, slide: Slide, topic: str) -> Slide:
         prompt = f"""
-        Generate content for a presentation slide about {topic}.
+        Generate content for a presentation slide about {slide.title} using the entire breadth of the screen.
         Slide title: {slide.title}
-        Content type: {slide.content_type}
         Layout: {slide.layout}
-
-        If content_type is "mermaid", create a mermaid.js diagram.
-        If content_type is "d3", create a D3.js visualization code.
-        If content_type is "text", create formatted HTML content.
 
         Return only the content code without any explanation without ```html, just the code as text.
         """
@@ -143,7 +245,8 @@ class PresentationCombiner:
                     controls: true,
                     progress: true,
                     center: true,
-                    hash: true
+                    hash: true,
+
                 }});
                 
                 mermaid.initialize({{
@@ -156,15 +259,16 @@ class PresentationCombiner:
         """
         
         slide_sections = []
+        slide_ind = 0
         for slide in slides:
-            if slide.content_type == "mermaid":
-                content = f'<div class="mermaid">{slide.content}</div>'
-            elif slide.content_type == "d3":
-                content = f'<div id="d3-{slide.index}" class="d3-container"></div><script>{slide.content}</script>'
-            else:
-                content = slide.content
-                
+            # if slide.content_type == "mermaid":
+            #     content = f'<div class="mermaid">{slide.content}</div>'
+            # elif slide.content_type == "d3":
+            #     content = f'<div id="d3-{slide_ind}" class="d3-container"></div><script>{slide.content}</script>'
+            # else:
+            content = slide.content    
             slide_sections.append(f'<section><h2>{slide.title}</h2>{content}</section>')
+            slide_ind+=1
         
         return html_template.format(slide_content="\n".join(slide_sections))
 
@@ -209,11 +313,11 @@ async def create_presentation_graph():
     return workflow.compile()
 
 # Usage example
-async def generate_presentation(topic: str, description: str, num_slides: Optional[int] = None):
+async def generate_presentation(topic: str, context: str, num_slides: Optional[int] = None):
     if num_slides is None:
         # Ask for number of slides using Groq
         llm = ChatGroq(
-            model="qwen-2.5-coder-32b",
+            model="llama-3.3-70b-versatile",
             groq_api_key=os.getenv("GROQ_API_KEY")
         )
         response = await llm.ainvoke(
@@ -225,7 +329,7 @@ async def generate_presentation(topic: str, description: str, num_slides: Option
     # Initialize state
     state = PresentationState(
         topic=topic,
-        description=description,
+        context=context,
         num_slides=num_slides,
         slides=[],
         current_state="planning"
@@ -244,7 +348,11 @@ async def generate_presentation(topic: str, description: str, num_slides: Option
 
 # Example usage
 if __name__ == "__main__":
-    topic = "Machine Learning Basics"
-    description = "An introduction to fundamental concepts in machine learning"
-    
-    asyncio.run(generate_presentation(topic, description))
+    topic = "Sales pitch: MoodMuse"
+    with open("summary.txt", "r") as file:
+        summary_content = file.read()
+    num_slides = 10
+    start_time = time.time()
+    asyncio.run(generate_presentation(topic, context = summary_content, num_slides=num_slides))
+    end_time = time.time()
+    print("time taken:", end_time - start_time)
