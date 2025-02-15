@@ -2,18 +2,204 @@ import os
 import json
 from pathlib import Path
 import openai
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 import time
 from datetime import datetime
 import asyncio
 import aiohttp
 from openai import AsyncOpenAI
+import requests
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.units import inch
+from io import BytesIO
+import textwrap
+from dotenv import load_dotenv
+import random
 
 class StartupDataGenerator:
     def __init__(self, api_key: str):
         self.api_key = api_key
         self.client = AsyncOpenAI(api_key=api_key)
         
+    def create_section_pdf(self, section: str, content: str, output_path: str):
+        """Create a PDF document for a specific section."""
+        doc = SimpleDocTemplate(
+            output_path,
+            pagesize=letter,
+            rightMargin=72,
+            leftMargin=72,
+            topMargin=72,
+            bottomMargin=72
+        )
+        
+        styles = getSampleStyleSheet()
+        title_style = ParagraphStyle(
+            'CustomTitle',
+            parent=styles['Heading1'],
+            fontSize=24,
+            spaceAfter=30
+        )
+        body_style = ParagraphStyle(
+            'CustomBody',
+            parent=styles['Normal'],
+            fontSize=12,
+            leading=14,
+            spaceAfter=12
+        )
+        
+        # Build the PDF content
+        elements = []
+        
+        # Add title
+        elements.append(Paragraph(section.replace('_', ' ').title(), title_style))
+        elements.append(Spacer(1, 20))
+        
+        # Process content
+        # Split content into paragraphs and handle each separately
+        paragraphs = content.split('\n')
+        for para in paragraphs:
+            if para.strip():  # Only process non-empty paragraphs
+                # Replace any remaining newlines and handle HTML-style breaks
+                processed_para = para.replace('\n', ' ').replace('<br/>', ' ')
+                elements.append(Paragraph(processed_para, body_style))
+                elements.append(Spacer(1, 12))
+        
+        # Build the PDF with error handling
+        try:
+            doc.build(elements)
+            print(f"Successfully generated PDF: {output_path}")
+        except Exception as e:
+            print(f"Error building PDF {output_path}: {str(e)}")
+
+    async def generate_subsection(self, idea: str, section: str, subsection: Tuple[str, str], output_dir: Path) -> Dict:
+        """Generate detailed content for a specific subsection and randomly create either a PDF or text file."""
+        subsection_name, subsection_prompt = subsection
+        
+        system_prompt = f"""You are a startup expert focusing specifically on {section} - {subsection_name}. 
+        Generate an extremely detailed, well-researched response. Include specific numbers, examples, and detailed analysis. 
+        Write in a professional, thorough style. WRITE AS MUCH AS POSSIBLE. Make up statistics if needed."""
+        
+        prompt = f"""For this startup idea: {idea}
+
+{subsection_prompt}
+
+Be extremely specific and detailed. Include:
+- Specific numbers and metrics where relevant
+- Detailed examples and use cases
+- Industry-specific insights
+- Implementation details
+- Future projections and growth plans
+- Specific challenges and solutions
+- Concrete action items and recommendations
+
+Write a comprehensive, well-structured response that could serve as a standalone document."""
+
+        try:
+            response = await self.client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.8,
+                max_tokens=2500
+            )
+            
+            # Get the content
+            content = response.choices[0].message.content
+            
+            # Randomly decide between PDF and text file (0 for text, 1 for PDF)
+            is_pdf = random.randint(0, 1)
+            
+            if is_pdf:
+                # Create PDF file
+                pdf_filename = f"{section}_{subsection_name}.pdf"
+                pdf_filepath = output_dir / pdf_filename
+                self.create_section_pdf(
+                    f"{section} - {subsection_name}",
+                    content,
+                    str(pdf_filepath)
+                )
+                print(f"Generated PDF: {pdf_filename}")
+                return {
+                    f"{section}/{subsection_name}": {
+                        "content": content,
+                        "file_path": str(pdf_filepath),
+                        "file_type": "pdf"
+                    }
+                }
+            else:
+                # Create text file
+                text_filename = f"{section}_{subsection_name}.txt"
+                text_filepath = output_dir / text_filename
+                with open(text_filepath, 'w') as f:
+                    f.write(content)
+                print(f"Generated text file: {text_filename}")
+                return {
+                    f"{section}/{subsection_name}": {
+                        "content": content,
+                        "file_path": str(text_filepath),
+                        "file_type": "txt"
+                    }
+                }
+            
+        except Exception as e:
+            print(f"Error generating {section}/{subsection_name}: {str(e)}")
+            return {f"{section}/{subsection_name}": {"content": f"Error: {str(e)}", "file_path": None, "file_type": None}}
+
+    async def generate_all_subsections(self, idea: str, output_dir: Path) -> Dict:
+        """Generate all subsections concurrently."""
+        tasks = []
+        subsections = self.get_subsections()
+        
+        for section, section_subsections in subsections.items():
+            for subsection in section_subsections:
+                task = asyncio.create_task(
+                    self.generate_subsection(idea, section, subsection, output_dir)
+                )
+                tasks.append(task)
+        
+        # Wait for all tasks to complete
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+        
+        # Combine results
+        all_data = {}
+        for result in results:
+            if isinstance(result, dict):
+                all_data.update(result)
+        
+        return all_data
+
+    async def generate_and_save_startup_data(self, idea: str) -> Dict:
+        # Create data directory
+        data_dir = Path("data")
+        data_dir.mkdir(exist_ok=True)
+        
+        print("\nGenerating sections and files in parallel...")
+        all_data = await self.generate_all_subsections(idea, data_dir)
+        
+        # Create index file
+        index_filepath = data_dir / "index.txt"
+        with open(index_filepath, "w") as f:
+            f.write(f"Startup Analysis for: {idea}\n")
+            f.write(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+            
+            for key, data in all_data.items():
+                f.write(f"\n{'-'*40}\n")
+                f.write(f"{key.upper()}\n")
+                f.write(f"{'-'*40}\n")
+                if data['file_path']:
+                    f.write(f"File: {data['file_path']} ({data['file_type']})\n")
+                f.write("\n")
+        
+        print(f"\nAll sections generated and saved to: {data_dir}")
+        print(f"Index file: {index_filepath}")
+        
+        return all_data
+
     def get_subsections(self) -> Dict[str, List[Tuple[str, str]]]:
         """Returns a dictionary of section names and their subsections with prompts."""
         return {
@@ -101,130 +287,21 @@ class StartupDataGenerator:
             ]
         }
 
-    async def generate_subsection(self, idea: str, section: str, subsection: Tuple[str, str], session_dir: Path) -> Dict:
-        """Generate detailed content for a specific subsection."""
-        subsection_name, subsection_prompt = subsection
-        
-        system_prompt = f"""You are a startup expert focusing specifically on {section} - {subsection_name}. 
-        Generate an extremely detailed, well-researched response. Include specific numbers, examples, and detailed analysis. 
-        Write in a professional, thorough style. WRITE AS MUCH AS POSSIBLE. Make up statistics if needed.  write as much as you can"""
-        
-        prompt = f"""For this startup idea: {idea}
-
-{subsection_prompt}
-
-Be extremely specific and detailed. Include:
-- Specific numbers and metrics where relevant
-- Detailed examples and use cases
-- Industry-specific insights
-- Implementation details
-- Future projections and growth plans
-- Specific challenges and solutions
-- Concrete action items and recommendations
-
-Write a comprehensive, well-structured response that could serve as a standalone document."""
-
-        try:
-            response = await self.client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.8,
-                max_tokens=2500
-            )
-            
-            # Save the raw response text
-            content = response.choices[0].message.content
-            
-            # Create section directory
-            section_dir = session_dir / section
-            section_dir.mkdir(exist_ok=True)
-            
-            # Save subsection file
-            filename = f"{subsection_name}.txt"
-            filepath = section_dir / filename
-            with open(filepath, "w") as f:
-                f.write(f"{section.upper()} - {subsection_name.replace('_', ' ').upper()}\n")
-                f.write("="*80 + "\n\n")
-                f.write(content)
-            
-            print(f"Generated and saved {section}/{subsection_name}")
-            return {f"{section}/{subsection_name}": content}
-            
-        except Exception as e:
-            print(f"Error generating {section}/{subsection_name}: {str(e)}")
-            return {f"{section}/{subsection_name}": f"Error: {str(e)}"}
-
-    async def generate_all_subsections(self, idea: str, session_dir: Path) -> Dict:
-        """Generate all subsections concurrently."""
-        tasks = []
-        subsections = self.get_subsections()
-        
-        for section, section_subsections in subsections.items():
-            for subsection in section_subsections:
-                task = asyncio.create_task(
-                    self.generate_subsection(idea, section, subsection, session_dir)
-                )
-                tasks.append(task)
-        
-        # Wait for all tasks to complete
-        results = await asyncio.gather(*tasks, return_exceptions=True)
-        
-        # Combine results
-        all_data = {}
-        for result in results:
-            if isinstance(result, dict):
-                all_data.update(result)
-        
-        return all_data
-
-    async def generate_and_save_startup_data(self, idea: str) -> Dict:
-        # Create data directory and session directory
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        data_dir = Path("data")
-        session_dir = data_dir / f"session_{timestamp}_{idea.lower().replace(' ', '_')[:50]}"
-        data_dir.mkdir(exist_ok=True)
-        session_dir.mkdir(exist_ok=True)
-        
-        print("\nGenerating all sections and subsections in parallel...")
-        all_data = await self.generate_all_subsections(idea, session_dir)
-        
-        # Save complete data to index file
-        index_filepath = session_dir / "complete_analysis.txt"
-        
-        # Create index document
-        with open(index_filepath, "w") as f:
-            f.write(f"Complete Startup Analysis for: {idea}\n")
-            f.write(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-            
-            for section, subsections in self.get_subsections().items():
-                f.write(f"\n{'='*80}\n")
-                f.write(f"{section.upper()}\n")
-                f.write(f"{'='*80}\n\n")
-                
-                for subsection_name, _ in subsections:
-                    key = f"{section}/{subsection_name}"
-                    content = all_data.get(key, "Content not generated")
-                    f.write(f"\n{'-'*40}\n")
-                    f.write(f"{subsection_name.replace('_', ' ').upper()}\n")
-                    f.write(f"{'-'*40}\n\n")
-                    f.write(content + "\n")
-        
-        print(f"\nAll sections generated and saved to: {session_dir}")
-        print(f"Complete analysis document: {index_filepath}")
-        
-        return all_data
-
 async def main_async():
-    # Get API key from environment variable
+    # Load environment variables
+    load_dotenv()
+    
+    # Get API keys from environment variables
     api_key = os.getenv("OPENAI_API_KEY")
+    
+    # Check if all required API keys are present
     if not api_key:
         raise ValueError("Please set the OPENAI_API_KEY environment variable")
     
     # Initialize generator
-    generator = StartupDataGenerator(api_key)
+    generator = StartupDataGenerator(
+        api_key=api_key
+    )
     
     # Get input from user
     idea = "A website that takes in user's journal entries and gives AI summaries for each, allows for sentinent analysis and mood tracking, and gives song recommendation. "
@@ -244,3 +321,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
