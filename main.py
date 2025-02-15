@@ -16,9 +16,8 @@ async def is_directory_empty(directory: str) -> bool:
     return not any(path.iterdir())
 
 async def main():
-    '''
 
-    # Load environment variables
+
     load_dotenv()
     
     # Set up directories
@@ -96,9 +95,7 @@ async def main():
     output_file = summary_dir / "summary.txt"
     await summarizer.process_chunks_directory(str(chunks_dir), str(output_file))
     print(f"Summary has been saved to: {output_file}")
-    '''
 
-    load_docs(str(summary_dir), "maixsxsn")
 
 
 if __name__ == "__main__":
