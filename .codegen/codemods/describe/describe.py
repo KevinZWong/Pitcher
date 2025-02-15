@@ -10,52 +10,55 @@ global explanation_parts
 
 
 def analyze_functions():
-    explanation_parts = []
-    explanation_parts.append('FUNCTION EXPLANATIONS')
+    explanations = []
+    explanations.append('FUNCTION EXPLANATIONS')
     i = len(codebase.functions)
     # Include explanations for each function
-    for function in codebase.functions:
-        i -= 1
-        #print(i)
-        explanation = codebase.ai(
-            prompt="Provide a detailed explanation of this function.",
-            target=function,
-            context={"usages": function.usages, "dependencies": function.dependencies}
-        )
-        #print(explanation)
-        explanation_parts.append(explanation)
-    return explanation_parts
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = [
+            executor.submit(
+                codebase.ai,
+                prompt="Provide a detailed explanation of this function.",
+                target=function,
+                context={"usages": function.usages, "dependencies": function.dependencies}
+            ) for function in codebase.functions
+        ]
+        for future in concurrent.futures.as_completed(futures):
+            explanations.append(future.result())
+    return  '\n'.join(explanations)
 def analyze_classes():
-    explanation_parts = []
+    explanations = []
+    explanations.append('CLASS EXPLANATIONS')
     i = len(codebase.classes)
-    explanation_parts.append('CLASS EXPLANATIONS')
     # Include explanations for each class
-    for cls in codebase.classes:
-        i -= 1
-        #print(i)
-        explanation = codebase.ai(
-            prompt="Provide a detailed explanation of this class.",
-            target=cls,
-            context={"usages": cls.usages, "dependencies": cls.dependencies}
-        )
-        #print(explanation)
-        explanation_parts.append(explanation)
-    return explanation_parts
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = [
+            executor.submit(
+                codebase.ai,
+                prompt="Provide a detailed explanation of this class.",
+                target=cls,
+                context={"usages": cls.usages, "dependencies": cls.dependencies}
+            ) for cls in codebase.classes
+        ]
+        for future in concurrent.futures.as_completed(futures):
+            explanations.append(future.result())
+    return  '\n'.join(explanations)
 def analyze_files():
-    explanation_parts = []
-    i = len(codebase.files())
-    #Include explanations for each file's imports
-    explanation_parts.append('FILE EXPLANATIONS')
-    for file in codebase.files():
-        i -= 1
-        #print(i)
-        explanation = codebase.ai(
-            prompt="Explain in detail this file and what it does (its features)",
-            target=file
-        )
-        #print(explanation,)
-        explanation_parts.append(explanation)
-    return explanation_parts
+    explanations = []
+    explanations.append('FILE EXPLANATIONS')
+    i = len(codebase.files)
+    # Include files for each class
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = [
+            executor.submit(
+                codebase.ai,
+                prompt="Explain in detail this file and what it does (its features)",
+                target=file,
+            ) for file in codebase.files
+        ]
+        for future in concurrent.futures.as_completed(futures):
+            explanations.append(future.result())
+    return '\n'.join(explanations)
 
 @codegen.function('describe')
 def run(codebase: Codebase):
@@ -70,11 +73,11 @@ def run(codebase: Codebase):
             executor.submit(analyze_files)
         ]
         for future in concurrent.futures.as_completed(futures):
-            explanation_parts.extend(future.result())
+            explanation_parts.append(future.result())
 
     # Write all explanations to output.txt
     with open("output.txt", "w") as f:
-        f.write('\n\n'.join(explanation_parts))
+        f.write('\n'.join(explanation_parts))
 
     # Commit changes to the codebase
     codebase.commit()
