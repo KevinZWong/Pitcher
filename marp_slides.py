@@ -26,8 +26,8 @@ load_dotenv()
 
 class SlideModel(BaseModel):
     marp_markdown: str
-    image_placeholder_filenames: List[str]
-    image_placeholder_desc: List[str]
+    # image_placeholder_filenames: List[str]
+    # image_placeholder_desc: List[str]
 
 class ImageRelevance(BaseModel):
     score: float
@@ -123,16 +123,13 @@ Your PRIMARY responsibility is to:
    - Match it with the most relevant slide section
    - Place the corresponding image filename in that section
    - Adapt the slide's text to directly reference the image's content
+   - Add the dimensions of the image as comments
 3. NEVER invent or suggest new images - only use the provided filenames
 
 Follow these key requirements:
 1. Maintain the exact MARP headers (marp:true etc)
 2. Keep text minimal but ensure it explicitly connects to the image content
-3. For each image placement:
-   - Use the exact filename from the input
-   - Ensure the surrounding text clearly relates to what's shown in the image (based on its description)
-   - Position the image to support the slide's message
-4. If an image description doesn't match any slide content well, do NOT force it - only use images where they truly fit the content
+3. If an image description doesn't match any slide content well, do NOT force it - only use images where they truly fit the content
 
 Remember: You can only use images that are explicitly provided in the input with their descriptions. Do not add any other image references or placeholders.
 
@@ -167,6 +164,66 @@ The output must be valid MARP markdown that could be rendered directly.
     return context
 
 
+def style_presentation_outline(context: dict) -> dict:
+    """
+    Third node in the presentation pipeline that generates a MARP markdown outline
+    with image placeholders and descriptions.
+    
+    Args:
+        context (dict): Contains presentation topic, requirements, and image descriptions
+        
+    Returns:
+        dict: Updated context with generated markdown and image descriptions
+    """
+    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7, openai_api_key=os.getenv("OPENAI_API_KEY"))
+    
+    system_prompt = f"""
+You are creating a MARP presentation. Your primary focus is proper image scaling and styling.
+
+Must start with:
+---
+marp: true
+theme: default
+paginate: true
+size: 16:9
+---
+
+Image Rules:
+1. EVERY image must include size directives - no exceptions
+2. Use these patterns:
+   - Charts/graphs: ![w:800 h:400](path/to/image.png)
+   - Flowcharts: ![w:900](path/to/image.png)
+   - Side images: ![bg right:40% w:400](path/to/image.png)
+3. Beautify EACH slide by using CSS
+
+Keep in mind:
+- Never exceed slide boundaries
+- Maximum 2 images per slide
+- Leave adequate whitespace around images
+- Center single images
+- Use bg right/left for text + image layouts"""
+
+    structured_llm = llm.with_structured_output(SlideModel)
+
+
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": 
+         f"Style the presentation that has the following marp layout {context['slides']['marp_markdown']} to include relevant images that has the following images:\n\n"}
+    ]
+    print("Sending LLM layout STYLE call ")
+
+    call3_start_time = time.time() #for keeping time 
+
+    response = structured_llm.invoke(messages)
+    context.update({
+        "slides": response.model_dump(),
+        "generated_at": time.time()
+    })
+    print(f"Received edited layout (Time Taken {time.time() - call3_start_time})")
+
+    return context
+
 # def rag_search_image(context: dict) -> dict:
 #     for i in range(len(context['slides']['image_placeholder_desc'])):
 
@@ -192,17 +249,22 @@ The output must be valid MARP markdown that could be rendered directly.
 #                   f"The score was {response['score']}")
 #         return context
 
+
+
 # Example of creating the graph
 def create_presentation_graph() -> Graph:
     workflow = Graph()
     
     workflow.add_node("create_outline", create_presentation_outline)
     workflow.add_node("edit_outline", edit_presentation_outline)
+    workflow.add_node("style_outline", style_presentation_outline)
+
     # workflow.add_node("rag_image", rag_search_image)
     # workflow.add_edge("create_outline", "create_mermaid_charts")
     # Add edges
     workflow.add_edge("create_outline", 'edit_outline')
-    workflow.add_edge("edit_outline", END)
+    workflow.add_edge("edit_outline", 'style_outline')
+    workflow.add_edge("style_outline", END)
     
     workflow.set_entry_point("create_outline")
     return workflow.compile()
@@ -232,9 +294,9 @@ if __name__ == "__main__":
     end_time = time.time()
 
     #just for knwoing what the names and descritpionf ot he needed placeholder are (DEPRECATED NOW)
-    for filename, desc in zip(result['slides']['image_placeholder_filenames'], result['slides']['image_placeholder_desc']):
-        with open("placeholder_images.txt", "a") as file:
-            file.write(f"{filename}: {desc}\n")
+    # for filename, desc in zip(result['slides']['image_placeholder_filenames'], result['slides']['image_placeholder_desc']):
+    #     with open("placeholder_images.txt", "a") as file:
+    #         file.write(f"{filename}: {desc}\n")
     
     print(result)
     print("time taken:", end_time - start_time)

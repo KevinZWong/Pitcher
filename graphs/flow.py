@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import List
 from graphviz import Digraph
+from PIL import Image
 
 class Connection(BaseModel):
    from_node: str 
@@ -23,6 +24,9 @@ def create_flowchart(flow: Flow, filename="flowchart", direction='TB'):
    flow: Flow object containing nodes and connections
    filename: output filename (without extension)
    direction: graph direction ('TB', 'LR', 'RL', 'BT')
+   
+   Returns:
+   tuple: The dimensions (width, height) of the saved PNG file.
    """
    
    # Initialize graph
@@ -57,8 +61,11 @@ def create_flowchart(flow: Flow, filename="flowchart", direction='TB'):
    for conn in flow.connections:
        dot.edge(conn.from_node, conn.to_node)
    
-   # Save the flowchart
+   # Save the flowchart and get its dimensions
    dot.render(filename, format='png', cleanup=True)
+   with Image.open(f"{filename}.png") as img:
+       width, height = img.size
+   return width, height
 
 # Example usage
 if __name__ == "__main__":

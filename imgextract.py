@@ -13,7 +13,7 @@ from typing import List, Dict
 import aiofiles
 from openai import AsyncOpenAI
 import glob
-from iris import load_docs
+# from iris import load_docs
 
 # Load environment variables
 load_dotenv()
@@ -150,11 +150,11 @@ async def process_directory(input_dir: str = "image_data", output_dir: str = "ex
     
     tasks = [extract_images_from_pdf(pdf_file, output_path) for pdf_file in pdf_files]
     all_results = await asyncio.gather(*tasks)
-    
-    combined_metadata = {
-        str(pdf_files[i]): metadata 
-        for i, metadata in enumerate(all_results)
-    }
+    combined_metadata = all_results[0]
+    # combined_metadata = {
+    #     str(pdf_files[i]): metadata 
+    #     for i, metadata in enumerate(all_results)
+    # }
     
     combined_json_path = output_path / "combined_metadata.json"
     async with aiofiles.open(combined_json_path, "w", encoding="utf-8") as f:
@@ -162,7 +162,7 @@ async def process_directory(input_dir: str = "image_data", output_dir: str = "ex
     
     total_images = sum(len(metadata) for metadata in all_results)
     print(f"Completed: {len(pdf_files)} PDFs, {total_images} images extracted")
-    load_docs(combined_json_path, "image_data")
+    # load_docs(combined_json_path, "image_data")
 
 async def main():
     try:
