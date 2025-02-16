@@ -3,10 +3,10 @@ from dotenv import load_dotenv
 from openai import OpenAI
 import os
 from pydantic import BaseModel
-from pie import create_pie_chart
-from bar import create_bar_chart
-from line import create_line_chart
-from flow import create_flowchart
+from graphs.pie import create_pie_chart
+from graphs.bar import create_bar_chart
+from graphs.line import create_line_chart
+from graphs.flow import create_flowchart
 
 
 load_dotenv()

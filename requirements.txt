@@ -162,3 +162,5 @@ google-auth-oauthlib
 matplotlib
 graphviz
 gdown
+flask[async]
+hypercorn
