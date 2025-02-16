@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodMuse Flowchart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Set up the SVG canvas dimensions
+        const width = 800;
+        const height = 600;
+
+        // Create an SVG element
+        const svg = d3.select('body').append('svg')
+            .attr('width', width)
+            .attr('height', height);
+
+        // Define nodes and links for the flowchart
+        const nodes = [
+            { id: 'Sign Up', x: 100, y: 50 },
+            { id: 'Freemium Model', x: 100, y: 150 },
+            { id: 'User Journey', x: 100, y: 250 },
+            { id: 'Premium Conversion', x: 100, y: 350 },
+            { id: 'Data Privacy', x: 400, y: 250 }
+        ];
+
+        const links = [
+            { source: 'Sign Up', target: 'Freemium Model' },
+            { source: 'Freemium Model', target: 'User Journey' },
+            { source: 'User Journey', target: 'Premium Conversion' },
+            { source: 'User Journey', target: 'Data Privacy' }
+        ];
+
+        // Create a scale for the arrows
+        const arrowScale = d3.scaleLinear()
+            .domain([0, 1])
+            .range([5, 15]);
+
+        // Create group for links
+        const linkGroup = svg.append('g');
+
+        // Create arrow markers
+        svg.append('defs').append('marker')
+            .attr('id', 'arrowhead')
+            .attr('viewBox', '0 0 10 10')
+            .attr('refX', 10)
+            .attr('refY', 5)
+            .attr('orient', 'auto')
+            .append('polygon')
+            .attr('points', '0 0, 10 5, 0 10')
+            .attr('fill', '#000');
+
+        // Draw links with arrows
+        links.forEach(link => {
+            const sourceNode = nodes.find(node => node.id === link.source);
+            const targetNode = nodes.find(node => node.id === link.target);
+
+            linkGroup.append('line')
+                .attr('x1', sourceNode.x + 50)
+                .attr('y1', sourceNode.y + 20)
+                .attr('x2', targetNode.x - 10)
+                .attr('y2', targetNode.y + 20)
+                .attr('stroke', '#000')
+                .attr('stroke-width', 2)
+                .attr('marker-end', 'url(#arrowhead)');
+        });
+
+        // Create a group for nodes
+        const nodeGroup = svg.append('g');
+
+        // Draw nodes with rectangles and text
+        nodes.forEach(node => {
+            nodeGroup.append('rect')
+                .attr('x', node.x)
+                .attr('y', node.y)
+                .attr('width', 120)
+                .attr('height', 50)
+                .attr('fill', '#f9f9f9')
+                .attr('stroke', '#333')
+                .attr('rx', 10)
+                .attr('ry', 10);
+
+            nodeGroup.append('text')
+                .attr('x', node.x + 60)
+                .attr('y', node.y + 30)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '16px')
+                .attr('fill', '#333')
+                .text(node.id);
+        });
+
+        // Handle window resizing
+        function resize() {
+            const newWidth = parseInt(d3.select('body').style('width'));
+            svg.attr('width', newWidth);
+        }
+
+        window.addEventListener('resize', resize);
+    </script>
+</body>
+</html>

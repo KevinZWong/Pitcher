@@ -90,9 +90,10 @@ def get_image_description(image_path, page_text):
                         "content": [
                             {
                                 "type": "text",
-                                "text": f"What's in this image? Provide a brief, clear description. Provided is the accommanying text on the same page as the image that can be used as context for the image. {page_text}"
+                                "text": f"What's in this image? Provide a brief, clear description. Provided is the accommanying text on the same page as the image that can be used as context for the image. Provide descriptive, quantitative descriptions about the image if possible (if it is a graph or diagram). {page_text}"
                             },
                             {
+                                
                                 "type": "image_url",
                                 "image_url": {
                                     "url": f"data:image/jpeg;base64,{base64.b64encode(image_file.read()).decode()}"
@@ -101,7 +102,7 @@ def get_image_description(image_path, page_text):
                         ]
                     }
                 ],
-                max_tokens=100
+                max_tokens=1000
             )
             return response.choices[0].message.content
     except Exception as e:

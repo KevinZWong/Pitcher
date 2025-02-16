@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodMuse Motivation Visualization</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            background-color: #282c34;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Set the dimensions and margins for the SVG container
+const margin = {top: 20, right: 20, bottom: 20, left: 20};
+const width = 800 - margin.left - margin.right;
+const height = 600 - margin.top - margin.bottom;
+
+// Append SVG object to the body of the page
+const svg = d3.select('body')
+    .append('svg')
+    .attr('width', width + margin.left + margin.right)
+    .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+    .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+// Load the image
+const imgUrl = 'https://example.com/path-to-your-serene-landscape-image.jpg';
+
+svg.append('image')
+    .attr('xlink:href', imgUrl)
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', width)
+    .attr('height', height)
+    .style('opacity', 0)
+    .transition() // Transition for smooth fading
+    .duration(2000)
+    .style('opacity', 1);
+
+// Add inspirational text
+svg.append('text')
+    .attr('x', width / 2)
+    .attr('y', height - 40)
+    .attr('text-anchor', 'middle')
+    .attr('font-size', '24px')
+    .attr('fill', 'white')
+    .text('Nurture Your Mind, Inspire Your Creativity')
+    .style('opacity', 0)
+    .transition()
+    .duration(2000)
+    .style('opacity', 1);
+
+// Responsive design
+function resize() {
+    const newWidth = parseInt(d3.select('body').style('width')) - margin.left - margin.right;
+    const newHeight = parseInt(d3.select('body').style('height')) - margin.top - margin.bottom;
+
+    svg.attr('width', newWidth + margin.left + margin.right)
+       .attr('height', newHeight + margin.top + margin.bottom);
+
+    svg.select('image')
+       .attr('width', newWidth)
+       .attr('height', newHeight);
+}
+
+window.addEventListener('resize', resize);
+    </script>
+</body>
+</html>

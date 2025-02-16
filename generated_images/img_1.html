@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodMuse Logo</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Set up SVG dimensions
+        const width = 300;
+        const height = 300;
+
+        // Create SVG container
+        const svg = d3.select('body')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height)
+            .attr('viewBox', `0 0 ${width} ${height}`)
+            .style('background', 'white');
+
+        // Define colors
+        const softLavender = '#E6E6FA';  // Soft Lavender color
+
+        // Draw the book shape
+        svg.append('rect')
+            .attr('x', 70)
+            .attr('y', 100)
+            .attr('width', 160)
+            .attr('height', 100)
+            .attr('rx', 15)
+            .attr('fill', softLavender)
+            .attr('stroke', 'black')
+            .attr('stroke-width', 2)
+            .transition()
+            .duration(1000)
+            .attr('y', 90);
+
+        // Draw the heart shape
+        const heartPath = d3.path();
+        heartPath.moveTo(150, 150);
+        heartPath.bezierCurveTo(130, 130, 110, 130, 100, 150);
+        heartPath.bezierCurveTo(100, 170, 130, 200, 150, 180);
+        heartPath.bezierCurveTo(170, 200, 200, 170, 200, 150);
+        heartPath.bezierCurveTo(200, 130, 170, 130, 150, 150);
+
+        svg.append('path')
+            .attr('d', heartPath)
+            .attr('fill', softLavender)
+            .attr('stroke', 'black')
+            .attr('stroke-width', 2)
+            .transition()
+            .duration(1000)
+            .attr('transform', 'translate(0, -20)');
+
+        // Draw a musical note
+        svg.append('path')
+            .attr('d', 'M 155 150 C 150 140, 150 130, 145 125 L 145 100 L 165 100 L 165 125 A 15 15 0 0 1 155 150 Z')
+            .attr('fill', softLavender)
+            .attr('stroke', 'black')
+            .attr('stroke-width', 2)
+            .transition()
+            .duration(1000);
+
+        // Draw the note's stem
+        svg.append('rect')
+            .attr('x', 155)
+            .attr('y', 100)
+            .attr('width', 5)
+            .attr('height', 50)
+            .attr('fill', softLavender)
+            .attr('stroke', 'black')
+            .attr('stroke-width', 2)
+            .transition()
+            .duration(1000);
+    </script>
+</body>
+</html>

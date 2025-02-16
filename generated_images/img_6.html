@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodMuse vs Competitors Heatmap</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .cell { stroke: #ccc; }
+        .x.axis path, .y.axis path { display: none; }
+    </style>
+</head>
+<body>
+    <script>
+        // Set dimensions and margins for the SVG container
+        const margin = {top: 20, right: 30, bottom: 40, left: 40},
+              width = 600 - margin.left - margin.right,
+              height = 400 - margin.top - margin.bottom;
+
+        // Sample data structure
+        const data = [
+            {competitor: 'MoodMuse', feature: 'AI Integration', rating: 8},
+            {competitor: 'MoodMuse', feature: 'Mood Tracking', rating: 9},
+            {competitor: 'MoodMuse', feature: 'User Engagement', rating: 7},
+            {competitor: 'Daylio', feature: 'AI Integration', rating: 6},
+            {competitor: 'Daylio', feature: 'Mood Tracking', rating: 8},
+            {competitor: 'Daylio', feature: 'User Engagement', rating: 8},
+            {competitor: 'Reflectly', feature: 'AI Integration', rating: 7},
+            {competitor: 'Reflectly', feature: 'Mood Tracking', rating: 7},
+            {competitor: 'Reflectly', feature: 'User Engagement', rating: 6}
+        ];
+
+        // Create SVG container
+        const svg = d3.select('body').append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom)
+          .append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
+
+        // Define scales
+        const x = d3.scaleBand()
+            .domain(data.map(d => d.competitor))
+            .range([0, width])
+            .padding(0.05);
+
+        const y = d3.scaleBand()
+            .domain(data.map(d => d.feature))
+            .range([height, 0])
+            .padding(0.05);
+
+        const color = d3.scaleSequential(d3.interpolateRdYlGn)
+            .domain([0, 10]); // Assuming ratings are out of 10
+
+        // Add X axis
+        svg.append('g')
+            .attr('class', 'x axis')
+            .attr('transform', `translate(0,${height})`)
+            .call(d3.axisBottom(x));
+
+        // Add Y axis
+        svg.append('g')
+            .attr('class', 'y axis')
+            .call(d3.axisLeft(y));
+
+        // Add the squares
+        svg.selectAll('.cell')
+            .data(data)
+          .enter().append('rect')
+            .attr('class', 'cell')
+            .attr('x', d => x(d.competitor))
+            .attr('y', d => y(d.feature))
+            .attr('width', x.bandwidth())
+            .attr('height', y.bandwidth())
+            .attr('fill', d => color(d.rating))
+            .on('mouseover', function(event, d) {
+                d3.select(this)
+                    .transition() 
+                    .duration(100)
+                    .style('opacity', 0.7);
+            })
+            .on('mouseout', function(event, d) {
+                d3.select(this)
+                    .transition() 
+                    .duration(100)
+                    .style('opacity', 1);
+            });
+
+        // Responsive resizing
+        function resize() {
+            const newWidth = parseInt(d3.select('body').style('width')) - margin.left - margin.right;
+            const newHeight = parseInt(d3.select('body').style('height')) - margin.top - margin.bottom;
+            svg.attr('width', newWidth + margin.left + margin.right)
+               .attr('height', newHeight + margin.top + margin.bottom);
+
+            // Update scales
+            x.range([0, newWidth]);
+            y.range([newHeight, 0]);
+
+            // Update axes
+            svg.select('.x.axis').call(d3.axisBottom(x));
+            svg.select('.y.axis').call(d3.axisLeft(y));
+
+            // Update rect positions
+            svg.selectAll('.cell')
+                .attr('x', d => x(d.competitor))
+                .attr('y', d => y(d.feature))
+                .attr('width', x.bandwidth())
+                .attr('height', y.bandwidth());
+        }
+
+        // Add event listener for window resize
+        window.addEventListener('resize', resize);
+
+        // Initial resizing
+        resize();
+    </script>
+</body>
+</html>

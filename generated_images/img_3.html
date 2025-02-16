@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodMuse Age Group Distribution</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // D3 code goes here
+        // Set the dimensions and margins for the pie chart
+const width = 450;
+const height = 450;
+const margin = 40;
+
+// Create an SVG container
+const svg = d3.select('body').append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .append('g')
+    .attr('transform', `translate(${width / 2}, ${height / 2})`);
+
+// Sample data for the pie chart
+const data = [
+    { ageGroup: '18-24', value: 30 },
+    { ageGroup: '25-34', value: 50 },
+    { ageGroup: '35-44', value: 10 },
+    { ageGroup: '45-54', value: 5 },
+    { ageGroup: '55+', value: 5 }
+];
+
+// Define the color scale
+const color = d3.scaleOrdinal()
+    .domain(data.map(d => d.ageGroup))
+    .range(d3.schemeCategory10);
+
+// Create the pie chart
+const pie = d3.pie()
+    .value(d => d.value);
+
+const arc = d3.arc()
+    .innerRadius(0)
+    .outerRadius(Math.min(width, height) / 2 - margin);
+
+const arcs = pie(data);
+
+// Draw the arcs
+svg.selectAll('path')
+    .data(arcs)
+    .enter()
+    .append('path')
+    .attr('d', arc)
+    .attr('fill', (d) => color(d.data.ageGroup))
+    .attr('stroke', 'white')
+    .style('stroke-width', '2px')
+    .transition()
+    .duration(750);
+
+// Add labels with percentage
+svg.selectAll('text')
+    .data(arcs)
+    .enter()
+    .append('text')
+    .attr('transform', (d) => `translate(${arc.centroid(d)})`)
+    .text((d) => {
+        const percent = ((d.data.value / d3.sum(data, d => d.value)) * 100).toFixed(1);
+        return `${d.data.ageGroup}: ${percent}%`;
+    })
+    .style('font-size', '12px')
+    .style('text-anchor', 'middle');
+    </script>
+</body>
+</html>

@@ -1,3 +1,5 @@
 .env
 summary.txt
 presentation_plan.json
+__pycache__
+images
