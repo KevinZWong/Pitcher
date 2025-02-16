@@ -61,7 +61,7 @@ if __name__ == "__main__":
 
     folder_url = "https://drive.google.com/drive/folders/1HohSxiUb2C0IKWfVXgLFhrQKs-v26M20?usp=sharing"
     repo_url = "https://github.com/KevinZWong/Mapling"
-    download_from_gdrive_folder(folder_url)
+    # download_from_gdrive_folder(folder_url)
     download_from_github(repo_url)
 
 

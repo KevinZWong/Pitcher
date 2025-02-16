@@ -62,6 +62,7 @@ def create_presentation_outline(context: dict) -> dict:
     2. Create a logical flow from introduction to conclusion
     3. Every Slide should have one or more images, especially charts, schematics and diagrams
     4. What you create must be in MARP syntax and should be able to be converted to slide decks using marp cli 
+    5. Generate some technical slides using the insights you get from the code_summary
 
     Keep in mind:
     - text should not be too much, keep space for visuals
@@ -79,9 +80,10 @@ def create_presentation_outline(context: dict) -> dict:
     messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": 
-         f"Create a presentation about: {context['topic']} using this context: {context['context']}\n\n"
+         f"Create a presentation about: {context['topic']} using this textual context: {context['text_context']} and this code context {context['code_context']}\n\n"
                                    f"Additional requirements: {context.get('requirements', '')}"}
     ]
+    start_time = time.time()
     print("Sending LLM layout call")
     response = structured_llm.invoke(messages)
     context.update({
@@ -236,7 +238,7 @@ Keep in mind:
 #         llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7, openai_api_key=os.getenv("OPENAI_API_KEY"))
 #         structured_llm = llm.with_structured_output(ImageRelevance)
         
-#         # Make the LLM calcdl
+#         # Make the LLM call
 #         response = structured_llm.invoke(prompt)
 
 #         # Check if the response indicates relevance
@@ -280,7 +282,7 @@ if __name__ == "__main__":
     
     start_time = time.time()
 
-    #create the grpah and start it
+    #create the graph and start it
     graph = create_presentation_graph()
     result = graph.invoke({
         "topic": topic,
@@ -288,15 +290,10 @@ if __name__ == "__main__":
         "context": summary_content,
     })
 
-    #make the mardown
+    #make the markdown
     with open("presentation.md", "w") as file:
         file.write(result['slides']['marp_markdown'])
     end_time = time.time()
-
-    #just for knwoing what the names and descritpionf ot he needed placeholder are (DEPRECATED NOW)
-    # for filename, desc in zip(result['slides']['image_placeholder_filenames'], result['slides']['image_placeholder_desc']):
-    #     with open("placeholder_images.txt", "a") as file:
-    #         file.write(f"{filename}: {desc}\n")
     
     print(result)
     print("time taken:", end_time - start_time)

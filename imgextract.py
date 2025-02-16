@@ -132,10 +132,11 @@ async def extract_images_from_pdf(pdf_path, output_base_dir):
     pdf_document.close()
     return all_metadata
 
-async def process_directory(input_dir: str = "image_data", output_dir: str = "extracted_images"):
+async def process_directory(input_dir: str = "text_data", output_dir: str = "extracted_images"):
     """
     Process all PDF files in the specified directory
     """
+    print("it reaches here")
     input_path = Path(input_dir)
     output_path = Path(output_dir)
     output_path.mkdir(exist_ok=True, parents=True)

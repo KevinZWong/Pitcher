@@ -1,326 +1,1041 @@
 
-=== medibase/app/src/index.css ===
+=== license.txt ===
 
-It seems that there is no input text provided for summarization. Please provide the text you would like summarized, and I will be happy to assist you.
+The copyright notice by Kevin Z Wong grants permission to use, copy, modify, merge, publish, distribute, sublicense, and sell the software without restrictions, provided that the copyright and permission notices are included in all copies. The software is offered "as is," without any warranties, and the authors are not liable for any claims or damages related to its use.
 
 
-=== medibase/app/src/nav-bar.js ===
+=== mapling_models/spline_data_loop.json ===
 
-The provided code is a React functional component named `Navbar`, which renders a navigation bar for a web application. The navigation bar consists of two main sections: the left side features a logo linked to the homepage, while the right side contains links to various sections of the application, including medication, schedule, search, and profile. Each link utilizes the `CurLang` component to support multilingual text. The structure is organized with appropriate HTML elements and class names for styling.
+The provided data consists of three sets of values: x_values, y_values, and z_values. 
 
+- **x_values**: [7, 317, 599, 678, 520, 325, 394, 648, 991] represent a series of numerical inputs.
+- **y_values**: [-1, 113, 383, 715, 900, 800, 396, 212, 5] correspond to outputs associated with each x_value.
+- **z_values**: [0.0, 1.5, 3.66, 4.5, 4.89, 5.39, 6.29, 8.0, 10.0] indicate a third dimension of values, likely representing a calculated or derived metric based on the x and y values.
 
-=== medibase/app/public/robots.txt ===
+This dataset can be utilized for analysis, potentially to explore relationships between the x and y values while incorporating the z values for additional insights.
 
-The provided text is a snippet from a robots.txt file, which is used to communicate with web crawlers and search engine bots. The directive "User-agent: *" indicates that the rules apply to all web crawlers. The "Disallow:" line is empty, meaning that there are no restrictions on crawling the website. Consequently, all bots are permitted to access and index the site's content without any limitations.
 
+=== Mapling.py ===
 
-=== medibase/app/src/home.js ===
+The provided script is a Python program that utilizes the EasyGUI library for user input and the MoviePy library for video editing. It prompts the user to enter video settings, including frame rate, clip duration, resolution, video name, and upscale factor. The script checks for any empty inputs and exits if found.
 
-The provided React component, `Homepage`, imports necessary styles and components, including a navigation bar and a language tool. It renders a main div containing the `Navbar` and a section with two paragraphs. The first paragraph highlights the feature of the application, stating, "All your medication at your fingertips," while the second explains that MediBase is a medication assistant designed for individuals with visual impairments, language barriers, or memory issues, facilitating safe medication management. An empty div is included for potential future content.
+Next, it allows the user to select an image file and a mapping model file, as well as a directory to save the final video. The script calculates the new dimensions for the image based on the specified upscale factor and resolution, resizing the image using OpenCV.
 
+A temporary resized image is saved, and a dynamic video clip is generated using the `DynamicPositionClip` class and a 3D spline movement model loaded from the selected file. Finally, the composite video is written to the specified output path, and the temporary image file is deleted.
 
-=== medibase/app/src/schedule.js ===
 
-The provided code defines a React functional component named `Schedule`. This component imports a `Navbar` and a `CurLang` tool for localization. Within the component, it renders a layout that includes the `Navbar`, followed by a content section. Inside this section, a message indicating that the schedule is "Coming Soon!" is displayed, along with an image that serves as a mock-up of the schedule. The image is sourced from a specified URL and is given an alt text for accessibility.
+=== example.py ===
 
+The provided code snippet is a Python script that utilizes the EasyGUI and MoviePy libraries to create a video from an image with dynamic positioning effects. The script begins by defining parameters such as frame rate, clip duration, resolution, video name, image path, movement file, save folder, and an upscale factor. 
 
-=== medibase/app/src/404.js ===
+It calculates the necessary dimensions for the output video based on the specified resolution and the aspect ratio of the input image. The image is then resized using OpenCV to ensure it meets the required dimensions. A temporary file is created to store the resized image.
 
-The provided code defines a React functional component named `PageNotFound`, which is designed to display a "404: page not found" error message. It imports a navigation bar component (`Navbar`) and a language tool (`CurLang`) for multilingual support, along with a CSS file for styling. Inside the component, it renders the navigation bar and a content section that includes an error message. The message informs users that the page is not available and provides a link to return to the homepage. The use of `CurLang` suggests that the text can be displayed in different languages.
+Next, a `DynamicPositionClip` object is instantiated to handle the video generation, and a `Spline3D` object is used to load movement data from a specified JSON file. The video is generated by combining the resized image with the dynamic movements defined in the movement model. Finally, the composite video is saved to the specified output path, and the temporary image file is deleted to clean up.
 
 
-=== medibase/app/src/home.css ===
+=== PointSelection.py ===
 
-The provided CSS code defines the styling for a web page, utilizing the 'Varela Round' font and establishing a color scheme with light blue and dark blue variables. Key elements include a fixed navigation bar at the top with a shadow effect and responsive hover effects for navigation links. The layout features a centered home content area with a background image, and text elements are styled for alignment, size, and color. The home content includes a feature text section and a body section, both centered and responsive, with specific font sizes and colors. Overall, the CSS aims to create a visually appealing and user-friendly interface.
-
-
-=== medibase/app/public/manifest.json ===
-
-MediBase is a medication management system designed to streamline the process of managing medications. It features a variety of icons, including a favicon and two logo sizes (192x192 and 512x512 pixels) in PNG format. The application launches from the root URL and operates in standalone mode. Its theme color is black (#000000), while the background color is white (#ffffff).
-
-
-=== medibase/app/src/api-calls/translateText.js ===
-
-The provided code snippet is a JavaScript function that utilizes the Axios library to perform text translation via the "MyMemory" translation API. It constructs a GET request with specified parameters, including the source text, language pair (English to the specified target language), and API credentials. The function `translateText` takes two arguments: `text` (the text to be translated) and `lang` (the target language code). 
-
-Upon execution, it updates the request parameters with the input text and language, sends the request, and processes the response. It iterates through the translation matches returned by the API, logging any discrepancies between the original segment and its translation, and returns the first valid translation found. If no translation is found, the function does not return anything.
-
-
-=== medibase/app/package.json ===
-
-The provided JSON represents a configuration file for a project named "MediBase," version 0.1.0, which is a private React application. It lists various dependencies essential for the project, including libraries for icons, testing, HTTP requests, QR code scanning, and routing. Key dependencies include React, Axios, and JSON Server for backend simulation.
-
-The scripts section outlines commands for starting, building, testing, and ejecting the application, as well as running a local server with JSON Server. The ESLint configuration is set to extend standard React app rules, ensuring code quality. Additionally, the browserslist specifies compatibility targets for both production and development environments, focusing on modern browser versions.
-
-
-=== medibase/app/src/profile.js ===
-
-The provided React component, `Profile`, manages user profile settings, specifically language preference and color-blind mode. It imports necessary modules and components, including a navigation bar and a language selection dropdown using `react-select`. 
-
-The component initializes state variables for language and color-blind mode based on the current profile retrieved via the `getProfile` function. It displays the user's name and allows them to select a language from a predefined list of options, updating the profile and state upon selection. Additionally, it provides a button to toggle the color-blind mode, updating the profile accordingly. The layout is structured with CSS for styling, ensuring a user-friendly interface.
-
-
-=== medibase/app/db.json ===
-
-The provided data contains two user profiles, each with distinct settings and medication details. 
-
-1. **Profile 1 (Example1)**:
-   - **Settings**: Language set to English, timezone UTC, and colorblind mode disabled.
-   - **Medications**:
-     - **XYLOCAINE**: Administered once daily at a dosage of 250 mg, with a maximum limit of 600 mg per day.
-     - **SYNTHROID**: Taken once daily as one tablet, recommended to be consumed on an empty stomach.
-
-2. **Profile 2 (Example2)**:
-   - **Settings**: Language set to English, timezone UTC-05:00, and colorblind mode enabled.
-   - **Medications**: No medications listed.
-
-This summary highlights the key aspects of each profile, including user settings and medication information.
-
-
-=== medibase/app/src/index.js ===
-
-The provided code is a React application that sets up routing for various components using React Router. It imports necessary modules and components, including Profile, Search, Homepage, Medication, PageNotFound, Schedule, and InitialSearch. The application renders a Router that defines multiple routes: 
-
-- The root path ("/") leads to the Homepage.
-- "/profile" displays the Profile component.
-- "/search" shows the Search component.
-- "/info/:din" routes to the InitialSearch component based on a dynamic parameter.
-- "/schedule" renders the Schedule component.
-- "/medication" displays the Medication component.
-- Any unmatched routes direct users to the PageNotFound component.
-
-Additionally, a `check` function is called every second using `setInterval`. The application is structured to provide a user-friendly navigation experience within a single-page application.
-
-
-=== medibase/app/src/api-calls/tts.js ===
-
-The `TTSIcon` component is a React functional component that utilizes text-to-speech (TTS) functionality. It accepts `text` and `lang` as props and manages internal state for the current text, original text, and playback status using the `useState` hook. 
-
-Upon initialization, if the original text differs from the current text and the component is ready, it resets the readiness state. If not ready, it calls the `toCurLang` function to convert the text to the appropriate language, updating the state once the conversion is complete.
-
-The component constructs a TTS API link using an environment variable for the API key. When the icon is clicked, it plays the audio if the component is ready and not currently playing. An event listener resets the playing state once the audio ends. The component renders an icon that triggers the audio playback on click.
-
-
-=== medibase/app/README.md ===
-
-The document provides an overview of using Create React App, a tool for bootstrapping React applications. Key commands include:
-
-- **`npm start`**: Launches the app in development mode at [http://localhost:3000](http://localhost:3000), with automatic page reloads and console linting errors.
-- **`npm test`**: Starts the test runner in interactive mode.
-- **`npm run build`**: Compiles the app for production, optimizing performance and creating a minified build in the `build` folder, ready for deployment.
-- **`npm run eject`**: Allows users to take full control over the build configuration. This action is irreversible.
-
-Additional resources for learning about Create React App and React are linked, along with sections on code splitting, bundle size analysis, making a Progressive Web App, advanced configuration, and deployment.
-
-
-=== medibase/app/src/initial-search.css ===
-
-The provided CSS code defines styles for various elements related to error messages and layout. 
-
-1. **Error Link Styling**: The class `.a-error` sets the text color to a light blue and removes default padding and margins. On hover, it underlines the text.
-
-2. **Error Text**: The `.error-text` class centers the text, sets its width to 100%, and applies a font size of 35px with a dark blue color.
-
-3. **Inner Content Layout**: The `.inner-content` class creates a flexible layout that vertically and horizontally centers its content, with specific padding and height calculations to account for a fixed space.
-
-4. **Main Content Area**: The `.content` class positions an element absolutely, centers it at the top with a height calculation, and applies a background image that covers the entire area without repeating.
-
-Overall, the styles focus on creating a visually appealing error message layout with centered text and a background image.
-
-
-=== medibase/app/src/initial-search.js ===
-
-The `InitialSearch` component in this React application is designed to manage medication data based on a Drug Identification Number (DIN) retrieved from the URL parameters. It utilizes hooks for state management and asynchronous requests to fetch medication details.
-
-Upon loading, the component initiates a request to `MakeDINRequests` to retrieve data corresponding to the provided DIN. If the data is successfully fetched and does not contain an error, it displays the medication information and provides a button to save the medication. When the button is clicked, the component checks if the medication is already in the user's profile; if not, it adds the medication details to the profile and alerts the user.
-
-If the DIN is not found, an error message is displayed, prompting the user to check the DIN number. While data is being loaded, a loading message is shown. The component also imports various modules for functionality, including navigation and styling.
-
-
-=== medibase/app/src/search.js ===
-
-The provided code is a React component that implements a QR code scanner and input form for a DIN (Document Identification Number). The `GetDIN` function manages the state of the input content and handles QR code scanning using the `Html5QrcodeScanner` library. 
+The provided code implements a graphical user interface (GUI) application using Tkinter for selecting points on a 2D canvas. The `PointSelectionApp` class initializes the GUI with a canvas for point selection, labeled axes, and a listbox to display selected points. Users can click on the canvas to add points, which are stored in a list and displayed in the listbox. The application features vertical and horizontal dashed lines that follow the mouse cursor, enhancing user interaction.
 
 Key functionalities include:
-- **Input Handling**: The `onDinChange` function pads the input to ensure it is 8 digits long and updates the state accordingly.
-- **Submission Validation**: The `onSubmit` function checks if the input data is valid (7 parts and the fourth part is an 8-digit number) before navigating to an information page. If invalid, it alerts the user.
-- **QR Code Scanning**: The `setUpQR` function initializes the QR code scanner, handling successful scans by displaying the result and updating the input state, while errors are indicated in the UI.
+- **Point Addition**: Clicking on the canvas records the point's coordinates, scales them, and visually marks them.
+- **Cursor Tracking**: As the mouse moves, the application updates the position of the dashed lines and the window title to reflect the current cursor coordinates.
+- **Point Management**: Users can clear all points or finalize their selection, which closes the application.
+- **Scaling Factor**: The application allows for a scaling factor to adjust point coordinates.
 
-The component is rendered within a `Search` function that includes a navigation bar. The overall structure emphasizes user interaction through scanning and manual input, with validation to ensure data integrity.
+The GUI is structured with a main canvas, a frame for the list of points, and buttons for clearing points and finalizing selections. The application runs in a Tkinter main loop, allowing for interactive point selection and manipulation.
 
 
-=== medibase/app/src/info.js ===
+=== tkSliderWidget.py ===
 
-The provided code is a React component that displays medication information based on a Drug Identification Number (DIN). It utilizes hooks like `useState` and `useParams` from React Router for state management and routing. The `InformationFormat` function retrieves and formats medication details, including brand name, instructions, warnings, and dosage information, while also allowing users to toggle notification settings for the medication.
+The Mapling project incorporates a Tkinter widget created by Mengxun Li, which is available on GitHub. The primary component is a `Slider` class that extends the `Frame` widget, allowing users to create a customizable slider interface. Key features include:
+
+- **Initialization Parameters**: The slider can be configured with width, height, minimum and maximum values, step size, initial values, and options for displaying values or allowing bar manipulation.
+- **Bar Management**: The slider supports multiple bars, each represented by a `Bar` dictionary containing position, value, and graphical IDs. Users can retrieve current values and set callbacks for value changes.
+- **Mouse Interaction**: The slider responds to mouse movements and clicks, enabling users to move existing bars or potentially add/remove them (though add/remove functionality is commented out).
+- **Graphical Representation**: The slider is visually represented using a canvas, with methods for drawing the track and bars, ensuring that the bars reflect their current values and positions.
+
+Overall, the `Slider` class provides a flexible and interactive way to manage and visualize numerical values within a graphical user interface.
+
+
+=== mapling_models/spline_data_hook.json ===
+
+The provided data consists of three sets of values: x_values, y_values, and z_values. 
+
+- **x_values**: [4, 193, 280, 519, 855, 803, 463]
+- **y_values**: [3, 287, 670, 955, 823, 513, 397]
+- **z_values**: [0.0, 2.42, 5.24, 7.63, 8.45, 9.16, 10.0]
+
+These values suggest a correlation where x_values and y_values may represent two different variables, while z_values appear to indicate a third variable that increases in a non-linear manner as x and y change. The z_values range from 0.0 to 10.0, reflecting a gradual increase. This data could be useful for analyzing relationships among the three variables in a statistical or graphical context.
+
+
+=== DynamicEffects.py ===
+
+The provided code defines a class, `DynamicPositionClip`, which facilitates the creation of a video where an image moves dynamically within a specified background. The class constructor initializes the frame rate and background dimensions. 
+
+The `dynamicPosition` method calculates the position of the image based on a movement model, scaling the movement to fit within the frame boundaries while considering the image's dimensions. It adjusts the y-coordinate to align with the coordinate system used.
+
+The `generate_video` method creates a video clip using an image, applies the dynamic positioning based on the movement model, and overlays the image on a colored background. It returns a composite video clip.
+
+In the main execution block, the script sets parameters such as frame rate, clip duration, image path, and background dimensions. It loads a movement model from a JSON file and generates the video, which is then saved to the specified output path.
+
+
+=== PathCreator.py ===
+
+The provided code snippet outlines a graphical user interface (GUI) application using Tkinter for selecting points that define a path for an image. The process begins by prompting the user to select points, which are then collected by the `PointSelectionApp`. If no points are selected, the program exits.
+
+Once points are gathered, a second Tkinter window is opened with a slider interface (`SliderApp`) that allows the user to adjust speed values corresponding to the selected path points. The x and y coordinates of the path points, along with the speed values, are extracted and converted into NumPy arrays.
+
+A 3D spline is created using the `Spline3D` class, which is then plotted in a 3D space. Finally, the user is prompted to enter a name for the model, and the spline data is saved under that name. This workflow integrates point selection, speed adjustment, and 3D spline visualization.
+
+
+=== TimeAdjustment.py ===
+
+The provided code defines a graphical user interface (GUI) application using Tkinter, specifically designed to manage a slider for selecting time intervals between points. The `SliderApp` class initializes with a root window, a specified length effect, and a list of points. It calculates intervals based on the given length and sets up a slider widget to allow users to adjust these intervals visually.
+
+Key components of the application include:
+
+1. **Interval Calculation**: The `calculate_intervals` method computes the intervals based on the length effect and the number of points.
+2. **Slider Setup**: The `setup_slider` method creates a slider with adjustable values, allowing users to modify the intervals dynamically.
+3. **Label Instructions**: The `setup_label` method displays instructions for the user regarding the slider's purpose.
+4. **Value Change Handling**: The `on_value_change` method is a placeholder for handling changes in slider values.
+5. **Finalization**: The `finalize_points` method is invoked when the user clicks the "Done" button, which currently closes the application.
+
+The application runs in a Tkinter main loop, and upon closure, it prints the current slider values. The example demonstrates the integration of a custom slider widget and user interaction within a GUI context.
+
+
+=== requirements.txt ===
+
+The provided text lists specific versions of various Python packages essential for data visualization, image processing, and video editing. The packages include:
+
+- **easygui (0.98.3)**: A simple GUI toolkit for Python.
+- **fonttools (4.47.0)**: A library for manipulating fonts.
+- **imageio (2.33.1)**: A library for reading and writing images in various formats.
+- **imageio-ffmpeg (0.4.9)**: An extension for reading and writing video files.
+- **matplotlib (3.8.2)**: A plotting library for creating static, animated, and interactive visualizations.
+- **moviepy (1.0.3)**: A library for video editing.
+- **numpy (1.26.2)**: A fundamental package for numerical computing in Python.
+- **opencv-python (4.8.1.78)**: A library for computer vision tasks.
+- **scipy (1.11.4)**: A library for scientific and technical computing.
+- **tqdm (4.66.1)**: A library for displaying progress bars in Python.
+
+These packages collectively support a range of functionalities from image and video manipulation to scientific computations and data visualization.
+
+
+=== README.md ===
+
+**Mapling Overview**
+
+Mapling is a video animation tool that transforms images into videos featuring customizable pan movements. It enhances an image's resolution by 150% and animates it at 60 frames per second using a customizable 3D spline graph to determine its movement path.
+
+**Key Features:**
+- **Customizable Movement:** Users can create unique movement paths by setting points on a spline graph, allowing for tailored animation speeds and directions.
+- **User-Friendly Interface:** A graphical user interface (GUI) facilitates path selection and adjustments, enabling users to visualize and modify movement trajectories easily.
+
+**Installation and Usage:**
+- **Prerequisites:** Requires Python 3.7+, Pip, and a virtual environment.
+- **Installation Steps:** Clone the repository and install necessary dependencies.
+- **Example Execution:** Users can run an example script to generate a sample video.
+
+**Creating Custom Movement Paths:**
+1. Launch `PathCreator.py` to begin creating paths.
+2. Use the GUI to select and arrange movement points.
+3. Adjust time intervals for speed variations.
+4. Preview the 3D model of camera positions over time.
+5. Save the model in the designated folder.
+
+**Using a Custom Mapling Model:**
+1. Execute `Mapling.py`.
+2. Set video parameters (framerate, duration, resolution, etc.) via the GUI.
+3. Select the image and the previously created Mapling model.
+4. Finalize settings and save the completed video in the specified folder.
+
+Mapling provides a comprehensive and customizable platform for animating images into engaging videos.
+
+
+=== Spline3D.py ===
+
+The provided code defines a `Spline3D` class for creating and manipulating 3D cubic spline interpolations based on given x, y, and z points. The class includes methods for initialization, plotting the spline in 3D, finding corresponding x and y values for a given z value, generating unique model names, saving spline data to a JSON file, and loading data from a JSON file.
 
 Key functionalities include:
-- Fetching medication data using the `MakeDINRequests` function.
-- Displaying a loading state until data is retrieved.
-- Handling cases where the DIN is not found, prompting the user to return home.
-- Utilizing icons from FontAwesome for user interactions, such as toggling notifications and closing the information panel.
-- Displaying medication details in a structured format, including patient and doctor information, and active ingredients.
+- **Initialization**: Accepts x, y, and z points, and sets up cubic spline interpolations.
+- **3D Plotting**: Visualizes the spline using Matplotlib.
+- **Finding Coordinates**: Uses optimization to find x and y values for a specified z input.
+- **Data Management**: Saves and loads spline data in JSON format, with error handling for file operations.
 
-The `Information` component manages the loading state and data retrieval, ensuring that the correct medication information is displayed based on user interactions. If the DIN changes or if there is an error in fetching data, appropriate responses are rendered to the user.
+The main execution block demonstrates the class's usage by defining path and speed points, creating a `Spline3D` instance, plotting the spline, and saving the model with a user-defined name. The commented-out section shows how to retrieve coordinates for a specific z value.
 
 
-=== medibase/app/src/404.css ===
+=== license.txt ===
 
-The provided CSS code defines styles for error messages and layout components in a web application. 
+Kevin Z Wong grants permission to use, copy, modify, merge, publish, distribute, sublicense, and sell the software and its documentation without restrictions, provided that the copyright notice and permission notice are included in all copies. The software is offered "as is," without any warranties, and the authors are not liable for any claims or damages related to its use.
 
-1. **Error Link Style**: The `.a-error` class styles links to have no text decoration, specific padding, margin, and a light blue color. On hover, the link is underlined.
 
-2. **Error Text Style**: The `.error-text` class centers text with a font size of 35px and a dark blue color, ensuring it occupies the full width of its container.
+=== mapling_models/spline_data_loop.json ===
 
-3. **Inner Content Layout**: The `.inner-content` class creates a flexible container that vertically and horizontally centers its content, with specified padding and a height that adjusts based on the viewport.
+The provided data consists of three sets of values: x_values, y_values, and z_values. 
 
-4. **Content Background**: The `.content` class positions its elements absolutely, centers them, and sets a background image that covers the entire area without repeating, with a specific height calculation.
+- **x_values**: This series includes the integers [7, 317, 599, 678, 520, 325, 394, 648, 991].
+- **y_values**: Corresponding to the x_values, this set contains the integers [-1, 113, 383, 715, 900, 800, 396, 212, 5].
+- **z_values**: This series features decimal values [0.0, 1.5, 3.66, 4.5, 4.89, 5.39, 6.29, 8.0, 10.0], which appear to be calculated based on the x_values.
 
-Overall, the styles focus on creating a visually appealing error display with centered text and a background image.
+Overall, the data presents a structured relationship among the three variables, with x_values and y_values being integers and z_values representing a continuous range of decimal values.
 
 
-=== medibase/app/src/info.css ===
+=== mapling_models/spline_data_hook.json ===
 
-The provided CSS code outlines styling rules for a web page, emphasizing a modern and user-friendly design. Key features include:
+The provided data consists of three sets of values: x_values, y_values, and z_values. The x_values range from 4 to 855, with corresponding y_values ranging from 3 to 955. The z_values, which appear to represent a calculated metric, range from 0.0 to 10.0, indicating a progressive increase. Each z_value corresponds to the respective x and y values, suggesting a relationship among the three sets. This data could be useful for analyzing trends or patterns in the relationship between the variables.
 
-1. **Custom Scrollbar**: The scrollbar is styled with specific dimensions, colors, and hover effects to enhance user experience.
 
-2. **Color Variables**: The code defines three color variables (light blue, dark blue, and a translucent light blue) for consistent theming throughout the page.
+=== tkSliderWidget.py ===
 
-3. **Font and Layout**: The 'Varela Round' font is applied universally, with layout settings ensuring full height and width for the HTML and body elements. Images are set to display as block elements.
+The Mapling project incorporates a Tkinter widget created by Mengxun Li, which can be found on GitHub. The main component is the `Slider` class, a graphical user interface element that allows users to manipulate values visually. 
 
-4. **Navigation Bar**: The navbar is positioned at the top, with a shadow effect and responsive design elements, including left and right sub-navigation sections.
+Key features of the `Slider` class include:
+- Customizable dimensions, minimum and maximum values, and optional step sizes.
+- Initialization of slider bars based on provided values, with the ability to show or hide these values.
+- Mouse event handling for moving slider bars and checking selections.
+- Methods for adding, moving, and retrieving values from the slider bars, with built-in validation for step sizes and value ranges.
 
-5. **Content Sections**: The main content area features a background image and is structured to accommodate medication information, including headers, icons, and buttons. The layout is designed for clarity and ease of navigation.
+The class uses a canvas to draw the slider and bars, with specific colors and dimensions defined for visual appeal. The slider's functionality is enhanced by callbacks that notify changes in values, ensuring interactive user experience. Overall, the `Slider` class is a versatile tool for creating interactive sliders in Tkinter applications.
 
-6. **Buttons and Interactivity**: The save medication button has hover effects, enhancing its visibility and user engagement.
 
-Overall, the CSS code is structured to create a visually appealing and functional interface for a medication management application, focusing on usability and aesthetic coherence.
+=== requirements.txt ===
 
+The provided text lists specific versions of various Python packages, which are essential for tasks involving graphical user interfaces, image processing, and data visualization. The packages include:
 
-=== medibase/app/src/medication.css ===
+- **easygui (0.98.3)**: For creating simple GUIs.
+- **fonttools (4.47.0)**: For manipulating fonts.
+- **imageio (2.33.1)**: For reading and writing images.
+- **imageio-ffmpeg (0.4.9)**: For handling video files.
+- **matplotlib (3.8.2)**: For plotting and visualizing data.
+- **moviepy (1.0.3)**: For video editing.
+- **numpy (1.26.2)**: For numerical computations.
+- **opencv-python (4.8.1.78)**: For computer vision tasks.
+- **scipy (1.11.4)**: For scientific computing.
+- **tqdm (4.66.1)**: For progress bar visualization in loops.
 
-The provided CSS code customizes the styling of a web page, focusing on elements such as scrollbars, navigation bars, and content layout. Key features include:
+These packages collectively support a range of functionalities from basic GUI creation to advanced image and video processing.
 
-1. **Custom Scrollbar**: Styles for the scrollbar include dimensions, track background, and hover effects.
-2. **Color Variables**: Defined color variables for light blue, dark blue, and their transparent versions for consistent theming.
-3. **Font and Layout**: Utilizes the 'Varela Round' font, with a structured layout for the navbar and content areas, ensuring full height and width utilization.
-4. **Navbar Design**: The navbar is positioned at the top, with a shadow effect and responsive hover states for links.
-5. **Content Sections**: The main content area features a background image and is divided into inner sections for medication information, with flexible height adjustments.
-6. **Medication List Styling**: Specific styles for medication items, including hover effects and layout adjustments for a clean presentation.
-7. **Error Handling**: A dedicated style for error messages, ensuring visibility and clarity.
 
-Overall, the CSS emphasizes a modern, clean aesthetic with user-friendly navigation and responsive design elements.
+=== DynamicEffects.py ===
 
+The provided code defines a class `DynamicPositionClip` that generates a video with an image moving dynamically based on a specified movement model. It uses the MoviePy library for video manipulation and the Spline3D library for movement modeling. 
 
-=== medibase/app/src/search.css ===
+Key features of the class include:
 
-The provided CSS code customizes the appearance of a web page, focusing on elements such as scrollbars, navigation bars, and form inputs. Key features include:
+1. **Initialization**: The class constructor accepts parameters for framerate, background width, and height.
+   
+2. **Dynamic Positioning**: The `dynamicPosition` method calculates the position of the image at a given time `t` by scaling movement values from a model to fit within the video frame, ensuring the image remains within the frame boundaries.
 
-1. **Custom Scrollbar**: The scrollbar is styled with a width of 10px, featuring a light grey track and a dark grey handle that changes to grey on hover.
+3. **Video Generation**: The `generate_video` method creates a video clip using an image file and a specified duration. It sets the image's position dynamically using the movement model and combines it with a black background.
 
-2. **Color Variables**: The code defines several color variables for consistent theming, including light blue, dark blue, and their transparent variants.
+4. **Execution**: In the main block, the class is instantiated with specific parameters, and a movement model is loaded from a JSON file. The video is generated and saved to a specified output path.
 
-3. **Typography**: The font used throughout the page is 'Varela Round', ensuring a uniform look.
+This code effectively allows for the creation of a video where an image moves according to predefined 3D spline data, enhancing visual storytelling in multimedia projects.
 
-4. **Navigation Bar**: The navbar is positioned at the top, with a height of 100px, a shadow effect, and a smooth background transition. It includes left and right sections for content alignment.
 
-5. **Content Layout**: The main content area is designed to be responsive, with a background image and a flexible layout that adjusts based on screen size.
+=== Mapling.py ===
 
-6. **Form Elements**: Input fields and buttons are styled for usability, featuring borders, hover effects, and focus states to enhance user interaction.
+The provided code is a Python script that utilizes the EasyGUI library for user input and the MoviePy library for video creation. It prompts users to enter video settings, including frame rate, clip duration, resolution, video name, and upscale factor. The script checks for empty inputs and exits if any are found. 
 
-7. **Placeholder and Labels**: Specific styles are applied to placeholders and labels to maintain visual hierarchy and clarity.
+Users are then asked to select an image file and a mapping model file, followed by choosing a folder to save the final video. The script calculates the new dimensions for the image based on the specified upscale factor and resolution, resizing the image using OpenCV. 
 
-Overall, the CSS aims to create a visually appealing and user-friendly interface with a cohesive design language.
+A temporary image file is created, and a dynamic video clip is generated using the `DynamicPositionClip` and `Spline3D` classes, which handle the movement model for the video. Finally, the composite video is saved in the specified output path, and the temporary image file is deleted.
 
 
-=== medibase/.github/workflows/static.yml ===
+=== README.md ===
 
-This GitHub Actions workflow is designed to deploy static content to GitHub Pages. It triggers on pushes to the main branch and can also be executed manually. The workflow grants necessary permissions for reading repository contents and writing to GitHub Pages. It ensures only one deployment occurs at a time without canceling in-progress runs.
+**Mapling Overview**
 
-The deployment consists of a single job that runs on an Ubuntu environment. The steps include checking out the repository, setting up GitHub Pages, uploading the entire repository as an artifact, and finally deploying the content to GitHub Pages. The deployment URL is captured for reference.
+Mapling is a video animation tool that transforms static images into dynamic videos by applying customizable pan movements. It enhances images to 150% larger than the final video resolution and animates them at 60 frames per second using a customizable 3D spline graph to dictate movement paths.
 
+**Key Features:**
+- **Customizable Movement:** Users can create unique movement paths by setting points on a spline graph, allowing for tailored speed and direction.
+- **User Interface:** A graphical user interface (GUI) facilitates path selection and adjustment of time intervals for movement speed.
 
-=== medibase/README.md ===
+**Installation and Usage:**
+1. **Prerequisites:** Requires Python 3.7+, Pip, and a virtual environment.
+2. **Installation Steps:** Clone the repository and install dependencies via pip.
+3. **Example Execution:** Run `examples.py` to generate a sample video.
 
-MediBase is a medication assistant designed to help individuals with visual impairments, language barriers, or forgetfulness manage their medications safely. Users can search for drug information using the Drug Identification Number (DIN) found on Canadian medications, which allows them to star and save important drugs for easy access. The platform features a medication tab that includes summaries and a text-to-speech function for auditory assistance.
+**Creating Custom Movement Paths:**
+- Run `PathCreator.py` to design movement paths using a GUI.
+- Adjust points to define movement boundaries and speed.
+- Save the created model in the `mapling_models` folder.
 
-Key features of MediBase include the ability to search medications by DIN or QR code, save and manage a personal medication list, receive daily reminders for medication intake, and access a fully translatable website with text-to-speech capabilities in multiple languages. The user interface is designed to be color-blind friendly and has undergone accessibility testing, with plans for further enhancements.
+**Using a Custom Model:**
+1. Execute `Mapling.py` to start the animation process.
+2. Input video parameters (framerate, duration, resolution, etc.) via the GUI.
+3. Select the image and the previously created Mapling model.
+4. Finalize the video and save it in the `finishedVideos` folder.
 
-MediBase was inspired by personal experiences of assisting family members with medication management and aims to address the serious issue of medication errors, which have led to increased overdose rates in various regions. The application was initially developed for LyonHacks II and has been updated with new features by the development team.
+Mapling offers a flexible and user-friendly approach to creating animated videos from images, making it suitable for various creative projects.
 
-To use MediBase, users can clone the repository, set up API keys, and run the application locally. Sample DIN numbers are provided for testing purposes. Additional resources, including a project pitch and website link, are available for further exploration.
 
+=== PathCreator.py ===
 
-=== medibase/app/src/medication.js ===
+The provided code snippet outlines a graphical user interface (GUI) application that allows users to select points representing a path for an image and adjust the speed at those points using sliders. 
 
-The `Medication` component in this React application manages a user's medication list. It retrieves the current user's profile using `getProfile` and initializes the state with the user's medications. If no medications are available, it displays a message prompting the user to add medications. 
+1. **Point Selection**: The application first prompts the user to select points on a path, which can overlap. This is facilitated by the `PointSelectionApp` class.
+2. **Speed Adjustment**: After point selection, a second GUI window opens using the `SliderApp` class, allowing users to set speed values corresponding to the selected points.
+3. **Data Processing**: The selected path points and speed values are extracted and converted into NumPy arrays for further processing.
+4. **3D Spline Creation**: A 3D spline is generated using the `Spline3D` class, which takes the selected points and speed values as input.
+5. **Visualization and Saving**: The 3D spline is plotted, and the user is prompted to name the model, which is then saved for future use.
 
-The component features a navigation bar and displays a list of medications, allowing users to select a medication to view more details. Each medication is represented as an object containing attributes such as name, dosage, and notes. Users can delete a medication from their profile, which updates the state and alerts the user of the change.
+Overall, the application integrates point selection, speed adjustment, 3D spline creation, and data saving functionalities in a user-friendly manner.
 
-The layout consists of a left column displaying the medication list and a right column showing detailed information about the selected medication. The component utilizes FontAwesome icons for visual elements and includes internationalization support through the `CurLang` function.
 
+=== PointSelection.py ===
 
-=== medibase/app/src/api-calls/drugDatabase.js ===
+The provided code defines a `PointSelectionApp` class using the Tkinter library in Python, which creates a graphical user interface (GUI) for selecting points on a canvas. The application features a 1000x1000 pixel canvas with labeled X and Y axes. Users can click on the canvas to add points, which are displayed as small circles, and their coordinates are listed in a scrollable listbox. 
 
-The provided code defines an asynchronous function, `MakeDINRequests`, which retrieves drug information from the Health Canada API based on a Drug Identification Number (DIN) provided in the input array. The function initializes a response object with patient and prescription details, including the patient's name, prescribed date, doctor's name, DIN, quantity dispensed, instructions, and warnings.
+Key functionalities include:
+- **Point Addition**: Clicking on the canvas records the point's coordinates, scales them, and displays them in the listbox.
+- **Cursor Tracking**: As the mouse moves, dashed lines follow the cursor, and the current coordinates are shown in the window title.
+- **Point Management**: Users can clear all points or finalize their selection with dedicated buttons. The `clear_points` method resets the canvas and listbox, while `finalize_points` closes the application.
+- **Coordinate Handling**: The application includes methods to manage a scaling factor and to return the list of points with flipped Y-coordinates for traditional use.
 
-The function then constructs API requests to gather detailed information about the drug associated with the provided DIN. It first checks if the DIN exists and retrieves basic drug details such as drug code, class name, company name, brand name, descriptor, and number of active ingredients. If the DIN is not found, it updates the response object with an error message.
+The app is initiated by creating a Tkinter root window and running the main event loop.
 
-Subsequent API calls fetch the drug's dosage form, route of administration, and active ingredients, which are formatted into an array of objects containing ingredient names and strengths. Each API call is wrapped in a `then` method to handle successful responses and a `catch` method to log errors. Finally, the function logs the complete response object and returns it.
 
+=== TimeAdjustment.py ===
 
-=== medibase/app/public/index.html ===
+The provided code defines a `SliderApp` class using Tkinter, which creates a graphical user interface (GUI) featuring a slider for selecting time intervals between points. The app initializes with a specified length effect and a list of points. Key components include:
 
-The provided HTML document outlines the structure of a web application named "MediBase," which serves as a medication assistant for individuals with visual impairments, language barriers, or memory issues. Key elements include:
+1. **Initialization**: The constructor sets up the root window, calculates intervals based on the given length effect, and configures the slider and label.
 
-- **Meta Tags**: These define the character set, viewport settings, theme color, and a description of the application.
-- **Icons and Manifest**: Links to favicon and an application manifest for mobile and desktop installation.
-- **JavaScript Requirements**: A note indicating that JavaScript must be enabled for the app to function, along with scripts for React, ReactDOM, and React-Bootstrap.
-- **Development Instructions**: Comments provide guidance on starting the development server and building the production bundle.
+2. **Interval Calculation**: The `calculate_intervals` method computes the intervals based on the length effect and the number of points.
 
-Overall, the document serves as a template for the MediBase application, ensuring proper functionality and accessibility for users.
+3. **Slider Setup**: The `setup_slider` method initializes a custom slider widget with properties such as width, height, and value display. It also sets a callback for value changes.
 
+4. **Label Setup**: The `setup_label` method creates a label to instruct users about the function of the slider.
 
-=== medibase/app/src/tools.js ===
+5. **Value Change Handling**: The `on_value_change` method is a placeholder for actions to be taken when the slider's value changes.
 
-The provided code defines a set of functions and components for managing user profiles, medication reminders, and text translation within a web application. Key functionalities include:
+6. **Finalization**: The `finalize_points` method is called when the user clicks the "Done" button, closing the application.
 
-1. **Profile Management**: 
-   - `getProfile()`: Retrieves the user's profile from cookies, creating a new profile if none exists.
-   - `setProfile(profile)`: Saves the user's profile to cookies.
-   - `newProfile()`: Initializes a default user profile with example data.
+The application runs within a Tkinter main loop, and upon closing, it prints the selected slider values. This setup allows users to visually adjust intervals between specified points in a user-friendly manner.
 
-2. **Medication Notifications**: 
-   - `check()`: Checks the current date against the last date medications were taken. If a medication needs to be taken and hasn't been recorded for the current date, it triggers a notification using `Notifier`.
 
-3. **Text Translation**:
-   - `toLang(text, lang)`: Translates a given text into the specified language, caching translations in cookies to avoid redundant API calls.
-   - `toCurLang(text)`: Translates text to the user's current language as specified in their profile.
+=== Spline3D.py ===
 
-4. **React Components**:
-   - `Lang`: A functional component that translates text and updates the displayed text if the translation changes.
-   - `CurLang`: A wrapper component that retrieves the user's language from their profile and uses the `Lang` component to display translated text.
+The provided code defines a `Spline3D` class for creating and manipulating 3D cubic spline interpolations based on given x, y, and z coordinates. The class includes methods for initializing spline data, plotting the 3D spline, finding corresponding x and y values for a given z value, saving and loading spline data to and from JSON files, and generating unique model names based on the current timestamp.
 
-Overall, the code integrates user profile management, medication reminders, and language translation in a cohesive manner, facilitating a personalized user experience.
+Key functionalities include:
+- **Initialization**: Accepts x, y, and z points to create cubic splines for each dimension.
+- **3D Plotting**: Uses Matplotlib to visualize the spline in 3D.
+- **Finding Coordinates**: Provides a method to retrieve x and y coordinates for a specified z value using optimization.
+- **Data Management**: Allows saving the spline data to a JSON file and loading it back, with checks for existing files and necessary directory creation.
+- **Example Usage**: The main block demonstrates creating a spline from predefined path and speed points, plotting it, and saving the model.
 
+The code is structured to handle potential errors, such as permission issues when creating directories, and prompts the user before overwriting existing files.
 
-=== medibase/app/src/profile.css ===
 
-The provided CSS code defines the styling for a web page, focusing on elements such as scrollbars, navigation bars, and profile content. Key features include:
+=== example.py ===
 
-1. **Custom Scrollbar**: The scrollbar is styled with specific dimensions, colors, and hover effects for better aesthetics.
+The provided code snippet is a Python script that utilizes the `moviepy` library and other modules to create a video from a static image with dynamic movement effects. Key components include:
 
-2. **CSS Variables**: Color variables (`--lblue`, `--lbluet`, `--dblue`) are defined for consistent theming throughout the page.
+1. **Setup Parameters**: The script defines parameters such as frame rate (60 fps), clip duration (7 seconds), resolution (1080x1920), video name ("test2"), image path ("images/corgi.jpg"), movement data file ("mapling_models/spline_data_loop.json"), and save folder ("finishedVideos"). An upscale factor of 1.5 is also specified to ensure the image is resized appropriately.
 
-3. **Typography**: The font used is 'Varela Round', applied universally across elements, with specific styles for links and headings.
+2. **Image Resizing**: The script reads the specified image, calculates the new dimensions based on the upscale factor and the specified resolution, and resizes the image using OpenCV.
 
-4. **Navigation Bar**: The navbar is positioned at the top, featuring a shadow effect and responsive hover states for links, which change background size and color.
+3. **Dynamic Video Creation**: A temporary resized image is saved, and a `DynamicPositionClip` object is created to handle the video generation. The movement model is loaded from the specified JSON file, and a composite video is generated using the resized image and the defined movement.
 
-5. **Profile Content**: The main profile area is designed with a background image, flexible inner content, and structured layout for displaying information like medication lists and profile details.
+4. **Output**: The final video is written to the specified output path as an MP4 file, and the temporary image file is deleted after the video is created.
 
-6. **Responsive Design**: Flexbox is utilized for layout management, ensuring elements adjust appropriately to different screen sizes.
+Overall, the script automates the process of creating a dynamic video from a still image, incorporating specified movement patterns and ensuring the output meets defined resolution standards.
 
-7. **Interactive Elements**: Buttons and list items include hover effects to enhance user interaction, with visual feedback provided through color changes.
 
-Overall, the CSS is structured to create a visually appealing and user-friendly interface, with a focus on navigation and content presentation.
+=== license.txt ===
+
+The copyright notice from Kevin Z Wong grants permission to use, copy, modify, merge, publish, distribute, sublicense, and sell the software and its documentation without restriction. However, it requires that the copyright and permission notices be included in all copies or substantial portions of the software. The software is provided "as is," without any warranties, and the authors are not liable for any claims or damages related to its use.
+
+
+=== mapling_models/spline_data_loop.json ===
+
+The provided data consists of three sets of values: x_values, y_values, and z_values. The x_values range from 7 to 991, indicating a diverse set of inputs. The corresponding y_values range from -1 to 900, showing a significant variation in output. The z_values, which appear to represent a calculated or derived metric, range from 0.0 to 10.0, with incremental increases. This structured dataset could be utilized for analysis or modeling, highlighting relationships between the x, y, and z variables.
+
+
+=== PathCreator.py ===
+
+The provided code snippet is a Python script that utilizes the Tkinter library for graphical user interface (GUI) elements and other libraries for numerical computations and plotting. The script begins by prompting the user to select points that represent a path for an image, allowing for overlapping lines. It initializes a GUI for point selection using the `PointSelectionApp` class, and upon selection, it retrieves the points.
+
+Next, the script initializes another GUI using the `SliderApp` class to gather speed values corresponding to the selected path points. It extracts the x and y coordinates from the selected points and converts them into NumPy arrays, along with the speed values.
+
+The script then creates a 3D spline using the `Spline3D` class with the gathered x, y, and speed data, and it plots the 3D spline. Finally, it prompts the user to enter a name for the model and saves the spline data under that name.
+
+
+=== Mapling.py ===
+
+The provided code is a Python script that utilizes the EasyGUI library for user input and the MoviePy library for video creation. It prompts the user to enter video settings such as frame rate, clip duration, resolution, video name, and upscale factor. After validating the inputs, it retrieves an image file and a mapping model file, as well as a folder for saving the output video.
+
+The script calculates the new dimensions for the image based on the specified upscale factor and resolution. It uses OpenCV to resize the image and saves it temporarily. A `DynamicPositionClip` is created to generate a video with dynamic movement based on the loaded mapping model. Finally, the composite video is saved in the specified folder, and the temporary image file is deleted.
+
+
+=== DynamicEffects.py ===
+
+The provided code defines a class `DynamicPositionClip` that creates a video with a dynamically positioned image based on a movement model. The class initializes with parameters for framerate, background width, and height. The `dynamicPosition` method calculates the position of the image at a given time `t`, scaling the movement values to fit within the video frame while ensuring the image remains within the boundaries.
+
+The `generate_video` method takes an image path, clip duration, movement model, and an optional output path. It creates an `ImageClip` from the image, sets its duration, and generates a background color clip. The image's position is updated dynamically using the `dynamicPosition` method, and both clips are combined into a `CompositeVideoClip`.
+
+In the main execution block, the script sets parameters such as framerate, clip duration, image path, and background dimensions. It loads movement data from a JSON file into a `Spline3D` model and generates the video, which is then saved to the specified output path.
+
+
+=== requirements.txt ===
+
+The provided text lists specific Python package dependencies along with their respective versions. The packages include:
+
+- **easygui** (0.98.3): A simple GUI toolkit for Python.
+- **fonttools** (4.47.0): A library for manipulating fonts.
+- **imageio** (2.33.1): A library for reading and writing image data.
+- **imageio-ffmpeg** (0.4.9): A plugin for reading and writing video files.
+- **matplotlib** (3.8.2): A plotting library for creating static, animated, and interactive visualizations.
+- **moviepy** (1.0.3): A library for video editing.
+- **numpy** (1.26.2): A fundamental package for numerical computing in Python.
+- **opencv-python** (4.8.1.78): A library for computer vision tasks.
+- **scipy** (1.11.4): A library for scientific and technical computing.
+- **tqdm** (4.66.1): A library for creating progress bars in Python applications.
+
+These packages are essential for various tasks, including image and video processing, numerical analysis, and data visualization.
+
+
+=== example.py ===
+
+The provided code snippet demonstrates a process for creating a video from an image using the MoviePy library and OpenCV. The script sets parameters such as frame rate, clip duration, resolution, and upscale factor. It reads an image, resizes it based on the specified resolution and upscale factor, and saves the resized image temporarily. A dynamic video clip is generated using a movement model loaded from a JSON file, which dictates the image's movement throughout the video. Finally, the composite video is saved in the specified output folder, and the temporary image file is deleted. Key components include the use of `ImageClip` from MoviePy, `DynamicPositionClip` for movement, and `Spline3D` for loading movement data.
+
+
+=== Spline3D.py ===
+
+The provided code defines a Python class, `Spline3D`, which facilitates the creation and manipulation of 3D cubic spline interpolations based on given x, y, and z points. The class includes methods for initializing spline data, plotting the spline in 3D, finding corresponding x and y values for a given z value, generating unique model names, saving spline data to a JSON file, and loading data from a JSON file.
+
+Key functionalities include:
+- **Initialization**: Accepts x, y, and z points to create cubic splines for each dimension.
+- **3D Plotting**: Visualizes the spline using Matplotlib's 3D plotting capabilities.
+- **Finding Coordinates**: Allows users to retrieve x and y coordinates for a specified z value using optimization.
+- **Data Management**: Supports saving and loading of spline data in JSON format, with checks for file existence and directory creation.
+
+In the main execution block, the class is instantiated with predefined path and speed points, the spline is plotted, and users are prompted to name and save the model. The code also contains commented-out sections for further functionality, such as retrieving coordinates for a specific z value.
+
+
+=== PointSelection.py ===
+
+The provided code implements a graphical user interface (GUI) for point selection using the Tkinter library in Python. The `PointSelectionApp` class initializes a canvas where users can click to select points, which are displayed in a list. Key features include:
+
+1. **Canvas Setup**: The canvas is set to 1000x1000 pixels, with labeled axes for X and Y.
+2. **Point Selection**: Users can click on the canvas to add points, which are stored in a list and displayed in a listbox. Each point is marked with a small circle, and its coordinates are shown next to it.
+3. **Cursor Tracking**: Vertical and horizontal dashed lines follow the mouse cursor, updating in real-time as the mouse moves.
+4. **Point Management**: Users can clear all selected points or finalize their selection with buttons provided in the interface.
+5. **Coordinate Scaling**: The application allows for a scaling factor for point coordinates, which can be adjusted if needed.
+
+The program concludes by creating a main window and running the Tkinter event loop. This setup allows for interactive point selection and management within a user-friendly GUI.
+
+
+=== tkSliderWidget.py ===
+
+The Mapling project incorporates a Tkinter widget created by Mengxun Li, designed for graphical user interface applications. The main component is a `Slider` class that extends the `Frame` class from Tkinter, allowing users to create a customizable slider interface. Key features include adjustable parameters for width, height, minimum and maximum values, and step size. The slider can display values and supports multiple bars, which represent different values on the slider.
+
+The `Slider` class includes methods for initializing the slider, handling mouse events for moving bars, and calculating positions based on user interaction. It also provides a callback mechanism to notify when values change. The visual elements consist of a track line and circular bars, with customizable colors and dimensions.
+
+The code includes commented-out sections for adding and removing bars, indicating potential future functionality. Overall, this implementation allows for a flexible and interactive slider component suitable for various applications. More information is available on the project's GitHub page.
+
+
+=== README.md ===
+
+**Mapling Overview**
+
+Mapling is a video animation tool that transforms static images into dynamic videos using customizable pan movements. It enhances images by upscaling them to 150% of the final video resolution and animates their position at 60 frames per second, based on a user-defined 3D spline graph that allows for smooth movement customization.
+
+**Key Features:**
+- **Customizable Movement:** Users can create unique movement paths by setting points on a spline graph, adjusting speed, and defining time intervals for image transitions.
+- **User-Friendly Interface:** The tool includes a GUI for selecting movement paths and adjusting parameters, making it accessible for users without extensive technical knowledge.
+
+**Installation Requirements:**
+- Python 3.7 or higher
+- Pip
+- A virtual environment (recommended)
+
+**Installation Steps:**
+1. Clone the repository and navigate to the directory.
+2. Install required packages using `pip install -r requirements.txt`.
+
+**Usage Instructions:**
+1. **Run Example:** Execute `examples.py` to generate a sample video named `test2.mp4`.
+2. **Create Custom Paths:** Use `PathCreator.py` to design movement paths through a GUI, allowing for adjustments in speed and direction.
+3. **Preview and Save Models:** After finalizing paths, users can preview in 3D and save models in the `mapling_models` folder.
+4. **Animate Images:** Run `Mapling.py` to set video parameters, select images and models, and save the final video in the `finishedVideos` folder.
+
+Mapling provides a comprehensive and customizable approach to creating animated videos from images, suitable for various creative projects.
+
+
+=== TimeAdjustment.py ===
+
+The provided code defines a `SliderApp` class using the Tkinter library to create a graphical user interface (GUI) for selecting time intervals between points. The class takes a root window, a length effect, and a list of points as input. 
+
+Key components of the application include:
+
+1. **Initialization**: The constructor initializes the app, calculates intervals based on the given length effect and points, and sets up the slider and label. A "Done" button is also created to finalize the selection.
+
+2. **Interval Calculation**: The `calculate_intervals` method computes the intervals based on the length effect divided by the number of points.
+
+3. **Slider Setup**: The `setup_slider` method creates a slider widget that allows users to adjust values, with properties such as width, height, and value display. It also sets a callback for value changes.
+
+4. **Label Setup**: The `setup_label` method creates a label that provides instructions to the user.
+
+5. **Value Change Handling**: The `on_value_change` method is defined to handle changes in slider values, although it currently does not implement any functionality.
+
+6. **Finalization**: The `finalize_points` method is called when the "Done" button is pressed, which closes the application.
+
+The application is executed in the main block, where a Tkinter window is created, and an instance of `SliderApp` is launched. After the GUI is closed, it prints the selected slider values.
+
+Overall, this code provides a simple interface for users to adjust and finalize time intervals between specified points.
+
+
+=== mapling_models/spline_data_hook.json ===
+
+The provided data consists of three sets of values: x_values, y_values, and z_values. 
+
+- **x_values**: [4, 193, 280, 519, 855, 803, 463]
+- **y_values**: [3, 287, 670, 955, 823, 513, 397]
+- **z_values**: [0.0, 2.42, 5.24, 7.63, 8.45, 9.16, 10.0]
+
+These values appear to represent a relationship among three variables, with x_values and y_values likely indicating two dimensions of data, while z_values may represent a third dimension or a calculated metric based on the other two. The z_values increase progressively, suggesting a potential correlation with the x and y values.
+
+
+=== license.txt ===
+
+The copyright notice by Kevin Z Wong grants permission for individuals to use, copy, modify, merge, publish, distribute, sublicense, and sell the software and its documentation without restrictions. However, this permission is contingent upon including the copyright and permission notices in all copies or significant portions of the software. The software is provided "as is," without any warranties, and the authors are not liable for any claims or damages arising from its use.
+
+
+=== DynamicEffects.py ===
+
+The provided code defines a `DynamicPositionClip` class for creating a video where an image moves dynamically within a specified frame size. The class initializes with a framerate and background dimensions. The `dynamicPosition` method calculates the image's position based on a movement model over time, scaling the movement to fit within the frame boundaries while adjusting for the image's size. The `generate_video` method creates a video clip by overlaying the image on a black background, setting its position using the movement model, and returning a composite video clip. In the main block, the class is instantiated with specific parameters, a movement model is loaded from a JSON file, and the video is generated and saved to a specified output path.
+
+
+=== requirements.txt ===
+
+The provided text lists specific versions of various Python packages commonly used for data visualization, image processing, and scientific computing. The packages include:
+
+- **easygui (0.98.3)**: A simple GUI toolkit for Python.
+- **fonttools (4.47.0)**: A library for manipulating fonts.
+- **imageio (2.33.1)**: A library for reading and writing image data.
+- **imageio-ffmpeg (0.4.9)**: A plugin for imageio to handle video files.
+- **matplotlib (3.8.2)**: A plotting library for creating static, animated, and interactive visualizations.
+- **moviepy (1.0.3)**: A library for video editing.
+- **numpy (1.26.2)**: A fundamental package for numerical computing in Python.
+- **opencv-python (4.8.1.78)**: A library for computer vision tasks.
+- **scipy (1.11.4)**: A library for scientific and technical computing.
+- **tqdm (4.66.1)**: A library for creating progress bars in Python applications.
+
+These packages are essential for developers working in fields such as data analysis, image processing, and machine learning.
+
+
+=== mapling_models/spline_data_loop.json ===
+
+The provided data consists of three sets of values: x_values, y_values, and z_values. 
+
+- **x_values**: This set includes integers [7, 317, 599, 678, 520, 325, 394, 648, 991].
+- **y_values**: Corresponding to the x_values, this set contains integers [-1, 113, 383, 715, 900, 800, 396, 212, 5].
+- **z_values**: This set features decimal values [0.0, 1.5, 3.66, 4.5, 4.89, 5.39, 6.29, 8.0, 10.0], which appear to be calculated based on the x_values or y_values.
+
+The data suggests a relationship among the three sets, potentially indicating trends or correlations that could be analyzed further.
+
+
+=== PointSelection.py ===
+
+The provided code implements a graphical user interface (GUI) for selecting points using the Tkinter library in Python. The `PointSelectionApp` class initializes a canvas where users can click to add points, which are displayed as small circles. The GUI includes labeled axes, a listbox to show the coordinates of selected points, and buttons to clear points or finalize the selection.
+
+Key features include:
+- **Canvas Setup**: A 1000x1000 pixel canvas with X and Y axis labels.
+- **Point Addition**: Clicking on the canvas adds a point, displaying its coordinates in a listbox and drawing it on the canvas.
+- **Cursor Tracking**: Vertical and horizontal dashed lines follow the cursor, updating the window title with the current coordinates.
+- **Point Management**: Users can clear all points or finalize their selection, which closes the application.
+
+The class also includes methods to manage the scaling factor for coordinate transformations and to retrieve the selected points. The application runs in a main loop, making it interactive and responsive to user inputs.
+
+
+=== example.py ===
+
+The provided code snippet is a Python script that utilizes the EasyGUI, MoviePy, OpenCV, and other libraries to create a dynamic video from a static image. The script sets parameters such as frame rate, clip duration, resolution, and image path. It calculates the necessary dimensions for the image based on the specified resolution and an upscale factor of 1.5 to ensure the image is sufficiently large.
+
+The image is read and resized using OpenCV, then temporarily saved as "temp.jpg." A `DynamicPositionClip` object is created to manage the video generation, and a movement model is loaded from a JSON file using the `Spline3D` class. The dynamic video is generated and saved as an MP4 file in the specified output folder. Finally, the temporary image file is deleted to clean up.
+
+
+=== PathCreator.py ===
+
+The provided code is a Python script that utilizes the Tkinter library for a graphical user interface (GUI) to select points representing a path for an image. The process begins by prompting the user to select points, which are then retrieved using the `PointSelectionApp`. If no points are selected, the program exits. 
+
+Following point selection, another GUI, `SliderApp`, allows the user to adjust speed values associated with the selected points. The script collects these speed values and organizes the selected path points into x and y coordinates, while speed values are stored in a z array.
+
+A 3D spline is created using the `Spline3D` class, which takes the x, y, and speed values as inputs. The script then plots the 3D spline and prompts the user to name the model before saving the data.
+
+
+=== Mapling.py ===
+
+The provided script is a Python program that utilizes the EasyGUI library for user input and the MoviePy library for video editing. It prompts the user to enter video settings, including frame rate, clip duration, resolution, video name, and upscale factor. The program checks for empty inputs and exits if any are found.
+
+After gathering the necessary inputs, the user is prompted to select an image file and a mapping model file. The script calculates the new dimensions for the image based on the specified upscale factor and resolution, resizing the image using OpenCV.
+
+A temporary resized image is saved, and a dynamic video clip is generated using the `DynamicPositionClip` class, which incorporates movement data from the mapping model. Finally, the composite video is saved to the specified output path, and the temporary image file is deleted. The overall process creates a video that features the input image with dynamic positioning based on the provided model.
+
+
+=== tkSliderWidget.py ===
+
+The Mapling project incorporates a Tkinter widget created by Mengxun Li, designed for graphical user interfaces. The core component is a `Slider` class, which extends the `Frame` class to create a customizable slider interface. Key features include:
+
+- **Initialization Parameters**: The slider can be configured with dimensions, value range, step size, and options for displaying values and adding/removing bars.
+- **Bar Management**: The slider supports multiple bars, each represented by a position and value. Users can interact with the slider to move these bars, with the option to restrict movement based on a specified step size.
+- **Event Handling**: The class includes methods for mouse motion and bar movement, enabling dynamic interaction. It also provides a callback mechanism to handle value changes.
+- **Graphical Representation**: The slider is visually represented using a canvas, where bars are drawn as ovals, and their values can be displayed above them.
+
+Overall, the `Slider` class offers a flexible and interactive way to manage multiple values within a defined range, making it suitable for applications requiring user input through graphical elements. For further details, the project is available on GitHub.
+
+
+=== mapling_models/spline_data_hook.json ===
+
+The provided data consists of three sets of values: x_values, y_values, and z_values. 
+
+- **x_values**: [4, 193, 280, 519, 855, 803, 463] 
+- **y_values**: [3, 287, 670, 955, 823, 513, 397] 
+- **z_values**: [0.0, 2.42, 5.24, 7.63, 8.45, 9.16, 10.0] 
+
+These values appear to represent three distinct variables, potentially for a dataset used in analysis or modeling. The x_values and y_values show a range of numerical data, while z_values indicate a progression or transformation of the data, likely reflecting a calculated metric or index based on the x and y values. Each set contains seven data points, suggesting a correlation or relationship among them that could be explored further.
+
+
+=== TimeAdjustment.py ===
+
+The provided code defines a `SliderApp` class using the Tkinter library to create a graphical user interface (GUI) that features a slider for selecting time intervals between points. The application initializes with a specified length effect and a list of points. Key components include:
+
+1. **Initialization**: The constructor sets up the root window, stores the given length effect and points list, and calculates intervals for the slider.
+
+2. **Interval Calculation**: The `calculate_intervals` method computes the intervals based on the length effect and the number of points.
+
+3. **Slider Setup**: The `setup_slider` method creates a slider widget with defined properties, including minimum and maximum values, and a callback function for value changes.
+
+4. **Label Setup**: The `setup_label` method adds a label to instruct users about the slider's purpose.
+
+5. **Value Change Handling**: The `on_value_change` method is a placeholder for actions to be taken when the slider values change.
+
+6. **Finalization**: The `finalize_points` method allows users to finalize their selections and closes the application.
+
+The main block creates an instance of `SliderApp`, sets the window title, and starts the Tkinter event loop. After the application closes, it prints the selected slider values.
+
+
+=== Spline3D.py ===
+
+The provided code defines a `Spline3D` class that facilitates the creation and manipulation of 3D cubic spline interpolations using given 3D points (x, y, z). Key functionalities include:
+
+1. **Initialization**: The class can be initialized with x, y, and z points, which are stored as numpy arrays. It also creates cubic spline interpolations for each dimension.
+
+2. **3D Plotting**: The `plot_3d_spline` method generates a 3D plot of the spline using Matplotlib.
+
+3. **Finding Coordinates**: The `find_t_for_z` method calculates the parameter `t` corresponding to a given z-value by minimizing the difference between the interpolated z-value and the input. The `get_x_y_for_z` method retrieves the corresponding x and y values for a specified z-value.
+
+4. **Data Management**: The class includes methods for saving and loading spline data to and from JSON files. The `save_data` method generates a unique filename based on the current time, checks for existing files, and prompts the user for overwriting if necessary.
+
+5. **Example Usage**: In the main block, the class is instantiated with predefined path and speed points, and the spline is plotted. The user is prompted to name the model for saving.
+
+Overall, the `Spline3D` class provides a comprehensive tool for creating and managing 3D spline models, including visualization and data persistence.
+
+
+=== README.md ===
+
+**Mapling Summary**
+
+Mapling is a video animation tool that transforms images into videos featuring customizable pan movements. It enhances images by upscaling them to 150% of the final video resolution and animates them by repositioning at a rate of 60 times per second, guided by a customizable 3D spline graph. Users can create unique movement paths by setting points on the graph, allowing for precise control over speed and direction.
+
+**Usage Instructions:**
+
+**Pre-requisites:**
+- Pip
+- Python 3.7+
+- Virtual Environment (recommended)
+
+**Installation Steps:**
+1. Clone the repository:  
+   `git clone https://github.com/KevinZWong/Mapling.git`  
+   `cd Mapling`  
+   `pip install -r requirements.txt`
+
+**Running an Example:**
+- Execute `examples.py` to generate a video named `test2.mp4` in the `finishedVideos` folder.
+
+**Creating Custom Movement Paths:**
+1. Run `PathCreator.py` and follow command line instructions.
+2. A GUI will appear for path selection; adjust points for desired movement.
+3. Finalize the path and set time intervals for speed adjustments.
+4. View a 3D model of the camera positions over time.
+5. Save the model in the `mapling_models` folder.
+
+**Using a Custom Mapling Model:**
+1. Execute `Mapling.py`.
+2. Set video parameters (framerate, duration, resolution, video name, upscale factor) via GUI.
+3. Select the image and the saved Mapling model.
+4. Choose the destination for the final video in the `finishedVideos` folder.
+
+Mapling offers a fully customizable experience for animating images, making it a versatile tool for video creators.
+
+
+=== license.txt ===
+
+The copyright notice from Kevin Z Wong grants permission to use, copy, modify, merge, publish, distribute, sublicense, and sell the software and its documentation without restrictions. However, this permission is contingent upon including the copyright and permission notice in all copies or significant portions of the software. The software is provided "as is," without any warranties, and the authors are not liable for any claims or damages related to its use.
+
+
+=== Mapling.py ===
+
+The provided code is a Python script that utilizes the EasyGUI library for user input and the MoviePy library for video processing. It prompts the user to enter video settings such as frame rate, clip duration, resolution, video name, and upscale factor. After validating the input, it allows the user to select an image file and a mapping model file, as well as a folder to save the final video.
+
+The script calculates the new dimensions for the image based on the specified upscale factor and resolution. It then resizes the image using OpenCV and saves it temporarily. A `DynamicPositionClip` object is created to generate a video with dynamic movements based on the loaded mapping model. Finally, the video is saved to the specified output path, and the temporary image file is deleted.
+
+
+=== PathCreator.py ===
+
+The provided code snippet outlines a graphical user interface (GUI) application using Tkinter for selecting points that define a path for an image. The process begins by prompting the user to select points, which are then retrieved by the `PointSelectionApp`. If points are selected, the application proceeds to a second GUI, `SliderApp`, where the user can adjust speed values associated with the selected path points.
+
+Once the speed values are obtained, the code extracts the x and y coordinates from the selected points and combines them with the speed values to create a 3D spline using the `Spline3D` class. The 3D spline is then visualized with a plot, and the user is prompted to name the model before saving the data. If no points are selected initially, the program exits.
+
+
+=== mapling_models/spline_data_hook.json ===
+
+The provided data consists of three sets of values: x_values, y_values, and z_values. 
+
+- **x_values**: [4, 193, 280, 519, 855, 803, 463]
+- **y_values**: [3, 287, 670, 955, 823, 513, 397]
+- **z_values**: [0.0, 2.42, 5.24, 7.63, 8.45, 9.16, 10.0]
+
+These values appear to represent a dataset where x_values and y_values could denote independent and dependent variables, respectively, while z_values may indicate a calculated metric or index related to the x and y values. The z_values increase progressively, suggesting a potential correlation with the x and y values.
+
+
+=== TimeAdjustment.py ===
+
+The provided code defines a `SliderApp` class using the Tkinter library to create a graphical user interface (GUI) that incorporates a slider widget for selecting time intervals between points. The application initializes with a specified length effect and a list of points. Key functionalities include:
+
+1. **Interval Calculation**: The `calculate_intervals` method computes the intervals based on the provided length effect and the number of points.
+
+2. **Slider Setup**: The `setup_slider` method creates a slider with adjustable values, allowing users to modify intervals interactively. It includes a callback for value changes.
+
+3. **Label Setup**: The `setup_label` method displays instructions for the user regarding the purpose of the slider.
+
+4. **Finalization**: A "Done" button allows users to finalize their selections, triggering the `finalize_points` method, which closes the application.
+
+5. **Value Retrieval**: The `get_slider_values` method retrieves the current values from the slider.
+
+The application is executed in the main block, where a Tkinter window is created, and an instance of `SliderApp` is initiated with specific parameters. Upon closing the window, the selected slider values are printed.
+
+
+=== DynamicEffects.py ===
+
+The provided code defines a class `DynamicPositionClip` that facilitates the creation of a video clip with dynamic positioning of an image based on a movement model. The class constructor initializes the frame rate and dimensions of the background. 
+
+The `dynamicPosition` method calculates the position of the image at a given time `t`, using a movement model to derive x and y coordinates, which are then scaled to fit within the frame boundaries. The y-coordinate is inverted to align with the coordinate system used in video editing.
+
+The `generate_video` method creates a video clip from a specified image, setting its position dynamically based on the movement model over a defined duration. It combines the image clip with a black background using `CompositeVideoClip`.
+
+In the main execution block, the script sets parameters such as frame rate, clip duration, and background dimensions, loads a movement model from a JSON file, and generates the video, which is then saved to a specified output path.
+
+
+=== tkSliderWidget.py ===
+
+The Mapling project utilizes a Tkinter widget created by Mengxun Li, which can be found on GitHub. The core component of the project is the `Slider` class, designed to create a customizable slider interface within a Tkinter application. 
+
+Key features of the `Slider` class include:
+- Customizable dimensions, value range, and step size for the slider.
+- The ability to display values associated with slider positions.
+- Support for multiple bars on the slider, each represented by a position and value.
+- Mouse event handling for moving and selecting bars, with visual feedback through cursor changes.
+
+The class includes methods for initializing the slider, adding and moving bars, calculating positions based on mouse coordinates, and checking for selections. It also provides a callback mechanism to handle value changes dynamically. The slider's appearance is defined by various color and size constants, ensuring a visually appealing interface. 
+
+Overall, the `Slider` class is a versatile tool for creating interactive sliders in Python applications using Tkinter.
+
+
+=== requirements.txt ===
+
+The provided text lists specific versions of various Python libraries, which are essential for tasks involving graphical user interfaces, image processing, numerical computations, and data visualization. The libraries include:
+
+- **easygui (0.98.3)**: For creating simple GUIs.
+- **fonttools (4.47.0)**: For font manipulation.
+- **imageio (2.33.1)**: For reading and writing image data.
+- **imageio-ffmpeg (0.4.9)**: For handling video files.
+- **matplotlib (3.8.2)**: For plotting and visualizing data.
+- **moviepy (1.0.3)**: For video editing.
+- **numpy (1.26.2)**: For numerical operations.
+- **opencv-python (4.8.1.78)**: For computer vision tasks.
+- **scipy (1.11.4)**: For scientific and technical computing.
+- **tqdm (4.66.1)**: For progress bars in loops.
+
+These libraries collectively support a wide range of applications in data science, image processing, and multimedia editing.
+
+
+=== mapling_models/spline_data_loop.json ===
+
+The provided data consists of three sets of values: x_values, y_values, and z_values. 
+
+- **x_values**: A list of integers representing independent variable data points: [7, 317, 599, 678, 520, 325, 394, 648, 991].
+- **y_values**: Corresponding dependent variable data points, which are integers: [-1, 113, 383, 715, 900, 800, 396, 212, 5].
+- **z_values**: A set of floating-point numbers that likely represent a calculated metric or transformation of the x and y values: [0.0, 1.5, 3.66, 4.5, 4.89, 5.39, 6.29, 8.0, 10.0].
+
+This data could be used for analysis or modeling, possibly indicating relationships between the x and y values, with z serving as an additional variable or metric.
+
+
+=== Spline3D.py ===
+
+The provided code defines a `Spline3D` class for creating and manipulating 3D cubic splines using given x, y, and z points. Key functionalities include:
+
+1. **Initialization**: The class can be initialized with x, y, and z points, which are converted into numpy arrays. If no points are provided, it can load data from a JSON file.
+
+2. **Interpolation**: It uses `CubicSpline` from SciPy to create smooth interpolations for x, y, and z based on a parameter `t`.
+
+3. **3D Plotting**: The `plot_3d_spline` method visualizes the spline in a 3D plot using Matplotlib.
+
+4. **Finding Coordinates**: The method `get_x_y_for_z` allows users to find corresponding x and y values for a given z input by minimizing the difference between the interpolated z value and the input.
+
+5. **Data Management**: The class includes methods for saving the spline data to a JSON file and loading it back. It generates a unique filename based on the current timestamp and handles potential file overwrite scenarios.
+
+6. **Example Usage**: In the main block, the class is instantiated with predefined path and speed points, the spline is plotted, and the user is prompted to save the model.
+
+Overall, this code provides a structured approach to creating and managing 3D splines, with functionalities for visualization and data persistence.
+
+
+=== example.py ===
+
+The provided code is a Python script that utilizes the EasyGUI, MoviePy, OpenCV, and custom modules to create a dynamic video from a single image. Key components include:
+
+1. **Configuration**: The script sets parameters such as frame rate (60 fps), clip duration (7 seconds), resolution (1080x1920), video name ("test2"), image path ("images/corgi.jpg"), and movement data file ("mapling_models/spline_data_loop.json"). It also specifies a save folder for the output video.
+
+2. **Image Resizing**: The script reads the specified image and calculates new dimensions based on the desired resolution and an upscale factor of 1.5. It ensures the image is resized appropriately while maintaining its aspect ratio.
+
+3. **Dynamic Video Generation**: A temporary resized image is saved, and a `DynamicPositionClip` object is created to generate a video using the resized image and movement data loaded from the JSON file. 
+
+4. **Output**: The final video is written to the specified output path in MP4 format at the defined frame rate. After the video is created, the temporary image file is deleted to clean up.
+
+Overall, the script effectively combines image processing and video editing to produce a visually dynamic output based on predefined parameters and movement data.
+
+
+=== README.md ===
+
+Mapling is a video animation tool that transforms images into videos with customizable pan movements. It upscales images to 150% of the final video's resolution and animates them by repositioning the image 60 times per second along a user-defined 3D spline graph, allowing for smooth and personalized movement paths.
+
+### Key Features:
+- **Customizable Movement:** Users can create unique movement paths by setting points on a spline graph, adjusting speed, and determining time intervals between movements.
+- **User Interface:** A graphical user interface (GUI) assists in selecting and finalizing movement paths, including options for acceleration and the arrangement of movement points.
+- **3D Model Preview:** Users can visualize camera positions over time before finalizing their movement paths.
+
+### Usage Instructions:
+1. **Pre-requisites:** Requires Python 3.7+, pip, and a virtual environment.
+2. **Installation:** Clone the repository and install dependencies via pip.
+3. **Example Execution:** Run `examples.py` to generate a sample video.
+
+### Custom Movement Path Creation:
+- Run `PathCreator.py` to design movement paths using the GUI.
+- Adjust time intervals for speed control and save models in the `mapling_models` folder.
+
+### Final Video Creation:
+- Execute `Mapling.py` to set video parameters through a GUI, including framerate, duration, and resolution.
+- Select an image and a saved model, then finalize the video output to the `finishedVideos` folder.
+
+Mapling offers a comprehensive and customizable solution for animating images into engaging videos.
+
+
+=== PointSelection.py ===
+
+The provided code implements a graphical user interface (GUI) for selecting points using the Tkinter library in Python. The `PointSelectionApp` class initializes a canvas for point selection, complete with labeled axes and mouse event bindings for adding points and updating cursor lines. Key features include:
+
+- **Canvas Setup**: A white canvas of 1000x1000 pixels is created, with X and Y axis labels.
+- **Point Addition**: Users can click on the canvas to add points, which are stored in a list and displayed in a listbox. Each point is marked with a small circle and labeled with its index.
+- **Cursor Tracking**: Vertical and horizontal dashed lines follow the mouse cursor, updating in real-time as it moves across the canvas.
+- **Point Management**: The GUI includes buttons to clear all points and finalize the selection, with the option to retrieve the selected points later.
+- **Scaling Factor**: The application allows for a scaling factor to adjust the coordinates of the points based on the canvas size.
+
+Overall, this application facilitates interactive point selection and visualization, making it suitable for various graphical tasks.
+
+
+=== license.txt ===
+
+The copyright notice from Kevin Z Wong grants permission to use, copy, modify, merge, publish, distribute, sublicense, and sell the associated software without restriction. Users must include the copyright and permission notice in all copies or significant portions of the software. The software is provided "as is," without any warranties, and the authors are not liable for any claims or damages related to its use.
+
+
+=== DynamicEffects.py ===
+
+The provided code defines a class `DynamicPositionClip` that creates a video clip with an image moving dynamically based on a specified movement model. The class initializes with a framerate and background dimensions. The `dynamicPosition` method calculates the image's position at any given time `t` using the movement model, ensuring the image stays within the frame's boundaries by scaling its position values accordingly. 
+
+The `generate_video` method takes an image path, clip duration, movement model, and an optional output path to create a video. It generates a background color clip and sets the image's position dynamically using the previously defined method. The main section of the code initializes parameters, loads a movement model from a JSON file, and generates the video, which is then saved to the specified output path. 
+
+Overall, this code allows for the creation of a video where an image moves according to a predefined path, enhancing visual storytelling through dynamic positioning.
+
+
+=== PathCreator.py ===
+
+The provided code outlines a process for selecting points that represent a path for an image and adjusting the speed of movement along that path using a graphical user interface (GUI) built with Tkinter. 
+
+1. **Point Selection**: The user is prompted to select points that define a path. This is handled by the `PointSelectionApp` class, and the selected points are stored in `path_points`.
+
+2. **Speed Adjustment**: After point selection, a second Tkinter window is opened using `SliderApp`, where the user can adjust speed values corresponding to the selected path points.
+
+3. **Data Preparation**: The code extracts x and y coordinates from `path_points` and combines them with the speed values to create arrays for further processing.
+
+4. **Spline Creation**: A 3D spline is generated using the `Spline3D` class, which takes the x, y, and speed values as inputs.
+
+5. **Visualization and Saving**: The 3D spline is plotted, and the user is prompted to enter a name to save the model data.
+
+Overall, the code facilitates point selection, speed adjustment, spline creation, visualization, and data saving in a structured manner.
+
+
+=== tkSliderWidget.py ===
+
+The Mapling project incorporates a Tkinter widget created by Mengxun Li, which is available on GitHub. The core component of this project is a `Slider` class that extends the Tkinter `Frame`. This class allows users to create a customizable slider interface with features such as adjustable step sizes, value display, and the ability to add or remove bars (though the add/remove functionality is commented out).
+
+Key attributes of the `Slider` class include:
+- **Visual Properties**: Customizable colors and dimensions for the slider and bars.
+- **Initialization Parameters**: Users can set minimum and maximum values, step sizes, and initial values for the bars.
+- **Event Handling**: The slider responds to mouse movements and clicks, enabling users to interactively adjust bar positions.
+
+The class maintains a list of bars, each represented by a dictionary containing its position and value. It includes methods for calculating positions, moving bars, and checking selections, ensuring an interactive experience. A callback function can be set to handle value changes, allowing for dynamic updates based on user interaction. 
+
+Overall, the `Slider` class provides a flexible and interactive way to visualize and manipulate numerical values within a graphical user interface.
+
+
+=== Mapling.py ===
+
+The provided script utilizes the EasyGUI library for user input and the MoviePy library for video processing. It prompts the user to enter video settings, including frame rate, clip duration, resolution, video name, and upscale factor. After validating the inputs, it allows the user to select an image file and a mapping model file, as well as a directory to save the output video.
+
+The script calculates the new dimensions for the image based on the specified upscale factor and resolution. It uses OpenCV to read and resize the image accordingly. A temporary resized image is saved, and a dynamic video clip is generated using the `DynamicPositionClip` class, which incorporates movement data from the selected model file. Finally, the composite video is written to the specified output path, and the temporary image file is deleted.
+
+
+=== mapling_models/spline_data_hook.json ===
+
+The data provided consists of three sets of values: x_values, y_values, and z_values. 
+
+- **x_values**: [4, 193, 280, 519, 855, 803, 463]
+- **y_values**: [3, 287, 670, 955, 823, 513, 397]
+- **z_values**: [0.0, 2.42, 5.24, 7.63, 8.45, 9.16, 10.0]
+
+These values appear to represent a relationship among three variables, with z_values indicating a progression or transformation based on the corresponding x and y values. The z_values increase steadily, suggesting a potential correlation with the x and y values.
+
+
+=== requirements.txt ===
+
+The provided text lists specific versions of various Python packages commonly used for data visualization, image processing, and multimedia applications. The packages include:
+
+- **easygui (0.98.3)**: A simple GUI toolkit for Python.
+- **fonttools (4.47.0)**: A library for manipulating fonts.
+- **imageio (2.33.1)**: A library for reading and writing images in various formats.
+- **imageio-ffmpeg (0.4.9)**: A plugin for imageio to read and write video files.
+- **matplotlib (3.8.2)**: A plotting library for creating static, animated, and interactive visualizations.
+- **moviepy (1.0.3)**: A library for video editing.
+- **numpy (1.26.2)**: A fundamental package for numerical computations in Python.
+- **opencv-python (4.8.1.78)**: A library for computer vision tasks.
+- **scipy (1.11.4)**: A library for scientific and technical computing.
+- **tqdm (4.66.1)**: A library for creating progress bars in Python applications.
+
+These packages are essential for developers working on projects involving graphics, video processing, and scientific computations.
+
+
+=== PointSelection.py ===
+
+The provided code implements a graphical user interface (GUI) for selecting points using the Tkinter library in Python. The `PointSelectionApp` class initializes a canvas where users can click to add points, which are displayed on the canvas and listed in a scrollable listbox. Key features include:
+
+1. **Canvas Setup**: A white canvas of 1000x1000 pixels is created, with X and Y axis labels.
+2. **Point Addition**: Users can click on the canvas to add points, which are stored in a list and displayed in the listbox. Each point is represented by a small circle, and its coordinates are shown next to it.
+3. **Cursor Tracking**: Vertical and horizontal dashed lines follow the cursor, updating in real-time as the mouse moves.
+4. **Point Management**: Users can clear all points with a button, which resets the canvas and listbox, or finalize their selection, which closes the application.
+5. **Coordinate Handling**: The application scales and flips Y-coordinates for display purposes, ensuring that the points are correctly represented on the canvas.
+
+Overall, this app facilitates interactive point selection and management in a simple and user-friendly manner.
+
+
+=== TimeAdjustment.py ===
+
+The provided code defines a `SliderApp` class using the Tkinter library to create a graphical user interface (GUI) that features a customizable slider. The application initializes with a specified length effect and a list of points, calculating intervals based on these inputs. Key components include:
+
+1. **Initialization**: The constructor sets up the root window, stores input parameters, and calls methods to calculate intervals, set up the slider, and create a label for instructions.
+
+2. **Interval Calculation**: The `calculate_intervals` method computes a list of intervals based on the given length effect and the number of points.
+
+3. **Slider Setup**: The `setup_slider` method creates a slider widget with adjustable values, allowing users to modify the intervals interactively.
+
+4. **Label Setup**: The `setup_label` method displays instructions for the user regarding the purpose of the slider.
+
+5. **Value Change Handling**: The `on_value_change` method is intended to handle changes in slider values, though it currently lacks implementation.
+
+6. **Finalization**: The `finalize_points` method is called when the user clicks the "Done" button, which closes the application.
+
+Finally, the application runs in a Tkinter main loop, and upon closure, it prints the current slider values. The app is designed to facilitate the selection of time intervals between points visually.
+
+
+=== Spline3D.py ===
+
+The provided code defines a `Spline3D` class for creating and manipulating 3D cubic spline interpolations based on given x, y, and z points. Key functionalities include:
+
+1. **Initialization**: The class can be initialized with x, y, and z points, which are converted into numpy arrays. If no points are provided, it allows for data loading later.
+
+2. **Interpolation**: The class uses `CubicSpline` from SciPy to create smooth interpolations for x, y, and z coordinates based on a parameter `t`, which is evenly spaced between 0 and 1.
+
+3. **3D Plotting**: The `plot_3d_spline` method generates a 3D plot of the spline using Matplotlib.
+
+4. **Finding Coordinates**: The method `get_x_y_for_z` allows users to find corresponding x and y values for a given z value by minimizing the difference between the interpolated z and the input z.
+
+5. **Data Management**: The class includes methods for saving the spline data to a JSON file and loading it back. It generates a unique filename based on the current timestamp and handles potential file overwrite scenarios.
+
+6. **Example Usage**: In the `__main__` section, the class is instantiated with predefined path and speed points, a 3D spline is plotted, and the user is prompted to name the model for saving.
+
+Overall, the `Spline3D` class provides a comprehensive framework for creating, visualizing, and managing 3D spline models.
+
+
+=== example.py ===
+
+The provided code snippet is a Python script that utilizes libraries such as EasyGUI, MoviePy, OpenCV, and custom modules to create a video from an image with dynamic positioning effects. Key components of the script include:
+
+1. **Configuration**: The script sets parameters like frame rate (60 fps), clip duration (7 seconds), resolution (1080x1920), video name ("test2"), image path ("images/corgi.jpg"), and movement data file ("mapling_models/spline_data_loop.json"). It also specifies a save folder for the output video.
+
+2. **Image Resizing**: The script calculates the necessary dimensions to upscale the image to at least 1.5 times the final resolution while maintaining its aspect ratio. It uses OpenCV to read and resize the image accordingly.
+
+3. **Dynamic Video Generation**: A temporary resized image is saved, and a `DynamicPositionClip` object is created to generate the video. The movement model is loaded from the specified JSON file using the `Spline3D` class.
+
+4. **Output**: The final video is created and saved as an MP4 file in the designated folder, and the temporary image file is deleted afterward.
+
+Overall, the script efficiently transforms a static image into a dynamic video by applying movement effects based on predefined spline data.
+
+
+=== mapling_models/spline_data_loop.json ===
+
+The provided data consists of three sets of values: x_values, y_values, and z_values. 
+
+- **x_values**: [7, 317, 599, 678, 520, 325, 394, 648, 991] 
+- **y_values**: [-1, 113, 383, 715, 900, 800, 396, 212, 5] 
+- **z_values**: [0.0, 1.5, 3.66, 4.5, 4.89, 5.39, 6.29, 8.0, 10.0] 
+
+These values represent numerical data that could be used for analysis or modeling, with x_values likely indicating independent variables, y_values representing dependent variables, and z_values possibly indicating a third variable or derived metric. The data spans a range of values, suggesting potential relationships or trends that could be explored further.
+
+
+=== README.md ===
+
+**Mapling Summary**
+
+Mapling is a video animation tool that transforms static images into dynamic videos by applying customizable pan movements. The software upscales images to 150% of the final video resolution and animates them at 60 frames per second using a customizable 3D spline graph, allowing users to define the image's movement path and speed.
+
+**Key Features:**
+- **Customizable Movement:** Users can create unique movement paths by setting points on a spline graph, adjusting the speed between points for varied motion effects.
+- **User Interface:** A graphical user interface (GUI) facilitates the selection and adjustment of movement paths, including options for acceleration and deceleration.
+- **3D Model Preview:** Users can visualize camera positions over time before finalizing their movement paths.
+
+**Installation and Usage:**
+- **Prerequisites:** Requires Python 3.7+, Pip, and a virtual environment.
+- **Installation Steps:** Clone the repository and install dependencies via pip.
+- **Example Execution:** Run `examples.py` to generate a sample video.
+
+**Creating Custom Movement Paths:**
+1. Execute `PathCreator.py` to design movement paths.
+2. Use the GUI to select and arrange movement points.
+3. Adjust time intervals for speed control.
+4. Preview the 3D model of the camera path.
+5. Save the model in the designated folder.
+
+**Using a Custom Mapling Model:**
+1. Run `Mapling.py`.
+2. Set video parameters (framerate, duration, resolution, etc.) through the GUI.
+3. Select the image and previously created Mapling model.
+4. Specify the output folder for the final video.
+
+Mapling offers a flexible and user-friendly approach to creating animated videos from images, making it suitable for various creative projects.
 
