@@ -24,7 +24,7 @@ async def process_and_feature_extract_files(chunks_dir, text_data_dir, summary_d
 
     # Process the data directory and get file information
     print("\nProcessing files into 10k token chunks...")
-    file_info = chunker.process_directory(str(text_data_dir))
+    file_info = chunker.process_directory(str(text_data_dir), chunks_dir=chunks_dir)
 
     total_tokens = 0
     total_size = 0
@@ -67,7 +67,7 @@ async def process_text_and_code():
     Main processing function for text and code analysis
     """
     # Set up directories
-    base_dir = Path("text_extract")
+    base_dir = Path("extract")
     text_data_dir = Path("text_data")
     code_data_dir = Path("code_data")
     chunks_dir = base_dir / "chunks"
@@ -103,6 +103,45 @@ async def process_text_and_code():
     await process_and_summarize_files(code_data_dir, summary_dir, summary_prompt)
     
     # load_docs("extract/summary", "current")
+
+
+async def process_text():
+    base_dir = Path("extract")
+    text_data_dir = Path("text_data")
+    chunks_dir = base_dir / "chunks"
+    summary_dir = base_dir / "summary"
+    for directory in [chunks_dir, summary_dir]:
+        directory.mkdir(parents=True, exist_ok=True)
+    feature_extraction_prompt = """You are an expert in extracting key information from text. Convert the input text into a series of short, clear statements.
+        Instructions:
+        - Extract key facts, insights, statistics, and details
+        - Write each piece of information as a single, clear statement
+        - Use bullet points for each statement
+        - Be concise and direct
+        - Include only factual information from the text
+        - Do not add any headers, introductions, or conclusions
+        - Do not add any meta-commentary or labels
+        - Do not group or categorize the information
+        - Do not repeat information
+        """
+    await process_and_feature_extract_files(chunks_dir, text_data_dir, summary_dir, feature_extraction_prompt)    
+
+async def process_code():
+    code_data_dir = Path("code_data")
+    base_dir = Path("extract")
+    chunks_dir = base_dir / "chunks"
+    summary_dir = base_dir / "summary"
+    for directory in [chunks_dir, summary_dir]:
+        directory.mkdir(parents=True, exist_ok=True)
+    summary_prompt = """You are an expert in summarizing and finding the purpose of code. Convert the input code into a concise summary.
+        Instructions:
+        - Write a summary of the input code
+        - Be concise and direct
+        - Include only factual information from the code
+        - Do not add any headers, introductions, or conclusions
+        - Do not add any meta-commentary or labels
+        """
+    await process_and_summarize_files(code_data_dir, summary_dir, summary_prompt)
 
 
 async def main():

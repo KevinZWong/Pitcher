@@ -8,6 +8,7 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 import io
 import pickle
+import shutil
 
 class DriveDownloader:
     def __init__(self):
@@ -110,10 +111,12 @@ class DriveDownloader:
             # Authenticate if not already done
             if not self.service:
                 self.authenticate()
-
+            # Empty the download path
+            if os.path.exists(download_path):
+                shutil.rmtree(download_path)
             # Extract folder ID from URL
             folder_id = self.extract_folder_id(folder_url)
-            
+            print("The folder_id is ", folder_id)
             # Create download directory if it doesn't exist
             os.makedirs(download_path, exist_ok=True)
             
@@ -132,7 +135,7 @@ class DriveDownloader:
             
             print(f"\nDownload complete! Successfully downloaded {successful_downloads} of {len(files)} files.")
 
-        except Exception as e:
+        except KeyError as e:
             print(f"An error occurred: {e}")
 
 def main():
