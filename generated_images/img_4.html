@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodMuse Technology Stack</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <script>
+        // Set up the SVG dimensions and margins
+        const width = 800;
+        const height = 600;
+        const margin = {top: 20, right: 20, bottom: 20, left: 20};
+        
+        // Create the SVG container
+        const svg = d3.select('body').append('svg')
+            .attr('width', width)
+            .attr('height', height);
+        
+        // Define the components of the technology stack
+        const components = [
+            {name: 'User Interface', x: 100, y: 100},
+            {name: 'NLP Algorithms', x: 400, y: 100},
+            {name: 'Music APIs', x: 250, y: 300}
+        ];
+        
+        // Create circles for each component
+        const circles = svg.selectAll('circle')
+            .data(components)
+            .enter()
+            .append('circle')
+            .attr('cx', d => d.x)
+            .attr('cy', d => d.y)
+            .attr('r', 30)
+            .attr('fill', '#69b3a2');
+        
+        // Add labels for each component
+        const labels = svg.selectAll('text')
+            .data(components)
+            .enter()
+            .append('text')
+            .attr('x', d => d.x)
+            .attr('y', d => d.y)
+            .attr('dy', '.35em')
+            .attr('text-anchor', 'middle')
+            .text(d => d.name);
+        
+        // Define links between components
+        const links = [
+            {source: components[0], target: components[1]},
+            {source: components[0], target: components[2]},
+            {source: components[1], target: components[2]}
+        ];
+        
+        // Create a line function for arrows
+        const line = d3.line()
+            .x(d => d.x)
+            .y(d => d.y);
+        
+        // Create arrows for each link
+        const arrows = svg.selectAll('path')
+            .data(links)
+            .enter()
+            .append('path')
+            .attr('d', d => line([d.source, d.target]))
+            .attr('fill', 'none')
+            .attr('stroke', '#ff6347')
+            .attr('stroke-width', 2);
+        
+        // Add markers to the end of each arrow
+        arrows.append('marker')
+            .attr('id', 'arrowhead')
+            .attr('viewBox', '0 0 10 10')
+            .attr('refX', 15)
+            .attr('refY', 5)
+            .attr('orient', 'auto')
+            .append('polygon')
+            .attr('points', '0 0, 10 5, 0 10')
+            .attr('fill', '#ff6347');
+        
+        // Update the arrow paths to use the marker
+        arrows.attr('marker-end', 'url(#arrowhead)');
+    </script>
+</body>
+</html>

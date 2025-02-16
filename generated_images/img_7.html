@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>MoodMuse User Journey Flowchart</title>
+</head>
+<body>
+
+<script>
+// Set the dimensions and margins for the SVG
+const margin = {top: 20, right: 30, bottom: 30, left: 40};
+const width = 800 - margin.left - margin.right;
+const height = 600 - margin.top - margin.bottom;
+
+// Create an SVG container
+const svg = d3.select('body').append('svg')
+    .attr('width', width + margin.left + margin.right)
+    .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+    .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+// Define the user journey steps
+const steps = [
+    { id: 'signup', label: 'Signup', x: 100, y: 50 },
+    { id: 'login', label: 'Login', x: 100, y: 150 },
+    { id: 'data_input', label: 'Input Data', x: 100, y: 250 },
+    { id: 'processing', label: 'Processing', x: 100, y: 350 },
+    { id: 'insights', label: 'AI Insights', x: 100, y: 450 },
+    { id: 'recommendations', label: 'Recommendations', x: 100, y: 550 }
+];
+
+// Draw the steps as rectangles
+svg.selectAll('rect')
+    .data(steps)
+    .enter()
+    .append('rect')
+    .attr('x', d => d.x - 50)
+    .attr('y', d => d.y - 20)
+    .attr('width', 100)
+    .attr('height', 40)
+    .attr('fill', '#69b3a2')
+    .attr('rx', 5)
+    .attr('ry', 5)
+    .transition()
+    .duration(800)
+    .attr('fill', '#4ca64c');
+
+// Add labels to the rectangles
+svg.selectAll('text')
+    .data(steps)
+    .enter()
+    .append('text')
+    .attr('x', d => d.x)
+    .attr('y', d => d.y)
+    .attr('text-anchor', 'middle')
+    .attr('alignment-baseline', 'middle')
+    .text(d => d.label)
+    .attr('fill', 'white');
+
+// Draw arrows between steps
+function drawArrow(source, target) {
+    const x1 = source.x;
+    const y1 = source.y + 20;
+    const x2 = target.x;
+    const y2 = target.y - 20;
+    
+    svg.append('line')
+        .attr('x1', x1)
+        .attr('y1', y1)
+        .attr('x2', x2)
+        .attr('y2', y2)
+        .attr('stroke', '#333')
+        .attr('stroke-width', 2)
+        .attr('marker-end', 'url(#arrowhead)')
+        .transition()
+        .duration(800);
+}
+
+// Define arrowhead marker
+svg.append('defs').append('marker')
+    .attr('id', 'arrowhead')
+    .attr('viewBox', '0 0 10 10')
+    .attr('refX', 10)
+    .attr('refY', 5)
+    .attr('markerWidth', 6)
+    .attr('markerHeight', 6)
+    .attr('orient', 'auto')
+    .append('polygon')
+    .attr('points', '0 0, 10 5, 0 10')
+    .attr('fill', '#333');
+
+// Draw arrows between each step
+for (let i = 0; i < steps.length - 1; i++) {
+    drawArrow(steps[i], steps[i + 1]);
+}
+</script>
+
+</body>
+</html>

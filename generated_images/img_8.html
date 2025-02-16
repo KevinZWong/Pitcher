@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projected Revenue Growth</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #tooltip {
+            position: absolute;
+            text-align: center;
+            width: 120px;
+            padding: 8px;
+            font: 12px sans-serif;
+            background: lightsteelblue;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="tooltip"></div>
+    <svg width="800" height="400"></svg>
+    <script>
+        // Set up dimensions and margins for the chart
+const margin = { top: 20, right: 30, bottom: 40, left: 50 },
+      width = 800 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
+
+// Create the SVG element
+const svg = d3.select('svg')
+    .attr('width', width + margin.left + margin.right)
+    .attr('height', height + margin.top + margin.bottom)
+  .append('g')
+    .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+// Sample data for projected revenue growth
+const data = [
+  { year: 'Year 1', users: 1000, revenue: 5000 },
+  { year: 'Year 2', users: 2000, revenue: 15000 },
+  { year: 'Year 3', users: 3000, revenue: 30000 }
+];
+
+// Set up the scales
+const x = d3.scaleBand()
+    .domain(data.map(d => d.year))
+    .range([0, width])
+    .padding(0.1);
+
+const y = d3.scaleLinear()
+    .domain([0, d3.max(data, d => d.revenue)])
+    .nice()
+    .range([height, 0]);
+
+// Create the axes
+svg.append('g')
+    .attr('class', 'x-axis')
+    .attr('transform', `translate(0, ${height})`)
+    .call(d3.axisBottom(x));
+
+svg.append('g')
+    .attr('class', 'y-axis')
+    .call(d3.axisLeft(y));
+
+// Create the line generator
+const line = d3.line()
+    .x(d => x(d.year) + x.bandwidth() / 2)
+    .y(d => y(d.revenue));
+
+// Add the line to the chart
+svg.append('path')
+    .datum(data)
+    .attr('fill', 'none')
+    .attr('stroke', 'steelblue')
+    .attr('stroke-width', 2)
+    .attr('d', line)
+    .transition()
+    .duration(1000);
+
+// Add data points to the line
+svg.selectAll('.dot')
+    .data(data)
+  .enter().append('circle')
+    .attr('class', 'dot')
+    .attr('cx', d => x(d.year) + x.bandwidth() / 2)
+    .attr('cy', d => y(d.revenue))
+    .attr('r', 5)
+    .attr('fill', 'steelblue')
+    .on('mouseover', (event, d) => {
+      const tooltip = d3.select('#tooltip');
+      tooltip.transition().duration(200).style('opacity', .9);
+      tooltip.html(`Users: ${d.users}<br>Revenue: $${d.revenue}`)
+        .style('left', `${event.pageX}px`)
+        .style('top', `${event.pageY - 28}px`);
+    })
+    .on('mouseout', () => {
+      d3.select('#tooltip').transition().duration(500).style('opacity', 0);
+    });
+
+// Responsive resizing
+function resize() {
+  const newWidth = parseInt(d3.select('svg').style('width')) - margin.left - margin.right;
+  const newHeight = parseInt(d3.select('svg').style('height')) - margin.top - margin.bottom;
+
+  x.range([0, newWidth]);
+  y.range([newHeight, 0]);
+
+  svg.select('.x-axis').call(d3.axisBottom(x));
+  svg.select('.y-axis').call(d3.axisLeft(y));
+
+  svg.select('path').attr('d', line);
+  svg.selectAll('.dot')
+    .attr('cx', d => x(d.year) + x.bandwidth() / 2)
+    .attr('cy', d => y(d.revenue));
+}
+
+window.addEventListener('resize', resize);
+    </script>
+</body>
+</html>
