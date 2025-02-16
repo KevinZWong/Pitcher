@@ -1,8 +1,8 @@
 import os
 import asyncio
 from pathlib import Path
-from summarizer import TextProcessor
-from chunker import TextChunker
+from text_extract.summarizer import TextProcessor
+from text_extract.chunker import TextChunker
 from dotenv import load_dotenv
 
 
@@ -16,7 +16,7 @@ async def is_directory_empty(directory: str) -> bool:
 
 
 async def process_and_feature_extract_files(chunks_dir, text_data_dir, summary_dir, feature_extraction_prompt):
-    chunker = TextChunker(model="gpt-4o-mini", max_tokens=10000)
+    chunker = TextChunker(model="gpt-4", max_tokens=10000)
     # cleanup chunks directory
     if chunks_dir.exists():
         for chunk_file in chunks_dir.glob("*_chunk_*.txt"):
@@ -49,7 +49,7 @@ async def process_and_feature_extract_files(chunks_dir, text_data_dir, summary_d
     print(f"Average Tokens per Chunk: {total_tokens/total_chunks:,.0f}" if total_chunks > 0 else "No chunks created")
     print(f"Chunks saved to: {chunks_dir}")
 
-    output_file = "summary/text_summary.txt"
+    output_file = summary_dir / "text_summary.txt"
     summarizer = TextProcessor(mode="extract")
     await summarizer.process_directory(str(chunks_dir), str(output_file))
     print(f"Summary has been saved to: {output_file}")
@@ -57,28 +57,24 @@ async def process_and_feature_extract_files(chunks_dir, text_data_dir, summary_d
 
 async def process_and_summarize_files(code_data_dir, summary_dir, summary_prompt):
     summarizer = TextProcessor(mode="summarize")
-    output_file = "summary/code_summary.txt"
+    output_file = summary_dir / "code_summary.txt"
     await summarizer.process_directory(str(code_data_dir), str(output_file))
     print(f"Summary has been saved to: {output_file}")
 
 
 async def main():
-
-
     load_dotenv()
     
     # Set up directories
+    base_dir = Path("text_extract")
     text_data_dir = Path("text_data")
     code_data_dir = Path("code_data")
-    chunks_dir = Path("chunks")
-    summary_dir = Path("Summary")
+    chunks_dir = base_dir / "chunks"
+    summary_dir = base_dir / "summary"
 
     # Create directories if they don't exist
     for directory in [chunks_dir, summary_dir]:
-        directory.mkdir(exist_ok=True)
-
-
-    # Initialize the TextChunker with exactly 20k tokens per chunk
+        directory.mkdir(parents=True, exist_ok=True)
     
     feature_extraction_prompt = """You are an expert in extracting key information from text. Convert the input text into a series of short, clear statements.
         Instructions:
@@ -104,13 +100,11 @@ async def main():
 
     await process_and_feature_extract_files(chunks_dir, text_data_dir, summary_dir, feature_extraction_prompt)    
     await process_and_summarize_files(code_data_dir, summary_dir, summary_prompt)
- 
 
+    load_docs("extract/summary", "current")
+
+    # put the data intto code_data and text_data directories
+ 
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-
-
-
-
