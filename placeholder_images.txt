@@ -142,3 +142,31 @@ extracted_images/input1/image_ec8ec45199aeabacec1c80e377965b4d.png: The logo of 
 extracted_images/input1/image_b0f14f2b2aa083f88a890e1e5c9ee60b.png: The molecular structure of chlorophyll, essential for capturing sunlight, akin to how MoodMuse captures emotional insights.
 extracted_images/input1/image_d37fafe635706085c3edd5c21c2bd8a2.jpeg: The chloroplast structure illustrating essential components for photosynthesis, paralleling the complex components of MoodMuse.
 extracted_images/input1/image_c4e33f69a01a53d4cc7a7684a1a5b4c6.png: A flowchart of photosynthesis stages, symbolizing the transformation of emotions through MoodMuse.
+MentalHealthAppMarketGrowth.png: This line chart represents the projected growth of the mental health app market from 2021 to 2027, highlighting an upward trend reaching approximately $13 billion.
+UserJourney.png: Flowchart illustrating a typical user journey on the MoodMuse platform from sign-up to receiving AI-generated insights and music recommendations.
+StartupGoals.png: This pie chart provides a visual distribution of MoodMuse's user acquisition and revenue goals, as well as the target user retention rate over the first five years.
+SubscriptionPricingComparison.png: A bar chart comparing the pricing of MoodMuse's premium subscription to competitors like Daylio, Journey, and Reflectly offering similar services.
+AnnualRevenueProjections.png: This bar chart showcases MoodMuse's projected annual revenue growth over the first three years, demonstrating significant financial expansion expected by Year 3.
+logo_placeholder.png: MoodMuse logo representing the brand identity.
+mission_diagram_placeholder.png: A diagram illustrating the mission of MoodMuse.
+graphs/bars/ProjectedMarketGrowth.png: A projected market growth bar chart for mental wellness.
+feature_overview_placeholder.png: Overview of unique features related to MoodMuse.
+tech_stack_placeholder.png: A diagram showing the technology stack used in MoodMuse.
+graphs/flows/UserJourney.png: Flowchart depicting the user journey within the platform.
+competitive_landscape_placeholder.png: Competitive landscape showing MoodMuse's position in the market.
+graphs/bars/SubscriptionRevenue.png: Bar chart displaying projected subscription revenue growth.
+team_photo_placeholder.png: Photo of the MoodMuse team members.
+community_engagement_placeholder.png: Visual representation of community engagement initiatives.
+sustainability_goals_placeholder.png: Chart highlighting sustainability goals and commitments.
+graphs/lines/GlobalAIandMentalHealthAppMarketGrowth.png: Line chart showing financial projections for the startup.
+thank_you_placeholder.png: Thank you slide to conclude the presentation.
+TargetDemographics.png: This pie chart represents the target demographics for the startup's platform, primarily focusing on individuals aged 18-35, students, young professionals, and creatives.
+MarketGrowthRates.png: This bar chart displays the projected growth of the global mental wellness market from 2021 to 2030.
+UserJourney.png: This flowchart represents the user journey through the platform, from signing up to receiving song recommendations based on mood analysis.
+ProjectedSubscriberBase.png: This line chart shows the projected growth of the subscriber base over a three-year period.
+StartupGrowthTargets.png: This bar chart represents the growth targets of the startup in terms of user base from Year 1 to Year 3.
+graphs/pies/MarketSegments.png: This pie chart represents the estimated distribution of the target audience for the platform. 40% include students, young professionals, and creatives, while the remaining 60% includes other potential users.
+graphs/lines/GlobalMentalHealthMarket.png: Line chart showing the growth of the global mental health market from $383 billion in 2020 to an estimated $737 billion by 2030.
+graphs/flows/UserJourney.png: A flowchart illustrating the user journey from sign-up to receiving AI-powered summaries and personalized recommendations, concluding with user feedback.
+graphs/bars/SubscriptionPriceComparison.png: Bar chart comparing subscription prices among different apps (Daylio, Journey, Reflectly, MoodMuse Premium) showing that MoodMuse's premium price is positioned at $7.99/month.
+graphs/bars/RevenueProjections.png: A bar chart showing the projected revenue over three years, starting with $719,520 in Year 1, then growing to $3,117,840 in Year 2, and $8,993,500 in Year 3.

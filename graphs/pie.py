@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from PIL import Image
 
 def create_pie_chart(values, labels, title="Pie Chart", output_file="pie_chart.png", 
                      colors=None, show_percentages=True, show_legend=True):
@@ -13,6 +14,9 @@ def create_pie_chart(values, labels, title="Pie Chart", output_file="pie_chart.p
     colors: list of colors for slices (optional)
     show_percentages: bool to show percentage labels (default: True)
     show_legend: bool to show legend (default: True)
+    
+    Returns:
+    tuple: The dimensions (width, height) of the saved PNG file.
     """
     
     # Create figure
@@ -54,7 +58,14 @@ def create_pie_chart(values, labels, title="Pie Chart", output_file="pie_chart.p
     
     # Save the plot
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
+    
+    # Open the saved image to get its dimensions
+    with Image.open(output_file) as img:
+        width, height = img.size
+    
     plt.close()
+    
+    return width, height
 
 # Example usage:
 if __name__ == "__main__":

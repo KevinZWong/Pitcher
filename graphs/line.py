@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from PIL import Image
 
 def create_line_chart(x_values, y_values, labels=None, title="Line Chart",
                      xlabel="X Axis", ylabel="Y Axis", output_file="line_chart.png",
@@ -65,7 +66,12 @@ def create_line_chart(x_values, y_values, labels=None, title="Line Chart",
     
     # Save the plot
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
+    # Open the saved image to get its dimensions
+    with Image.open(output_file) as img:
+        width, height = img.size
     plt.close()
+    
+    return width, height
 
 # Example usage:
 if __name__ == "__main__":
