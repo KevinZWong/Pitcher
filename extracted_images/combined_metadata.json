@@ -1,1 +1,72 @@
-[]
+[
+  {
+    "type": "pie",
+    "filepath": "graphs/pies/JournalingBenefitUsage.png",
+    "description": "This pie chart illustrates the percentage of Americans who use journaling for mental health benefits versus those who do not."
+  },
+  {
+    "type": "pie",
+    "filepath": "graphs/pies/UserDemographics.png",
+    "description": "This pie chart represents the demographic breakdown of MoodMuse users, highlighting primary users, millennials/Gen Z, and students/professionals/creatives."
+  },
+  {
+    "type": "bar",
+    "filepath": "graphs/bars/YearlyUserGrowth.png",
+    "description": "This bar chart depicts the projected user growth of MoodMuse in each year starting from its initial launch."
+  },
+  {
+    "type": "bar",
+    "filepath": "graphs/bars/MarketSocietalStats.png",
+    "description": "A comprehensive bar chart displaying various projections related to mental wellness, market values, and societal statistics highlighted in the document."
+  },
+  {
+    "type": "line",
+    "filepath": "graphs/lines/CAGRTrends.png",
+    "description": "This line chart illustrates the Compound Annual Growth Rate (CAGR) trends specific to the mental wellness and mental health apps market as projected in the document."
+  },
+  {
+    "type": "flow",
+    "filepath": "graphs/flows/UserJourney.png",
+    "description": "Flowchart demonstrating the user journey from signing up to the usage of the platform's journaling and recommendation features."
+  },
+  {
+    "type": "flow",
+    "filepath": "graphs/flows/BusinessModelFlow.png",
+    "description": "This flowchart explains the business model for MoodMuse, specifically focusing on the revenue streams stemming from a freemium model, subscriptions, and data insights."
+  },
+  {
+    "type": "pie",
+    "filepath": "graphs/pies/TargetDemographicPie.png",
+    "description": "This pie chart shows the distribution of the target demographic for the AI-powered journaling platform, focusing on Millennials and Gen Z who represent 70% of users and are more inclined to use digital journaling tools for mental wellness."
+  },
+  {
+    "type": "pie",
+    "filepath": "graphs/pies/RevenueStreams.png",
+    "description": "This pie chart illustrates the various revenue streams for the startup, highlighting the diversity in income sources ranging from subscription models to workshops."
+  },
+  {
+    "type": "bar",
+    "filepath": "graphs/bars/MarketProjectionBarChart.png",
+    "description": "A comparison bar chart representing the projected growth of the mental health app market from 2021 to 2026, highlighting the market opportunity for the AI-driven journaling platform."
+  },
+  {
+    "type": "bar",
+    "filepath": "graphs/bars/SubscriptionPlanBarChart.png",
+    "description": "This bar chart shows the pricing structure for the subscription plans available in the freemium model, detailing the cost difference between basic and premium options."
+  },
+  {
+    "type": "line",
+    "filepath": "graphs/lines/UserGrowthLineChart.png",
+    "description": "A line graph illustrating the projected growth in active users from launch day up to three years, showing a clear trajectory of reaching 500,000 users by the third year."
+  },
+  {
+    "type": "line",
+    "filepath": "graphs/lines/ChurnRateTargetLine.png",
+    "description": "This line chart displays the targeted churn rate reduction goals of the startup, from 10% in the initial phase down to 5% by the end of the first year."
+  },
+  {
+    "type": "flow",
+    "filepath": "graphs/flows/UserJourneyFlowchart.png",
+    "description": "A flowchart depicting the user journey on the AI-powered journaling platform, from signing up to engaging with mood tracking and song recommendation features."
+  }
+]

@@ -9,6 +9,7 @@ import json
 import os
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
+import subprocess
 # from image_gen import create_mermaid_charts
 # from imagerag import search_q
 
@@ -60,16 +61,17 @@ def create_presentation_outline(context: dict) -> dict:
     Follow these key requirements:
     1. Include Marp headers (marp:true etc)
     2. Create a logical flow from introduction to conclusion
-    3. Every Slide MUST have one or more elements such as images, charts, schematics and diagrams
+    3. Every Slide should have one or more images, especially charts, schematics and diagrams
     4. What you create must be in MARP syntax and should be able to be converted to slide decks using marp cli 
+    5. Generate some technical slides using the insights you get from the code_summary
 
     Keep in mind:
-    - Keep minimal text, leave space for visuals
+    - text should not be too much, keep space for visuals
     - do not include any visuals
     - Use clear headers and bullet points
     - Include diagrams/visualizations where they add value
     - Maintain consistent styling throughout
-    - Make sure to leave room for images to be added
+
 
     The output should be valid MARP that could be rendered directly.
 """
@@ -104,7 +106,7 @@ def edit_presentation_outline(context: dict) -> dict:
     Returns:
         dict: Updated context with generated markdown and image descriptions
     """
-    llm = ChatOpenAI(model="gpt-4o", temperature=0.7, openai_api_key=os.getenv("OPENAI_API_KEY"))
+    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7, openai_api_key=os.getenv("OPENAI_API_KEY"))
     
     system_prompt = f"""
    You are an expert MARP presentation editor who creates clear, engaging slide decks using MARP.
@@ -119,21 +121,20 @@ size: 16:9
 ---
 
 Your PRIMARY responsibility is to:
-    SELECT THE MOST RELEVANT IMAGE for each slide—choose the best possible match that enhances understanding and engagement.
-    It is important to have at least one image per slide while. Do not force an image if it does not fit. If no good match exists, DO NOT include an completely unrelated image.
-    Integrate images naturally:
-    Match each provided image description to the most relevant slide content.
-    Insert the corresponding image filename in that section.
-    Modify the slide text to explicitly connect with the image’s content.
-    Ensure GOOD SPACING between text and images for easy comprehension.
-    Maintain the original aspect ratio of all images to avoid distortion.
-    Confirm that images are of appropriate resolution and clearly visible in the slide format.
-    Include image dimensions as comments to validate size accuracy.
-Strict Requirements:
-    Keep all original MARP headers and formatting (e.g., marp:true).
-    Ensure text remains minimal while still directly referencing the image’s content.
-    NEVER invent or suggest new images—only use the explicitly provided filenames.
-    Do NOT force an image if it doesn’t fit—only include those that truly enhance the content.
+1. ONLY use images that are relevant to that slide
+2. For each image description in the input:
+   - Match it with the most relevant slide section
+   - Place the EXACT corresponding image filepath in that section
+   - Add the dimensions of the image as comments
+3. NEVER invent or suggest new filepaths - use the EXACT provided filenames in the context
+
+Follow these key requirements:
+1. Maintain the exact MARP headers (marp:true etc)
+2. Keep text minimal but ensure it explicitly connects to the image content
+3. If an image description doesn't match any slide content well, do NOT force it - only use images where they truly fit the content
+
+Remember: You can only use images that are explicitly provided in the input with their descriptions. Do not add any other image references or placeholders.
+
 The output must be valid MARP markdown that could be rendered directly.
 """
 
@@ -190,23 +191,19 @@ size: 16:9
 ---
 
 Image Rules:
-1. EVERY image must include size directives - NO exceptions
+1. EVERY image must include size directives - no exceptions
 2. Use these patterns:
    - Charts/graphs: ![w:800 h:400](path/to/image.png)
    - Flowcharts: ![w:900](path/to/image.png)
    - Side images: ![bg right:40% w:400](path/to/image.png)
-3. Make each slide aesthetically pleasing and aligned
-4. Make sure each image is the correct size and fits the slide
-
+3. Beautify EACH slide by using CSS
 
 Keep in mind:
 - Never exceed slide boundaries
 - Maximum 2 images per slide
 - Leave adequate whitespace around images
 - Center single images
-- Use bg right/left for text + image layouts
-
-"""
+- Use bg right/left for text + image layouts"""
 
     structured_llm = llm.with_structured_output(SlideModel)
 
@@ -276,28 +273,29 @@ def create_presentation_graph() -> Graph:
 
 
 if __name__ == "__main__":
-    topic = "Sales pitch: MoodMuse"
-
-    #get the summary context
-    with open("summary.txt", "r") as file:
-        summary_content = file.read()
-    num_slides = 10
+    topic = "Sales pitch"
+        
+    # Read summaries
+    text_summary = ""
+    code_summary = ""
+    with open("extract/summary/text_summary.txt", "r") as file:
+        text_summary = file.read()
+    with open("extract/summary/code_summary.txt", "r") as file:
+        code_summary = file.read()
     
-    start_time = time.time()
-
-    #create the graph and start it
+    # Create and process graph
     graph = create_presentation_graph()
     result = graph.invoke({
         "topic": topic,
-        "requirements": "Include visuals",
-        "context": summary_content,
+        "requirements": "Make it about the bsuiness model but srpinkle in some technical details",
+        "text_context": text_summary,
+        "code_context": code_summary
     })
 
-    #make the markdown
+    # Create markdown and convert to HTML
     with open("presentation.md", "w") as file:
         file.write(result['slides']['marp_markdown'])
-    end_time = time.time()
     
-    print(result)
-    print("time taken:", end_time - start_time)
+    output_html = "presentation.html"
+    subprocess.run(["marp", "presentation.md", "-o", output_html], check=True)
 

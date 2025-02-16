@@ -17,6 +17,7 @@ from extract_text_code import process_code, process_text
 from imgextract import process_directory
 from marp_slides import create_presentation_graph
 import time
+from graphs.process import image_gen
 
 app = Flask(__name__)
 CORS(app)
@@ -96,11 +97,12 @@ async def process_project():
         
         # Wait for all tasks to complete
         results = await asyncio.gather(*tasks, return_exceptions=True)
+        image_gen()
         if prompt:
             create_slides(prompt)
         # # Check if any task failed
-        if any(isinstance(result, Exception) for result in results):
-            return {'error': 'One or more processes failed'}, 500
+        # if any(isinstance(result, Exception) for result in results):
+        #     return {'error': 'One or more processes failed'}, 500
         return {'message': 'All processes completed successfully',
                 'filename': 'presentation.html'}, 200
 

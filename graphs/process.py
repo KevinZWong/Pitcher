@@ -55,103 +55,102 @@ class output(BaseModel):
     flows: list[flow]
 
 
+def image_gen():
+    messages=[{
+                'role': 'system',
+                    'content': f""""Your job is to create charts based on a given document. The document contains all the central ideas
+                    about a particular tpoic/idea. we currently have the capabilities to make flowcharts, pie charts, bar charts, and line charts.
+                    Now I will provide you with the document and you return a list of all the charts that should be created with the appropriate required
+                    data.
+                    Make sure to fill in the correct values for each of the charts.
+                    Do not use spaces between names.
+                    Make as many meaningful graphs as you can
+                    Include a deailted description what each image represents
+                    """
+                }]
 
 
-messages=[{
-             'role': 'system',
-                'content': f""""Your job is to create charts based on a given document. The document contains all the central ideas
-                about a particular tpoic/idea. we currently have the capabilities to make flowcharts, pie charts, bar charts, and line charts.
-                Now I will provide you with the document and you return a list of all the charts that should be created with the appropriate required
-                data.
-                Make sure to fill in the correct values for each of the charts.
-                Do not use spaces between names.
-                Make as many meaningful graphs as you can
-                Include a deailted description what each image represents
-                """
-            }]
 
+    client=OpenAI(api_key=OPENAI_KEY)
 
+    with open("extract/summary/text_summary.txt") as f:
+        document=f.read()
+    formatted_user_query = f"""
+    This is the document:\n
+    {document}
 
-client=OpenAI(api_key=OPENAI_KEY)
+    """
+    messages.append(
+        {
+            'role': 'user',
+            'content': formatted_user_query
+        })
+    routput = client.beta.chat.completions.parse(
+        model="gpt-4o",
+        messages=messages,
+        response_format=output
+    )
+    out =  routput.choices[0].message.parsed
+    print(out)
 
-with open("summary.txt") as f:
-    document=f.read()
-formatted_user_query = f"""
-This is the document:\n
-{document}
+    combined_metadata = [] 
+        
 
-"""
-messages.append(
-    {
-        'role': 'user',
-        'content': formatted_user_query
-    })
-routput = client.beta.chat.completions.parse(
-    model="gpt-4o",
-    messages=messages,
-    response_format=output
-)
-out =  routput.choices[0].message.parsed
-print(out)
+    for graph in out.pies:
+        create_pie_chart(graph.values, graph.labels, graph.name, "graphs/pies/" + graph.name+".png")
+        combined_metadata.append({
+            "type": "pie",
+            "filepath": "graphs/pies/" + graph.name +".png",
+            # "values": graph.values,
+            # "labels": graph.labels,
+            "description": graph.description
+        })
+    for graph in out.bars:
+        create_bar_chart(graph.x_values, graph.y_values, None, graph.name, graph.x_label, graph.y_label, "graphs/bars/" + graph.name+".png")
+        combined_metadata.append({
+            "type": "bar",
+            "filepath": "graphs/bars/" + graph.name +".png",
+            # "x_values": graph.x_values,
+            # "y_values": graph.y_values,
+            # "x_label": graph.x_label,
+            # "y_label": graph.y_label,
+            "description": graph.description
+        })
+    for graph in out.lines:
+        create_line_chart(graph.x_values, graph.y_values,None, graph.name, graph.x_label, graph.y_label, "graphs/lines/" + graph.name+".png")
+        combined_metadata.append({
+            "type": "line",
+            "filepath": "graphs/lines/" + graph.name +".png",
+            # "x_values": graph.x_values,
+            # "y_values": graph.y_values,
+            # "x_label": graph.x_label,
+            # "y_label": graph.y_label,
+            "description": graph.description
+        })
+    for graph in out.flows:
+        create_flowchart(graph, "graphs/flows/" + graph.name)
+        combined_metadata.append({
+            "type": "flow",
+            "filepath": "graphs/flows/" + graph.name +".png",
+            "description": graph.description
+        })
 
-combined_metadata = [] 
-    
+    json_file_path = "extracted_images/combined_metadata.json"
+    existing_data = {}
 
-for graph in out.pies:
-    create_pie_chart(graph.values, graph.labels, graph.name, "graphs/pies/" + graph.name+".png")
-    combined_metadata.append({
-        "type": "pie",
-        "filepath": "graphs/pies/" + graph.name +".png",
-        # "values": graph.values,
-        # "labels": graph.labels,
-        "description": graph.description
-    })
-for graph in out.bars:
-    create_bar_chart(graph.x_values, graph.y_values, None, graph.name, graph.x_label, graph.y_label, "graphs/bars/" + graph.name+".png")
-    combined_metadata.append({
-        "type": "bar",
-        "filepath": "graphs/bars/" + graph.name +".png",
-        # "x_values": graph.x_values,
-        # "y_values": graph.y_values,
-        # "x_label": graph.x_label,
-        # "y_label": graph.y_label,
-        "description": graph.description
-    })
-for graph in out.lines:
-    create_line_chart(graph.x_values, graph.y_values,None, graph.name, graph.x_label, graph.y_label, "graphs/lines/" + graph.name+".png")
-    combined_metadata.append({
-        "type": "line",
-        "filepath": "graphs/lines/" + graph.name +".png",
-        # "x_values": graph.x_values,
-        # "y_values": graph.y_values,
-        # "x_label": graph.x_label,
-        # "y_label": graph.y_label,
-        "description": graph.description
-    })
-for graph in out.flows:
-    create_flowchart(graph, "graphs/flows/" + graph.name)
-    combined_metadata.append({
-        "type": "flow",
-        "filepath": "graphs/flows/" + graph.name +".png",
-        "description": graph.description
-    })
+    if os.path.exists(json_file_path):
+        try:
+            with open(json_file_path, 'r') as f:
+                existing_data = json.load(f)
+        except json.JSONDecodeError:
+            # Handle empty or invalid JSON file
+            existing_data = {}
 
-json_file_path = "extracted_images/combined_metadata.json"
-existing_data = {}
+    # If gen_images doesn't exist in the data, create it
 
-if os.path.exists(json_file_path):
-    try:
-        with open(json_file_path, 'r') as f:
-            existing_data = json.load(f)
-    except json.JSONDecodeError:
-        # Handle empty or invalid JSON file
-        existing_data = {}
+    # Append new combined_metadata to gen_images
+    existing_data.extend(combined_metadata)
 
-# If gen_images doesn't exist in the data, create it
-
-# Append new combined_metadata to gen_images
-existing_data.extend(combined_metadata)
-
-# Write back to the file
-with open(json_file_path, 'w') as f:
-    json.dump(existing_data, f, indent=2)
+    # Write back to the file
+    with open(json_file_path, 'w') as f:
+        json.dump(existing_data, f, indent=2)
