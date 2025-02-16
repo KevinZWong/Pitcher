@@ -71,8 +71,8 @@ export default function CreateProjectPage() {
             
             async function checkStatus() {
               try {
-                const status = 'N'; // Hardcoded for testing
-                if (status.includes('N')) {
+                const status = 'Y'; // Hardcoded for testing
+                if (status.includes('Y')) {
                   const iframe = document.getElementById('presentation');
                   const rightArrowEvent = new KeyboardEvent('keydown', {
                     key: 'ArrowRight',
@@ -137,7 +137,7 @@ export default function CreateProjectPage() {
             async function checkStatus() {
               try {
                 const status = await fetch('/api/presentation-status').then(r => r.text());
-                if (status.includes('N')) {
+                if (status.includes('Y')) {
                   const iframe = document.getElementById('presentation');
                   const rightArrowEvent = new KeyboardEvent('keydown', {
                     key: 'ArrowRight',
