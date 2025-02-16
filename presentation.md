@@ -5,99 +5,109 @@ paginate: true
 size: 16:9
 ---
 
-# MoodMuse: Revolutionizing Emotional Wellness
-
-![MoodMuse Logo](img_1.png)
-<!-- Image description: The logo for MoodMuse, which features a stylized open book combined with a musical note and heart shape, symbolizing the integration of journaling, music, and emotional well-being. The primary color is Soft Lavender, representing calmness and creativity. -->
+# MoodMuse: Revolutionizing Mental Wellness
 
 ---
 
-## Our Mission
-- Empower individuals to understand their emotions.  
-- Utilize journaling, AI analysis, and music recommendations.  
-- Promote mental wellness through innovative technology.
+## Introduction to MoodMuse
+- **Name Origin**: Combination of "Mood" + "Muse"
+- **Logo**: Stylized open book with a musical note and heart
+- **Primary Color**: Soft Lavender (calmness & creativity)
 
-![Mission Diagram](img_2.png)
-<!-- Image description: A flowchart illustrating the mission of MoodMuse, showing how journaling, AI analysis, and music recommendations interconnect to empower users in understanding their emotions and enhancing mental wellness. -->
+---
+
+## Mission Statement
+- **Empower Individuals**: Understand emotions through journaling
+- **AI Analysis**: Summarize journal entries & mood tracking
+- **Music Recommendations**: Tailored to user emotions
 
 ---
 
 ## Market Opportunity
-- Global mental wellness market projected to reach **$121 billion** by 2027.  
-- **70%** of Americans use journaling for mental health benefits.
-
-![Market Growth Chart](img_3.png)
-<!-- Image description: A bar chart showing the projected growth of the global mental wellness market, highlighting the increase from 2021 to 2027, alongside statistics about the popularity of journaling among Americans for mental health. -->
+- **Global Mental Wellness Market**: Projected to reach $121 billion by 2027
+- **Journaling Statistics**: 70% of Americans use journaling for mental health benefits
 
 ---
 
-## User Features
-- **Journal Entries:** Submit entries for summaries and mood tracking.  
-- **Music Recommendations:** Tailored playlists based on emotional state.
-
-![User Features](img_4.png)
-<!-- Image description: A user interface mockup displaying the MoodMuse app features, highlighting the journal entry input, mood tracking dashboard, and music recommendation section, showcasing an engaging and user-friendly design. -->
+## User Engagement Features
+- **Submit Journal Entries**: For summaries and mood tracking
+- **Personalized Music Suggestions**: Based on emotional analysis
+- **Technology Stack**: NLP algorithms, music API integration
 
 ---
 
-## Technology Stack
-- **NLP Algorithms:** For sentiment analysis.  
-- **Music API Integration:** To recommend songs based on mood.  
-- **Data Security:** Robust encryption and privacy policies.
-
-![Technology Stack](img_5.png)
-<!-- Image description: A diagram showing the technology stack of MoodMuse, including components like Natural Language Processing (NLP), Music API integration, and data security features like encryption, portraying a comprehensive tech architecture. -->
+## User Growth Projections
+- **Year 1 Goal**: 10,000 active users
+- **Freemium Model**: Premium subscription at $9.99/month
 
 ---
 
-## Business Model
-- **Freemium Model:** Basic features for free, premium at **$9.99/month**.  
-- **User Privacy:** Robust data encryption and compliance with GDPR and CCPA.
-
-![Business Model](img_6.png)
-<!-- Image description: A visual representation of the MoodMuse business model, illustrating the freemium subscription tiers, user privacy commitments, and the potential revenue streams from premium subscriptions and partnerships. -->
+## Addressing User Privacy
+- **Data Encryption**: Robust measures to protect sensitive information
+- **Compliance**: Adherence to GDPR and CCPA regulations
 
 ---
 
-## Growth Targets
-- **Year 1:** 10,000 active users.  
-- **Year 3:** 50,000 users with annual revenue of **$600,000**.
-
-![Growth Targets Chart](img_7.png)
-<!-- Image description: A line graph depicting the user growth targets for MoodMuse from Year 1 to Year 3, showcasing the projected increase in user base and corresponding revenue growth. -->
+## Company Culture & Team
+- **Founding Team**: Emily Chen (CEO), David Patel (CTO)
+- **Culture**: Empathy, innovation, transparency
+- **Work Environment**: Flexible arrangements, open workspaces
 
 ---
 
-## Team & Culture
-- **Founders:** Emily Chen (CEO), David Patel (CTO).  
-- **Values:** Empathy, innovation, transparency.
-
-![Team Photo](img_8.png)
-<!-- Image description: A team photo of the MoodMuse founding members, Emily Chen and David Patel, showcasing a diverse and inclusive environment that emphasizes collaboration and innovation in mental wellness technology. -->
+## Sustainability Goals
+- **Carbon Neutrality**: Achieve by 2030
+- **Reduce E-Waste**: Target a 40% reduction by 2025
+- **Community Engagement**: Fund mental health programs in underserved communities
 
 ---
 
-## Community Engagement
-- **Mental Health Programs:** 10% of profits allocated for funding.  
-- **Sustainability Goals:** Carbon neutrality by 2030.
+## Technology Development Plan
+- **MVP Development**: Allocate $50,000 for core functionalities
+- **Market Research**: Conduct surveys with at least 100 participants
 
-![Community Engagement](img_9.png)
-<!-- Image description: An infographic illustrating the community engagement initiatives of MoodMuse, including funding for mental health programs and sustainability efforts, emphasizing the startup's commitment to social responsibility. -->
+---
+
+## Competitive Analysis
+- **Current Competitors**: Daylio, Reflectly, Journey
+- **Unique Selling Proposition**: Combination of sentiment analysis & music recommendations
+
+---
+
+## Revenue Projections
+- **Year 1 Revenue**: Estimated at $1,233,000
+- **Freemium Model**: Basic, Premium, and Professional tiers
+
+---
+
+## User Journey Flow
+1. **Sign Up**
+2. **Submit Journal Entries**
+3. **Receive Summaries & Recommendations**
 
 ---
 
 ## Conclusion
-- MoodMuse aims to fill the gap in the mental wellness market through innovative AI technology.  
-- Join us in revolutionizing emotional wellness!
-
-![Conclusion Image](img_10.png)
-<!-- Image description: A motivational image encouraging potential investors and users to join MoodMuse in its journey to enhance emotional wellness and mental health support through technology, featuring inviting graphics and a call-to-action message. -->
+- **Impact on Mental Health**: Innovative solutions for emotional understanding
+- **Future Goals**: Expand user base to 1 million by 2026
 
 ---
 
-# Thank You!
-- **Questions?**  
-- Let's connect!
+## Thank You!
+- **Get in Touch**: [Contact Information]
+- **Follow Us** on Social Media
 
-![Thank You Image](img_11.png)
-<!-- Image description: A visually appealing Thank You slide with an inviting design, encouraging audience engagement and questions while promoting further connection with MoodMuse for potential partnerships or inquiries. -->
+---
+
+## Image References
+![MoodMuse Logo](extracted_images/input1/image_ec8ec45199aeabacec1c80e377965b4d.png)  
+*The logo of MoodMuse representing calmness and creativity.*  
+
+![Chlorophyll Structure](extracted_images/input1/image_b0f14f2b2aa083f88a890e1e5c9ee60b.png)  
+*The molecular structure of chlorophyll, essential for capturing sunlight, akin to how MoodMuse captures emotional insights.*  
+
+![Chloroplast Structure](extracted_images/input1/image_d37fafe635706085c3edd5c21c2bd8a2.jpeg)  
+*The chloroplast structure illustrating essential components for photosynthesis, paralleling the complex components of MoodMuse.*  
+
+![Photosynthesis Diagram](extracted_images/input1/image_c4e33f69a01a53d4cc7a7684a1a5b4c6.png)  
+*A flowchart of photosynthesis stages, symbolizing the transformation of emotions through MoodMuse.*  

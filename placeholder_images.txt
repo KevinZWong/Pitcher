@@ -25,3 +25,120 @@ img_8.png: A team photo of the MoodMuse founding members, Emily Chen and David P
 img_9.png: An infographic illustrating the community engagement initiatives of MoodMuse, including funding for mental health programs and sustainability efforts, emphasizing the startup's commitment to social responsibility.
 img_10.png: A motivational image encouraging potential investors and users to join MoodMuse in its journey to enhance emotional wellness and mental health support through technology, featuring inviting graphics and a call-to-action message.
 img_11.png: A visually appealing Thank You slide with an inviting design, encouraging audience engagement and questions while promoting further connection with MoodMuse for potential partnerships or inquiries.
+logo.png: logo of MoodMuse
+extracted_images/input1/image_d37fafe635706085c3edd5c21c2bd8a2.jpeg: diagram of a chloroplast illustrating its internal structure
+extracted_images/input1/image_4e3d61b3a4cc89af3deb1150d4d8fc22.png: chart showing projected market growth
+extracted_images/input1/image_51f3de9274e5e898b78b8efa73195b74.png: diagram illustrating the transformation of energy in user features
+extracted_images/input1/image_72c3c6e18a084a6d92c68efe171291f2.png: diagram of ATP synthesis process
+extracted_images/input1/image_45991205ac0006a0157345f49db6d0dc.jpeg: chart showing financial projections
+extracted_images/input1/image_5e464d54bc5c2b2e640cd2f37b258da4.png: diagram showing user privacy measures
+extracted_images/input1/image_8e3aae2a759d00a4643ef79f4544fcae.png: diagram illustrating company culture
+extracted_images/input1/image_c4e33f69a01a53d4cc7a7684a1a5b4c6.png: flowchart of sustainability goals
+extracted_images/input1/image_5a1c428cc1395a674c7b6e7ef42ab9b9.jpeg: diagram showing competitive landscape
+extracted_images/input1/image_7391dd6c2bcabe411750a556adb70528.png: chart showing growth goals
+extracted_images/input1/image_c6b055f5a2fb10b334a590d58818ce5b.png: image summarizing the conclusion with key takeaways
+extracted_images/input1/image_b0f14f2b2aa083f88a890e1e5c9ee60b.png: Molecular structure of chlorophyll.
+extracted_images/input1/image_d37fafe635706085c3edd5c21c2bd8a2.jpeg: Labeled diagram of a chloroplast.
+extracted_images/input1/image_72c3c6e18a084a6d92c68efe171291f2.png: Market Growth Chart for Mental Wellness.
+extracted_images/input1/image_5e464d54bc5c2b2e640cd2f37b258da4.png: User Journey in MoodMuse.
+extracted_images/input1/image_4e3d61b3a4cc89af3deb1150d4d8fc22.png: Technology Stack Overview.
+extracted_images/input1/image_51f3de9274e5e898b78b8efa73195b74.png: Business Model Overview.
+extracted_images/input1/image_8e3aae2a759d00a4643ef79f4544fcae.png: Growth Strategy Chart.
+extracted_images/input1/image_45991205ac0006a0157345f49db6d0dc.jpeg: Team Overview in MoodMuse.
+extracted_images/input1/image_c4e33f69a01a53d4cc7a7684a1a5b4c6.png: Sustainability Goals Flowchart.
+extracted_images/input1/image_39de3f708be0fe3dc3981cc6b01d7020.png: Financial Projections Chart.
+extracted_images/input1/image_7391dd6c2bcabe411750a556adb70528.png: Competitive Analysis Flowchart.
+extracted_images/input1/image_c6b055f5a2fb10b334a590d58818ce5b.png: Conclusion visual representation.
+extracted_images/input1/image_b0f14f2b2aa083f88a890e1e5c9ee60b.png: MoodMuse Logo
+extracted_images/input1/image_d37fafe635706085c3edd5c21c2bd8a2.jpeg: Mission Statement: Diagram of a chloroplast
+extracted_images/input1/image_4ccf93ba5e587a8ef0470d07b71eb0c6.jpeg: Market Opportunity: 3PG molecules
+extracted_images/input1/image_72c3c6e18a084a6d92c68efe171291f2.png: User Features: ATP synthesis
+extracted_images/input1/image_51f3de9274e5e898b78b8efa73195b74.png: Business Model: NADPH structure
+extracted_images/input1/image_5e464d54bc5c2b2e640cd2f37b258da4.png: Technology: Chemiosmosis
+extracted_images/input1/image_8e3aae2a759d00a4643ef79f4544fcae.png: Company Culture: Calvin cycle
+extracted_images/input1/image_c4e33f69a01a53d4cc7a7684a1a5b4c6.png: Sustainability Goals: Flowchart of photosynthesis
+extracted_images/input1/image_5a1c428cc1395a674c7b6e7ef42ab9b9.jpeg: User Journey: Molecular structure of GP
+extracted_images/input1/image_c6b055f5a2fb10b334a590d58818ce5b.png: Financial Projections: Visualizing NADP+
+extracted_images/input1/image_39de3f708be0fe3dc3981cc6b01d7020.png: Competitive Analysis: Light energy entry
+extracted_images/input1/image_7391dd6c2bcabe411750a556adb70528.png: Marketing Strategy: Simplified version of Calvin cycle
+extracted_images/input1/image_4e3d61b3a4cc89af3deb1150d4d8fc22.png: Conclusion: Diagram of stages in photosynthesis
+image_ec8ec45199aeabacec1c80e377965b4d.png: Diagram showing relationship between sunlight and chlorophyll in photosynthesis.
+image_b0f14f2b2aa083f88a890e1e5c9ee60b.png: Molecular structure representation of chlorophyll, essential for photosynthesis.
+image_d37fafe635706085c3edd5c21c2bd8a2.jpeg: Labeled diagram of a chloroplast illustrating its structure for photosynthesis.
+image_51f3de9274e5e898b78b8efa73195b74.png: Illustration depicting ATP synthesis from ADP in a chloroplast.
+image_72c3c6e18a084a6d92c68efe171291f2.png: Diagram of the Z scheme of photosynthesis detailing Photosystem II and I.
+image_4e3d61b3a4cc89af3deb1150d4d8fc22.png: Illustration of chemiosmosis and ATP synthesis in chloroplasts during photophosphorylation.
+image_5a1c428cc1395a674c7b6e7ef42ab9b9.jpeg: Chemical reaction involving ribulose 1,5-bisphosphate (RuBP) and carbon dioxide (CO2) in photosynthesis.
+image_45991205ac0006a0157345f49db6d0dc.jpeg: Molecular structure of glycerate-3-phosphate (GP), an intermediate in the Calvin cycle.
+image_c6b055f5a2fb10b334a590d58818ce5b.png: Schematic of the Calvin cycle illustrating carbon fixation process.
+image_7391dd6c2bcabe411750a556adb70528.png: Flowchart summarizing the stages of photosynthesis.
+extracted_images/input1 copy/image_ec8ec45199aeabacec1c80e377965b4d.png: MoodMuse Logo
+extracted_images/input1 copy/image_d37fafe635706085c3edd5c21c2bd8a2.jpeg: User Journey Diagram
+extracted_images/input1 copy/image_4ccf93ba5e587a8ef0470d07b71eb0c6.jpeg: Market Growth Chart
+extracted_images/input1 copy/image_5e464d54bc5c2b2e640cd2f37b258da4.png: User Interface Mockup
+extracted_images/input1 copy/image_4e3d61b3a4cc89af3deb1150d4d8fc22.png: Technology Stack Diagram
+extracted_images/input1 copy/image_72c3c6e18a084a6d92c68efe171291f2.png: Subscription Tiers Comparison
+extracted_images/input1 copy/image_5a1c428cc1395a674c7b6e7ef42ab9b9.jpeg: Team Photo
+extracted_images/input1 copy/image_39de3f708be0fe3dc3981cc6b01d7020.png: Sustainability Initiatives Overview
+extracted_images/input1 copy/image_c4e33f69a01a53d4cc7a7684a1a5b4c6.png: Engagement Strategy Flowchart
+extracted_images/input1 copy/image_45991205ac0006a0157345f49db6d0dc.jpeg: SWOT Analysis Diagram
+extracted_images/input1 copy/image_8e3aae2a759d00a4643ef79f4544fcae.png: Revenue Growth Projection Chart
+extracted_images/input1 copy/image_c6b055f5a2fb10b334a590d58818ce5b.png: Call to Action Graphic
+extracted_images/input1/image_ec8ec45199aeabacec1c80e377965b4d.png: MoodMuse Logo
+extracted_images/input1/image_b0f14f2b2aa083f88a890e1e5c9ee60b.png: Market Growth Chart
+extracted_images/input1/image_d37fafe635706085c3edd5c21c2bd8a2.jpeg: User Interaction Flow
+extracted_images/input1/image_97ac3a3476219f2ea790cca5a4315f57.jpeg: Tech Stack Overview
+extracted_images/input1/image_72c3c6e18a084a6d92c68efe171291f2.png: Business Growth Plan
+extracted_images/input1/image_4e3d61b3a4cc89af3deb1150d4d8fc22.png: Team Collaboration
+extracted_images/input1/image_5a1c428cc1395a674c7b6e7ef42ab9b9.jpeg: Inclusive Workplace
+extracted_images/input1/image_c6b055f5a2fb10b334a590d58818ce5b.png: Community Support
+extracted_images/input1/image_39de3f708be0fe3dc3981cc6b01d7020.png: Sustainability Initiatives
+extracted_images/input1/image_c4e33f69a01a53d4cc7a7684a1a5b4c6.png: Marketing Strategy Flow
+extracted_images/input1/image_45991205ac0006a0157345f49db6d0dc.jpeg: Financial Overview
+extracted_images/input1/image_5e464d54bc5c2b2e640cd2f37b258da4.png: Challenges Overview
+extracted_images/input1/image_8e3aae2a759d00a4643ef79f4544fcae.png: User Journey Map
+extracted_images/input1/image_4ccf93ba5e587a8ef0470d07b71eb0c6.jpeg: Conclusion Visual
+extracted_images/input1/image_ec8ec45199aeabacec1c80e377965b4d.png: Logo of MoodMuse, a stylized open book with musical note and heart shape.
+extracted_images/input1/image_ec8ec45199aeabacec1c80e377965b4d.png: Logo of MoodMuse
+extracted_images/input1/image_b0f14f2b2aa083f88a890e1e5c9ee60b.png: Market opportunity chart for mental wellness
+extracted_images/input1/image_d37fafe635706085c3edd5c21c2bd8a2.jpeg: Insights on journaling benefits
+extracted_images/input1/image_51f3de9274e5e898b78b8efa73195b74.png: Diagram of technology stack
+extracted_images/input1/image_72c3c6e18a084a6d92c68efe171291f2.png: Business model overview
+extracted_images/input1/image_4e3d61b3a4cc89af3deb1150d4d8fc22.png: Illustration of company culture
+extracted_images/input1/image_8e3aae2a759d00a4643ef79f4544fcae.png: Diversity chart for workforce goals
+extracted_images/input1/image_c6b055f5a2fb10b334a590d58818ce5b.png: Diagram of user journey
+extracted_images/input1/image_45991205ac0006a0157345f49db6d0dc.jpeg: Revenue projections chart
+extracted_images/input1/image_5e464d54bc5c2b2e640cd2f37b258da4.png: Competitive analysis chart
+extracted_images/input1/image_5a1c428cc1395a674c7b6e7ef42ab9b9.jpeg: Marketing strategy visual
+extracted_images/input1/image_7391dd6c2bcabe411750a556adb70528.png: Challenges and solutions diagram
+extracted_images/input1/image_c4e33f69a01a53d4cc7a7684a1a5b4c6.png: Future vision and funding requirements
+extracted_images/input1/image_b0f14f2b2aa083f88a890e1e5c9ee60b.png: Image of MoodMuse logo
+extracted_images/input1/image_4ccf93ba5e587a8ef0470d07b71eb0c6.jpeg: Image representing mission and vision
+extracted_images/input1/image_c4e33f69a01a53d4cc7a7684a1a5b4c6.png: Chart showing market growth projections
+extracted_images/input1/image_5a1c428cc1395a674c7b6e7ef42ab9b9.jpeg: Diagram illustrating the user journey
+extracted_images/input1/image_51f3de9274e5e898b78b8efa73195b74.png: Image of technology stack overview
+extracted_images/input1/image_72c3c6e18a084a6d92c68efe171291f2.png: Visual representation of the business model
+extracted_images/input1/image_d37fafe635706085c3edd5c21c2bd8a2.jpeg: Image of the founding team
+extracted_images/input1/image_5e464d54bc5c2b2e640cd2f37b258da4.png: Chart illustrating financial projections
+extracted_images/input1/image_39de3f708be0fe3dc3981cc6b01d7020.png: Visual summarizing challenges and solutions
+extracted_images/input1/image_4e3d61b3a4cc89af3deb1150d4d8fc22.png: Image depicting community initiatives
+extracted_images/input1/image_c6b055f5a2fb10b334a590d58818ce5b.png: Visual showcasing sustainability goals
+extracted_images/input1/image_8e3aae2a759d00a4643ef79f4544fcae.png: Image depicting the journey ahead
+image1.png: Logo Mockup
+image2.png: Mission Visualization
+image3.png: Market Growth Graph
+image4.png: User Journey Flowchart
+image5.png: Technology Stack Diagram
+image6.png: Business Model Canvas
+image7.png: Team Structure
+image8.png: Office Layout
+image9.png: Sustainability Initiatives
+image10.png: User Journey Map
+image11.png: Competitive Landscape
+image12.png: Financial Overview Chart
+image13.png: Funding Breakdown
+image14.png: Conclusion Visual
+extracted_images/input1/image_ec8ec45199aeabacec1c80e377965b4d.png: The logo of MoodMuse representing calmness and creativity.
+extracted_images/input1/image_b0f14f2b2aa083f88a890e1e5c9ee60b.png: The molecular structure of chlorophyll, essential for capturing sunlight, akin to how MoodMuse captures emotional insights.
+extracted_images/input1/image_d37fafe635706085c3edd5c21c2bd8a2.jpeg: The chloroplast structure illustrating essential components for photosynthesis, paralleling the complex components of MoodMuse.
+extracted_images/input1/image_c4e33f69a01a53d4cc7a7684a1a5b4c6.png: A flowchart of photosynthesis stages, symbolizing the transformation of emotions through MoodMuse.
