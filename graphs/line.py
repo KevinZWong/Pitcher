@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
-
+import matplotlib
+matplotlib.use('Agg')
 def create_line_chart(x_values, y_values, labels=None, title="Line Chart",
                      xlabel="X Axis", ylabel="Y Axis", output_file="line_chart.png",
                      colors=None, markers=None, line_styles=None, show_grid=True):

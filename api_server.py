@@ -4,83 +4,112 @@ import os
 import shutil
 import tempfile
 import subprocess
+import traceback
 from git import Repo
 import requests
 from pathlib import Path
-#from runner import generate_slides, process_code_directory, extract_text_from_pdf as extract_text_code_main
 from temprunner import generate_slides, process_code_directory
 from temprunner import extract_text_from_pdf as extract_text_code_main
-app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+from drive_extract import DriveDownloader
+from extract_links import download_from_github
+from extract_text_code import process_code, process_text, process_code_wrapper, process_text_wrapper
+from imgextract import process_directory
+from marp_slides import create_presentation_graph
+import time
+from graphs.process import image_gen
 
-def download_drive_file(drive_url):
-    # This is a placeholder - you'll need to implement proper Google Drive download
-    # Consider using google-api-python-client or a similar library
-    response = requests.get(drive_url)
-    with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_file:
-        tmp_file.write(response.content)
-        return tmp_file.name
+app = Flask(__name__)
+CORS(app)
+
+def process_drive_data(drive_url):
+    downloader = DriveDownloader()
+    try:
+        downloader.download_folder(drive_url, 'text_data')
+        # Convert async functions to sync
+        process_text_wrapper()
+        process_directory()
+        return True
+    except Exception as e:
+        print(f"Error in drive processing: {e}")
+        return False
+
+def process_github_data(github_url):
+    try:
+        download_from_github(github_url)
+        # Convert async process_code to sync
+        process_code_wrapper()
+        shutil.rmtree('code_data', ignore_errors=True)
+        return True
+    except Exception as e:
+        print(f"Error in github processing: {e}")
+        return False
+
+def create_slides(prompt):
+    try:
+        topic = "Sales pitch"
+        
+        # Read summaries
+        text_summary = ""
+        code_summary = ""
+        with open("extract/summary/text_summary.txt", "r") as file:
+            text_summary = file.read()
+        with open("extract/summary/code_summary.txt", "r") as file:
+            code_summary = file.read()
+        
+        # Create and process graph
+        graph = create_presentation_graph()
+        result = graph.invoke({
+            "topic": topic,
+            "requirements": prompt,
+            "text_context": text_summary,
+            "code_context": code_summary
+        })
+
+        # Create markdown and convert to HTML
+        with open("presentation.md", "w") as file:
+            file.write(result['slides']['marp_markdown'])
+        
+        output_html = "presentation.html"
+        subprocess.run(["marp", "presentation.md", "-o", output_html], check=True)
+        return True
+    except Exception as e:
+        print(f"Error in slide creation: {e}")
+        print(traceback.format_exc())
+        return False
 
 @app.route('/api/projects', methods=['POST'])
 def process_project():
     try:
+        start_time = time.time()
         data = request.json
         prompt = data.get('prompt')
         github_url = data.get('githubUrl')
         drive_url = data.get('driveUrl')
-        
-        # Create a temporary working directory
-        with tempfile.TemporaryDirectory() as temp_dir:
-            content = []
-            
-            # Process Google Drive PDF if provided
-            if drive_url:
-                pdf_path = download_drive_file(drive_url)
-                content.extend(extract_text_code_main(pdf_path))
-                print("drive_url from the backend!", drive_url)
-                os.unlink(pdf_path)  # Clean up the PDF file
-            
-            # Process GitHub repository if provided
-            if github_url:
-                repo_dir = os.path.join(temp_dir, 'repo')
-                print("github_url from the backend!", github_url)
-                #Repo.clone_from(github_url, repo_dir)
-                
-                # Decide which processor to use based on your criteria
-                # Here we're using describe.py for code processing
-                content.extend(process_code_directory(repo_dir))
-                
-                # Clean up happens automatically when tempfile directory is closed
-            #print('content from the backend!', content)
-            # Generate slides using marp
-            if content:
-                # Combine all content and pass to prompt
-                combined_content = "\n".join(content)
-                print("prompt from the backend!", prompt)
-                #slides_html = generate_slides(prompt, combined_content)
-                # Save the HTML file
-                #output_path = os.path.join('pitcher', 'public', 'slides.html')
-                #with open(output_path, 'w', encoding='utf-8') as f:
-                #    f.write(slides_html)
-                
-                return {'filename': 'slides.html'}, 200
 
+        if not any([prompt, github_url, drive_url]):
             return {'error': 'No content to process'}, 400
-            
+
+        # Process sequentially instead of concurrently
+        if drive_url:
+            process_drive_data(drive_url)
+        if github_url:
+            process_github_data(github_url)
+        
+        # Generate images
+        image_gen()
+        
+        if prompt:
+            create_slides(prompt)
+        time.sleep(2)
+        print("Time_take: ", time.time() - start_time)
+        return {'message': 'All processes completed successfully',
+                'filename': 'presentation.html'}, 200
+
     except Exception as e:
         print("An error occurred:", e)
         return {'error': str(e)}, 500
-    
-@app.route('/api/presentation-status', methods=['GET'])
-def get_presentation_status():
-    with open('status.txt', 'r') as f:
-        content = f.read()
-    if content=="Move":
-        with open('status.txt', 'w') as f:
-            f.write("Wait")
-        return {'status': 'Yes'}, 200
-    return {'status': 'pending'}, 200
 
 if __name__ == '__main__':
     print("Starting server...")
-    app.run(debug=True, port=5000) 
+    # Use regular Flask development server instead of hypercorn
+    app.run(host='localhost', port=5000, debug=True)

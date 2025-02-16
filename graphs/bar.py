@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 from PIL import Image
 
 def create_bar_chart(x_values, y_values, labels=None, title="Bar Chart", 

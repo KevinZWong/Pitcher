@@ -126,6 +126,12 @@ async def process_text():
         """
     await process_and_feature_extract_files(chunks_dir, text_data_dir, summary_dir, feature_extraction_prompt)    
 
+def process_text_wrapper():
+    """Synchronous wrapper function for process_text."""
+    print("Starting text processing...")
+    asyncio.run(process_text())
+    print("Text processing completed.")
+
 async def process_code():
     code_data_dir = Path("code_data")
     base_dir = Path("extract")
@@ -143,6 +149,11 @@ async def process_code():
         """
     await process_and_summarize_files(code_data_dir, summary_dir, summary_prompt)
 
+def process_code_wrapper():
+    """Synchronous wrapper function for process_code."""
+    print("Starting code processing...")
+    asyncio.run(process_code())
+    print("Code processing completed.")
 
 async def main():
     load_dotenv()

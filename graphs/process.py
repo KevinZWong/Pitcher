@@ -136,7 +136,7 @@ def image_gen():
         })
 
     json_file_path = "extracted_images/combined_metadata.json"
-    existing_data = {}
+    existing_data = []
 
     if os.path.exists(json_file_path):
         try:
@@ -144,13 +144,16 @@ def image_gen():
                 existing_data = json.load(f)
         except json.JSONDecodeError:
             # Handle empty or invalid JSON file
-            existing_data = {}
+
+            existing_data = []
 
     # If gen_images doesn't exist in the data, create it
-
+    print(existing_data)
     # Append new combined_metadata to gen_images
     existing_data.extend(combined_metadata)
 
     # Write back to the file
     with open(json_file_path, 'w') as f:
         json.dump(existing_data, f, indent=2)
+
+#image_gen

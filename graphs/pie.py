@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from PIL import Image
-
+import matplotlib
+matplotlib.use('Agg')
 def create_pie_chart(values, labels, title="Pie Chart", output_file="pie_chart.png", 
                      colors=None, show_percentages=True, show_legend=True):
     """
