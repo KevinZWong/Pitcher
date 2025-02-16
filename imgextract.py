@@ -111,7 +111,7 @@ def get_image_description(image_path, page_text):
 
 def main():
     # Extract images from the generated pitch deck PDF
-    pdf_path = "input.pdf"
+    pdf_path = "/Users/swastikagrawal/Documents/TreeHacks/Pitcher/input.pdf"
     
     try:
         metadata = extract_images_from_pdf(pdf_path)
