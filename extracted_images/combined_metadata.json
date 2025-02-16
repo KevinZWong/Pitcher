@@ -1,0 +1,32 @@
+[
+  {
+    "type": "pie",
+    "filepath": "graphs/pies/UserBaseGrowth.png",
+    "description": "This pie chart visualizes the targeted growth of the user base for the JournalAI startup over a five-year period, demonstrating a strong push towards reaching 1 million active users by Year 5 with strategic marketing and differentiated AI capabilities."
+  },
+  {
+    "type": "bar",
+    "filepath": "graphs/bars/RevenueGrowth.png",
+    "description": "This bar chart shows the projected growth of the AI in mental health market from 2023 to 2030, indicating a market expansion from $1.5 billion to $6.5 billion, showcasing opportunities for startups leveraging AI in digital mental health solutions."
+  },
+  {
+    "type": "bar",
+    "filepath": "graphs/bars/DigitalJournalingMarketGrowth.png",
+    "description": "This bar chart represents the projected growth of the digital journaling market from $2.6 billion in 2023 to $6.8 billion by 2030, highlighting the increasing demand and opportunities for digital journaling platforms."
+  },
+  {
+    "type": "line",
+    "filepath": "graphs/lines/UserEngagementTrends.png",
+    "description": "This line chart represents the projected growth in user engagement for the JournalAI platform from launch, targeting a 30% engagement rate within the first 6 months, increasing to 100% by the end of year three."
+  },
+  {
+    "type": "line",
+    "filepath": "graphs/lines/MentalHealthAppMarketGrowth.png",
+    "description": "This line chart visualizes the growth trajectory of the mental health app market from 2020 to 2028, illustrating a projected expansion from $1.6 billion to $3.5 billion, which reflects the growing interest and investment in mental wellness applications."
+  },
+  {
+    "type": "flow",
+    "filepath": "graphs/flows/AI-drivenJournalingPlatformFlow.png",
+    "description": "This flowchart illustrates the user journey on the AI-driven journaling platform, starting from user registration to journaling entry submission, followed by AI processing for sentiment analysis, mood tracking, recommendation of songs, and concluding with user feedback collection."
+  }
+]

@@ -3,26 +3,23 @@ marp: true
 theme: default
 paginate: true
 size: 16:9
+
 ---
 
 <style>
-section {
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
+  section {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+  }
 
-h1, h2, h3 {
-  color: #2c3e50;
-}
+  h1, h2, h3 {
+    color: #333;
+  }
 
-ul {
-  line-height: 1.6;
-}
-
-img {
-  border-radius: 10px;
-  margin-top: 10px;
-}
+  ul {
+    margin: 10px 0;
+  }
 </style>
 
 # Sales Pitch for JournalAI
@@ -30,104 +27,120 @@ img {
 ---
 
 ## Introduction to JournalAI
-- AI-powered digital journal platform
-- Features include:
-  - Journal entry submission
-  - AI-generated summaries
-  - Sentiment analysis and mood tracking
-  - Personalized song recommendations
+- AI-driven journaling platform  
+- Offers sentiment analysis, mood tracking, and personalized song recommendations  
+- Targeting mental health enthusiasts and professionals  
 
 ---
 
-## Market Opportunity
-- Mental health app market projected to reach $4.2 billion by 2027
-- Increasing trend in journaling for self-improvement
-- Approximately 30% of the population engages in journaling
-
-![w:800 h:400](graphs/pies/MarketShareMentalHealthApps2028.png)  
-<!-- Pie chart showing market share of mental health apps projected to reach $6 billion by 2028, within a larger industry valued at approximately $90 billion. -->
-
----
-
-## Target Audience
-- Individuals seeking self-improvement
-- Mental health professionals
-- Music enthusiasts looking for mood-based recommendations
+## Business Model Overview
+- **Revenue Streams**:  
+  - Subscription plans ($9.99 - $19.99/month)  
+  - Affiliate marketing  
+  - In-app purchases  
+  - Corporate wellness programs  
+- **Initial Capital Requirement**:  
+  - Estimated at $1.5 million  
+  - Funding from angel investors and crowdfunding  
 
 ---
 
-## Key Features
-- **AI Summarization**: Automatically generate summaries from journal entries to save time.
-- **Sentiment Analysis**: Understand user emotions through text analysis.
-- **Mood Tracking**: Visualize mood changes over time using graphs and heat maps.
-- **Song Recommendations**: Integrate with Spotify API for personalized music suggestions based on user mood.
+## Target Market
+- **Demographics**:  
+  - Young adults (ages 15-40)  
+  - Individuals seeking mental wellness  
+- **Market Size**:  
+  - Digital mental health app market projected to reach **$4.2 billion by 2027**  
+  - 30% of the population engages in journaling  
+
+---
+
+## Key Features of JournalAI
+- User authentication and rich text editor  
+- Visual mood tracker  
+- AI summaries using NLP models (spaCy, BERT)  
+- Music recommendations via Spotify API  
 
 ---
 
 ## Technical Architecture
-- **Frontend**: Built with React.js or Vue.js for a responsive UI
-- **Backend**: Node.js with Express.js for scalable API development
-- **Database**: MongoDB for flexible document storage
-- **AI Services**: NLTK or spaCy for NLP processing, Hugging Face's Transformers for summarization and sentiment analysis
+- **Frontend**: React.js  
+- **Backend**: Node.js with Express  
+- **Database**: MongoDB for flexible storage  
+- **AI Services**:  
+  - NLP processing for entry analysis  
+  - Sentiment analysis for emotional insights  
+
+---
+
+## Scalability and Security
+- **Hosting**: Cloud services (AWS/Google Cloud) for scalability  
+- **Data Security**:  
+  - AES-256 encryption for user data  
+  - OAuth 2.0 for secure authentication  
+
+---
+
+## User Engagement Strategies
+- Content marketing to increase organic traffic (20% monthly)  
+- Social media campaigns targeting younger audiences  
+- Gamification strategies to enhance user retention (target churn rate < 5%)  
 
 ---
 
 ## Implementation Timeline
-1. **Research & Planning**: 0-3 months
-2. **Development**: 4-8 months
-3. **Launch**: 9-12 months
-4. **Enhancements**: Continuous based on user feedback
-
----
-
-## User Engagement Goals
-- Aim for **10,000** monthly active users in Year 1
-- Target **70%** retention rate after six months
-- Encourage users to submit an average of **3 journal entries per week**
-
-![w:800 h:400](graphs/lines/UserGrowthProjection.png)  
-<!-- Line chart showing the user growth projection for the startup, aiming for 100,000 users in Year 1, 500,000 by the end of Year 3, and reaching 1 million by Year 5. -->
-
----
-
-## Revenue Model
-- **Freemium Model**: Basic features for free, premium features at $9.99/month
-- Revenue streams:
-  - Subscription models
-  - Affiliate marketing
-  - In-app purchases
-  - Corporate wellness programs
+1. **Research and Development** (0-3 months)  
+2. **Beta Launch** (4-6 months)  
+3. **Full Launch** (6-12 months)  
+4. **User Feedback and Enhancements**  
 
 ---
 
 ## Financial Projections
-![w:800 h:400](graphs/bars/RevenueProjectionsOverYears.png)  
-<!-- Bar chart illustrating projected revenue growth for the startup: Year 1 - $299,700, Year 2 - $2.7 million, Year 3 - $5 million. -->
+- Expected to reach **100,000 active users in 18 months**  
+- Projected annual revenue of **$28 million by Year 3**  
+- Customer acquisition cost (CAC) estimated at **$30/user**  
 
 ---
 
-## Data Privacy and Security
-- Compliance with GDPR and HIPAA regulations
-- User data encrypted with AES-256
-- SSL for secure data transmission
-
----
-
-## Challenges and Solutions
-- **User Retention**: Implement gamification strategies to keep users engaged
-- **Data Privacy Concerns**: Transparent privacy policy and regular audits
-- **Competition**: Unique features like AI-driven insights to stand out
+## Market Opportunities
+- Growing demand for digital mental health solutions  
+- Potential partnerships with mental health organizations  
+- Opportunity to expand features based on user feedback  
 
 ---
 
 ## Conclusion
-- JournalAI aims to enhance emotional awareness and self-reflection
-- A robust technical infrastructure supports scalability and user engagement
-- Join us in transforming digital journaling into a powerful self-improvement tool!  
+- JournalAI offers a unique blend of technology and mental wellness  
+- Strong market potential and growth strategies in place  
+- Join us in revolutionizing the journaling experience through AI!  
 
 ---
 
-## Questions?
-- Let's discuss how JournalAI can fit your needs and impact mental health positively!  
+## User Base Growth Projection
+![w:800 h:400](graphs/pies/UserBaseGrowth.png)
 
 ---
+
+## Revenue Growth Projection
+![w:800 h:400](graphs/bars/RevenueGrowth.png)
+
+---
+
+## Digital Journaling Market Growth
+![w:800 h:400](graphs/bars/DigitalJournalingMarketGrowth.png)
+
+---
+
+## User Engagement Trends
+![w:800 h:400](graphs/lines/UserEngagementTrends.png)
+
+---
+
+## Mental Health App Market Growth
+![w:800 h:400](graphs/lines/MentalHealthAppMarketGrowth.png)
+
+---
+
+## User Journey Flow
+![w:900](graphs/flows/AI-drivenJournalingPlatformFlow.png)

@@ -46,6 +46,7 @@ Instructions:
             "summarize": """You are an expert summarizer. Create a clear, concise summary of the input text.
 
 Instructions:
+-  Aim for about 5% of the original length
 - Provide a comprehensive yet concise summary
 - Maintain the key points and main ideas
 - Keep the original meaning and context
@@ -53,7 +54,6 @@ Instructions:
 - Focus on the most important information
 - Organize the summary in a logical flow
 - Include critical details and examples
-- Aim for about 25% of the original length
 - Make the summary standalone and understandable"""
         }
 
