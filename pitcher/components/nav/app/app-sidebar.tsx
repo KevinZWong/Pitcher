@@ -30,7 +30,7 @@ export function Sidebar() {
     {
       icon: Folders,
       label: "Projects",
-      href: "/projects",
+      href: "/dashboard/projects",
     },
     {
       icon: BarChart3,
