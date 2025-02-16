@@ -68,6 +68,7 @@ def process_project():
             return {'error': 'No content to process'}, 400
             
     except Exception as e:
+        print("An error occurred:", e)
         return {'error': str(e)}, 500
 
 if __name__ == '__main__':

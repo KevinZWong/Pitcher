@@ -1,8 +1,8 @@
 import os
 import asyncio
 from pathlib import Path
-from text_extract.summarizer import TextProcessor
-from text_extract.chunker import TextChunker
+from extract.summarizer import TextProcessor
+from extract.chunker import TextChunker
 from dotenv import load_dotenv
 
 
@@ -102,7 +102,7 @@ async def process_text_and_code():
     await process_and_feature_extract_files(chunks_dir, text_data_dir, summary_dir, feature_extraction_prompt)    
     await process_and_summarize_files(code_data_dir, summary_dir, summary_prompt)
     
-    load_docs("extract/summary", "current")
+    # load_docs("extract/summary", "current")
 
 
 async def main():

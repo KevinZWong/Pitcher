@@ -1,6 +1,6 @@
 "use server"
 
-export default async function callApi() {
+export default async function callApi(values) {
     const response = await fetch('http://localhost:5000/api/projects', {
         method: 'POST',
         headers: {

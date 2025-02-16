@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { useToast } from "@/components/ui/use-toast"
-
+import axios from "axios"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -94,7 +94,12 @@ export default function CreateProjectPage() {
       newWindow.document.close();
       */
 
-      const response = await callApi(values);
+      // const response = await callApi(values);
+      const response = await axios.post('http://127.0.0.1:5000/api/projects', {
+        prompt: values.prompt,
+        githubUrl: values.githubLink,
+        driveUrl: values.driveLink
+      });
       const newWindow = window.open('', '_blank', 'width=800,height=600');
       if (!newWindow) throw new Error('Popup blocked');
       
