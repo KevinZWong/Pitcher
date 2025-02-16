@@ -2,7 +2,6 @@ import time
 from typing import List, Optional, Union, Literal
 from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.graph import Graph, START, END
-from langchain_groq import ChatGroq
 import asyncio
 from dataclasses import dataclass
 from langchain_openai import ChatOpenAI
@@ -10,9 +9,9 @@ import json
 import os
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
-from langchain.output_parsers import PydanticOutputParser
-from langchain.prompts import ChatPromptTemplate
-from image_gen import create_mermaid_charts
+# from image_gen import create_mermaid_charts
+from imagerag import search_q
+
 
 load_dotenv()
 
@@ -25,15 +24,13 @@ Approach:
 -> render the pdf
 '''
 
-#creating models for outputs
-'''
-
-'''
-
 class SlideModel(BaseModel):
     marp_markdown: str
     image_placeholder_filenames: List[str]
     image_placeholder_desc: List[str]
+
+class ImageRelevance(BaseModel):
+    score: float
 
 def create_presentation_outline(context: dict) -> dict:
     """
@@ -92,23 +89,49 @@ def create_presentation_outline(context: dict) -> dict:
     print("Sending LLM layout call")
     response = structured_llm.invoke(messages)
     context.update({
-        "slides": response.dict(),
+        "slides": response.model_dump(),
         "generated_at": time.time()
     })
     print(f"Received layout (Time Taken {time.time() - start_time})")
     return context
+
+
+def rag_search_image(context: dict) -> dict:
+    for i in range(len(context['slides']['image_placeholder_desc'])):
+
+        desc = context['slides']['image_placeholder_desc'][i]
+        ret = search_q(query= desc, k=1)
+        # Prepare the prompt for the LLM call
+        prompt = f"Is the image retrieved from the RAG search relevant to the description: {desc}?"
+        
+        # Initialize the LLM with structured output
+        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7, openai_api_key=os.getenv("OPENAI_API_KEY"))
+        structured_llm = llm.with_structured_output(ImageRelevance)
+        
+        # Make the LLM calcdl
+        response = structured_llm.invoke(prompt)
+        
+        # Check if the response indicates relevance
+        if response['score'] > 0.6:
+            context['slides']['image_placeholder_filename'][i] = ret['filepath']
+            print(f"Image {filename} is relevant to the description: {desc}")
+        else:
+            print(f"Image {filename} is not relevant to the description: {desc}\n"
+                  f"The score was {response['score']}")
 
 # Example of creating the graph
 def create_presentation_graph() -> Graph:
     workflow = Graph()
     
     workflow.add_node("create_outline", create_presentation_outline)
-    workflow.add_node("create_mermaid_charts", create_mermaid_charts)
-    workflow.set_entry_point("create_outline")
-    
+    # workflow.add_node("create_mermaid_charts", create_mermaid_charts)
+    workflow.add_node("rag_image", rag_search_image)
     # Add edges
-    workflow.add_edge("create_outline", "create_mermaid_charts")
-    workflow.add_edge("create_mermaid_charts", END)
+    # workflow.add_edge("create_outline", "create_mermaid_charts")
+    workflow.set_entry_point("create_outline")
+
+    workflow.add_edge("create_outline", "rag_image")
+    workflow.add_edge("rag_image", END)
     
     return workflow.compile()
 

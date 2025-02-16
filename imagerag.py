@@ -1,4 +1,4 @@
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.text_splitter import CharacterTextSplitter
 import json
 import os
 from dotenv import load_dotenv
@@ -17,7 +17,7 @@ embeddings = OpenAIEmbeddings()
 def load_image_descriptins(name="images"):
     with open("image_metadata.json", 'r', encoding='utf-8') as file:
                 data = json.load(file)
-    text_splitter = RecursiveCharacterTextSplitter(
+    text_splitter = CharacterTextSplitter(
         chunk_size=4000, 
         chunk_overlap=0,  
         length_function=len,
@@ -55,7 +55,7 @@ def load_image_descriptins(name="images"):
     print(ret)
     
 
-def search_q(query, coll="images"):
+def search_q(query, k=4, coll="images"):
     embeddings = OpenAIEmbeddings()
     username = 'demo'
     password = 'demo' 
@@ -70,13 +70,15 @@ def search_q(query, coll="images"):
     collection_name=coll,
     connection_string=CONNECTION_STRING,
     )
-    ret= db.similarity_search(query, k=4)
-    out=[]
+    ret= db.similarity_search(query, k=k)
+    out={}
     for r in ret:
-        out.append(r.metadata['filepath'])
+        out['filepath'] = r.metadata['filepath']
+        print(r)
+        out["description"] = r
 
-    print(ret)
-    print(out)
+    print("ret is", ret)
+    print("out is",out)
     return out
 
 # load_image_descriptins()
