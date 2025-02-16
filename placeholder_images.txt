@@ -1,0 +1,5 @@
+img_1.png: The MoodMuse logo featuring a stylized open book with a musical note and heart shape, emphasizing the themes of creativity and emotional well-being.
+img_2.png: An infographic illustrating the user journey from signing up, submitting journal entries, to receiving summaries and music recommendations.
+img_3.png: A professional photo of the founding team, Emily Chen and David Patel, in a collaborative setting.
+img_4.png: Visual representation of community engagement initiatives, showing partnerships and outreach programs.
+img_5.png: A futuristic depiction of MoodMuse's impact on a community, showcasing users engaging with the app in various environments.
