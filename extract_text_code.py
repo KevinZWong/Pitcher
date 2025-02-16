@@ -62,9 +62,10 @@ async def process_and_summarize_files(code_data_dir, summary_dir, summary_prompt
     print(f"Summary has been saved to: {output_file}")
 
 
-async def main():
-    load_dotenv()
-    
+async def process_text_and_code():
+    """
+    Main processing function for text and code analysis
+    """
     # Set up directories
     base_dir = Path("text_extract")
     text_data_dir = Path("text_data")
@@ -100,11 +101,15 @@ async def main():
 
     await process_and_feature_extract_files(chunks_dir, text_data_dir, summary_dir, feature_extraction_prompt)    
     await process_and_summarize_files(code_data_dir, summary_dir, summary_prompt)
-
+    
     load_docs("extract/summary", "current")
 
-    # put the data intto code_data and text_data directories
- 
+
+async def main():
+    load_dotenv()
+    print("Starting processing...")
+    await process_text_and_code()
+
 
 if __name__ == "__main__":
     asyncio.run(main())
