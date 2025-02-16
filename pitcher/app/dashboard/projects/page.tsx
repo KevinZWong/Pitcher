@@ -93,24 +93,28 @@ export default function CreateProjectPage() {
       newWindow.document.close();
       */
 
-      const response = await fetch('/api/projects', {
+      const response = await fetch('http://localhost:5000/api/projects', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          prompt: values.prompt,
+          githubUrl: values.githubLink,
+          driveUrl: values.driveLink
+        }),
       });
       
       if (!response.ok) throw new Error('Failed to create project');
 
-      const html = await response.text();
+      const data = await response.json();
       const newWindow = window.open('', '_blank', 'width=800,height=600');
       if (!newWindow) throw new Error('Popup blocked');
       
       newWindow.document.write(`
         <html>
           <body style="margin:0">
-            <iframe id="presentation" src="data:text/html;charset=utf-8,${encodeURIComponent(html)}" 
+            <iframe id="presentation" src="/presentation.html" 
               style="width:100vw;height:100vh;border:none;">
             </iframe>
           </body>
