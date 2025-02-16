@@ -25,7 +25,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { useUser } from "@/hooks/use-user"
 import router from "next/router"
-import callApi from "@/actions/call"
 
 const formSchema = z.object({
   githubLink: z.string().url({
@@ -94,7 +93,21 @@ export default function CreateProjectPage() {
       newWindow.document.close();
       */
 
-      const response = await callApi(values);
+      const response = await fetch('http://localhost:5000/api/projects', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt: values.prompt,
+          githubUrl: values.githubLink,
+          driveUrl: values.driveLink
+        }),
+      });
+      
+      if (!response.ok) throw new Error('Failed to create project');
+
+      const data = await response.json();
       const newWindow = window.open('', '_blank', 'width=800,height=600');
       if (!newWindow) throw new Error('Popup blocked');
       
