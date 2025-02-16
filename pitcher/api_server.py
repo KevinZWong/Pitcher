@@ -44,31 +44,30 @@ def process_project():
             if github_url:
                 repo_dir = os.path.join(temp_dir, 'repo')
                 print("github_url from the backend!", github_url)
-                #Repo.clone_from(github_url, repo_dir)
+                Repo.clone_from(github_url, repo_dir)
                 
                 # Decide which processor to use based on your criteria
                 # Here we're using describe.py for code processing
                 content.extend(process_code_directory(repo_dir))
                 
                 # Clean up happens automatically when tempfile directory is closed
-            #print('content from the backend!', content)
+            
             # Generate slides using marp
             if content:
                 # Combine all content and pass to prompt
                 combined_content = "\n".join(content)
                 print("prompt from the backend!", prompt)
-                #slides_html = generate_slides(prompt, combined_content)
+                slides_html = generate_slides(prompt, combined_content)
                 # Save the HTML file
-                #output_path = os.path.join('pitcher', 'public', 'slides.html')
-                #with open(output_path, 'w', encoding='utf-8') as f:
-                #    f.write(slides_html)
+                output_path = os.path.join('pitcher', 'public', 'slides.html')
+                with open(output_path, 'w', encoding='utf-8') as f:
+                    f.write(slides_html)
                 
-                return {'filename': 'slides.html'}, 200
+                return {'filename': 'slides.html'+' '.join(content)}, 200
 
             return {'error': 'No content to process'}, 400
             
     except Exception as e:
-        print("An error occurred:", e)
         return {'error': str(e)}, 500
 
 if __name__ == '__main__':
