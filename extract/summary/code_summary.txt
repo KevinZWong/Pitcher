@@ -109,3 +109,123 @@ The provided list details specific versions of various Python libraries, which i
 
 These libraries are commonly used in data analysis, image processing, and video editing tasks.
 
+
+=== license.txt ===
+
+Kevin Z Wong grants permission to use, copy, modify, and distribute his software freely, provided that the copyright and permission notices are included in all copies. The software is offered "as is" without any warranties, and the authors are not liable for any claims or damages related to its use.
+
+
+=== example.py ===
+
+The provided code creates a video using an image and dynamic movement effects. It imports necessary libraries, sets parameters such as frame rate, clip duration, resolution, and image path. The image is resized based on a specified upscale factor to ensure it meets the minimum resolution requirements. A temporary resized image is saved, and a `DynamicPositionClip` is created to apply movement using data from a JSON file. The final video is generated and saved as an MP4 file, after which the temporary image file is deleted.
+
+
+=== tkSliderWidget.py ===
+
+The Mapling project incorporates a Tkinter widget created by Mengxun Li, designed for graphical slider functionality. The `Slider` class allows users to create a customizable slider interface with adjustable parameters such as width, height, minimum and maximum values, and step sizes. It supports multiple bars that can be moved along a track, with options for displaying values and enabling/removing bars. The class includes methods for handling mouse events, updating bar positions, and calculating values based on user interactions. Key features include visual customization, event handling for user input, and callbacks for value changes. More details can be found on the project's GitHub page.
+
+
+=== DynamicEffects.py ===
+
+The provided code defines a `DynamicPositionClip` class that generates a video with a dynamically positioned image based on a movement model. The class initializes with a specified framerate and background dimensions. The `dynamicPosition` method calculates the image's position at a given time `t`, scaling the movement values to fit within the video frame while inverting the y-coordinate if necessary. The `generate_video` method creates a video clip using an image and a background color, applying the movement model to position the image throughout the clip's duration. In the main section, a video is generated using a specified image and movement data from a JSON file, and the final video is saved to a specified output path.
+
+
+=== PointSelection.py ===
+
+The PointSelectionApp is a graphical user interface built using Tkinter that allows users to select points on a canvas. The application features a 1000x1000 pixel canvas with labeled X and Y axes. Users can click to add points, which are displayed as small circles, and their coordinates are listed in a scrollable listbox. The app includes vertical and horizontal dashed lines that follow the cursor, providing visual guidance. Users can clear all points or finalize their selection with dedicated buttons. The app also supports scaling of coordinates and maintains a list of selected points, which can be retrieved in their original resolution. The application closes upon finalizing the point selection.
+
+
+=== Mapling.py ===
+
+The provided code is a Python script that utilizes the EasyGUI library for user input and the MoviePy library for video editing. It prompts the user to enter video settings, including frame rate, clip duration, resolution, video name, and upscale factor. The script checks for empty inputs and exits if any are found. It then allows the user to select an image file and a mapping model file, as well as a folder to save the output video.
+
+The script calculates the new dimensions for the image based on the specified upscale factor and resolution, resizing the image using OpenCV. It creates a temporary image file and generates a dynamic video clip using the specified movement model. Finally, it writes the composite video to the specified output path and deletes the temporary image file.
+
+
+=== mapling_models/spline_data_hook.json ===
+
+The provided data consists of three sets of values: 
+
+1. **x_values**: [4, 193, 280, 519, 855, 803, 463]
+2. **y_values**: [3, 287, 670, 955, 823, 513, 397]
+3. **z_values**: [0.0, 2.42, 5.24, 7.63, 8.45, 9.16, 10.0]
+
+These values can represent a dataset where x and y values could indicate coordinates or measurements, while z values appear to be derived metrics or indices related to the x and y values. The z_values increase progressively, suggesting a correlation with the x and y values.
+
+
+=== TimeAdjustment.py ===
+
+The provided code defines a `SliderApp` class using Tkinter, which creates a graphical user interface (GUI) for selecting time intervals between points using a slider widget. The application initializes with a specified length effect and a list of points, calculates intervals based on the length effect, and sets up a slider and label for user interaction. A "Done" button finalizes the selection and closes the application. The slider allows users to adjust values, and the current slider values can be retrieved upon closing the app. The main section of the code creates an instance of the `SliderApp` and starts the Tkinter event loop.
+
+
+=== PathCreator.py ===
+
+The provided code snippet utilizes the Tkinter library to create a graphical user interface (GUI) for selecting points that represent a path for an image. Users are prompted to select points, which are then processed to extract their coordinates. A second GUI allows users to adjust speed values associated with these points using sliders. The x and y coordinates of the selected points, along with the speed values, are converted into numpy arrays. A 3D spline is generated using the Spline3D class, which is then plotted. Finally, the user is prompted to name the model, and the spline data is saved under that name.
+
+
+=== mapling_models/spline_data_loop.json ===
+
+The data consists of three sets of values: 
+
+1. **x_values**: [7, 317, 599, 678, 520, 325, 394, 648, 991]
+2. **y_values**: [-1, 113, 383, 715, 900, 800, 396, 212, 5]
+3. **z_values**: [0.0, 1.5, 3.66, 4.5, 4.89, 5.39, 6.29, 8.0, 10.0]
+
+These values may represent a dataset with three dimensions, where each set corresponds to a different variable. The x_values range from 7 to 991, y_values vary from -1 to 900, and z_values increase from 0.0 to 10.0.
+
+
+=== README.md ===
+
+Mapling is a video animation tool that transforms images into videos with customizable pan movements. It upscales images to 150% of the video resolution and animates them at 60 frames per second using a customizable 3D spline graph to define movement paths. Users can create unique movement paths by adjusting points on the graph and setting time intervals for speed control.
+
+**Installation Requirements:**
+- Python 3.7+, Pip, and a virtual environment are recommended. Users can install the tool by cloning the repository and running the necessary requirements.
+
+**Usage Steps:**
+1. **Path Creation:**
+   - Run `PathCreator.py` to design custom movement paths using a GUI.
+   - Adjust time intervals for speed and finalize the path.
+   - Preview the 3D model of camera positions and save the model.
+
+2. **Video Creation:**
+   - Execute `Mapling.py` to set video parameters (framerate, duration, resolution).
+   - Select the image and the saved Mapling model.
+   - Finalize settings and save the resulting video in the designated folder.
+
+This tool allows for complete customization of image movements, making it versatile for various animation projects.
+
+
+=== requirements.txt ===
+
+The text lists specific versions of various Python libraries, which include:
+
+- **easygui** (0.98.3)
+- **fonttools** (4.47.0)
+- **imageio** (2.33.1)
+- **imageio-ffmpeg** (0.4.9)
+- **matplotlib** (3.8.2)
+- **moviepy** (1.0.3)
+- **numpy** (1.26.2)
+- **opencv-python** (4.8.1.78)
+- **scipy** (1.11.4)
+- **tqdm** (4.66.1)
+
+These libraries are commonly used for tasks related to image processing, numerical computations, and data visualization in Python.
+
+
+=== Spline3D.py ===
+
+The provided code defines a `Spline3D` class for creating and manipulating 3D cubic spline interpolations based on given x, y, and z points. Key functionalities include:
+
+1. **Initialization**: The class can be initialized with x, y, and z coordinates, which are stored as numpy arrays and used to create cubic spline interpolations.
+
+2. **3D Plotting**: The `plot_3d_spline` method generates a 3D plot of the spline using matplotlib.
+
+3. **Finding Coordinates**: The class includes methods to find the parameter `t` corresponding to a specific z value and to retrieve the corresponding x and y values.
+
+4. **Data Management**: It provides methods for saving the spline data to a JSON file and loading data from an existing JSON file. The `save_data` method includes checks for file overwriting and directory creation.
+
+5. **Example Usage**: In the main block, the class is instantiated with predefined path and speed points, followed by plotting the spline and saving the model data.
+
+Overall, the `Spline3D` class is designed for 3D spline interpolation, visualization, and data management.
+

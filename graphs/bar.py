@@ -3,7 +3,8 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 from PIL import Image
-
+import os
+import time
 def create_bar_chart(x_values, y_values, labels=None, title="Bar Chart", 
                     xlabel="X Axis", ylabel="Y Axis", output_file="bar_chart.png"):
     """
@@ -45,12 +46,15 @@ def create_bar_chart(x_values, y_values, labels=None, title="Bar Chart",
     plt.tight_layout()
     
     # Save the plot
-    plt.savefig(output_file, dpi=300, bbox_inches='tight')
-    with Image.open(output_file) as img:
-        width, height = img.size
+    output_path = os.path.join("/Users/swastikagrawal/Documents/TreeHacks/Pitcher/pitcher/public",output_file)
+    fig = plt.gcf()  # Get current figure
+    width, height = fig.get_size_inches()
+    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    # time.sleep(1)
+    # with Image.open(output_path) as img:
+    #     width, height = img.size
     plt.close()
     return width, height
-
 
 # Example usage:
 if __name__ == "__main__":

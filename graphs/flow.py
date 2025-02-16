@@ -2,7 +2,8 @@ from pydantic import BaseModel
 from typing import List
 from graphviz import Digraph
 from PIL import Image
-
+import os
+import time
 class Connection(BaseModel):
    from_node: str 
    to_node: str
@@ -28,44 +29,48 @@ def create_flowchart(flow: Flow, filename="flowchart", direction='TB'):
    Returns:
    tuple: The dimensions (width, height) of the saved PNG file.
    """
-   
-   # Initialize graph
-   dot = Digraph()
-   dot.attr(rankdir=direction)
-   
-   # Default styles for different node types
-   default_styles = {
-       'start': {'shape': 'oval', 'fillcolor': '#90EE90', 'style': 'filled'},
-       'end': {'shape': 'oval', 'fillcolor': '#FFB6C1', 'style': 'filled'},
-       'decision': {'shape': 'diamond', 'fillcolor': '#87CEEB', 'style': 'filled'},
-       'process': {'shape': 'box', 'fillcolor': 'white', 'style': 'filled'}
-   }
-   
-   # Add nodes
-   for node in flow.nodes:
-       # Determine node style
-       style = {}
-       if node.name.lower().startswith('decision'):
-           style = default_styles['decision']
-       elif node.name.lower().startswith('start'):
-           style = default_styles['start']
-       elif node.name.lower().startswith('end'):
-           style = default_styles['end']
-       else:
-           style = default_styles['process']
-       
-       # Create node
-       dot.node(node.name, node.label, **style)
-   
-   # Add connections
-   for conn in flow.connections:
-       dot.edge(conn.from_node, conn.to_node)
-   
-   # Save the flowchart and get its dimensions
-   dot.render(filename, format='png', cleanup=True)
-   with Image.open(f"{filename}.png") as img:
-       width, height = img.size
-   return width, height
+   try:
+        # Initialize graph
+        dot = Digraph()
+        dot.attr(rankdir=direction)
+        
+        # Default styles for different node types
+        default_styles = {
+            'start': {'shape': 'oval', 'fillcolor': '#90EE90', 'style': 'filled'},
+            'end': {'shape': 'oval', 'fillcolor': '#FFB6C1', 'style': 'filled'},
+            'decision': {'shape': 'diamond', 'fillcolor': '#87CEEB', 'style': 'filled'},
+            'process': {'shape': 'box', 'fillcolor': 'white', 'style': 'filled'}
+        }
+        
+        # Add nodes
+        for node in flow.nodes:
+            # Determine node style
+            style = {}
+            if node.name.lower().startswith('decision'):
+                style = default_styles['decision']
+            elif node.name.lower().startswith('start'):
+                style = default_styles['start']
+            elif node.name.lower().startswith('end'):
+                style = default_styles['end']
+            else:
+                style = default_styles['process']
+            
+            # Create node
+            dot.node(node.name, node.label, **style)
+        
+        # Add connections
+        for conn in flow.connections:
+            dot.edge(conn.from_node, conn.to_node)
+        
+        # Save the flowchart and get its dimensions
+        output_path = os.path.join("/pitcher/public", filename)
+        dot.render(output_path, format='png', cleanup=True)
+        time.sleep(0.5)
+        with Image.open(f"{filename}.png") as img:
+            width, height = img.size
+        return width, height
+   except Exception as e: 
+      return 0,0
 
 # Example usage
 if __name__ == "__main__":

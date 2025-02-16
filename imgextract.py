@@ -113,6 +113,7 @@ async def extract_images_from_pdf(pdf_path, output_base_dir):
     """
     pdf_name = Path(pdf_path).stem
     output_dir = output_base_dir / pdf_name
+    output_dir = os.path.join("pitcher/public", output_dir)
     output_dir.mkdir(exist_ok=True, parents=True)
     
     pdf_document = pymupdf.open(pdf_path)
@@ -132,7 +133,7 @@ async def extract_images_from_pdf(pdf_path, output_base_dir):
     pdf_document.close()
     return all_metadata
 
-async def process_directory(input_dir: str = "text_data", output_dir: str = "extracted_images"):
+async def process_directory(input_dir: str = "text_data", output_dir: str = "img"):
     """
     Process all PDF files in the specified directory
     """
@@ -140,6 +141,7 @@ async def process_directory(input_dir: str = "text_data", output_dir: str = "ext
     input_path = Path(input_dir)
     output_path = Path(output_dir)
     output_path.mkdir(exist_ok=True, parents=True)
+    json_path = Path("extracted_images")
     
     pdf_files = list(input_path.glob("**/*.pdf"))
     
@@ -157,7 +159,7 @@ async def process_directory(input_dir: str = "text_data", output_dir: str = "ext
     #     for i, metadata in enumerate(all_results)
     # }
     
-    combined_json_path = output_path / "combined_metadata.json"
+    combined_json_path = json_path / "combined_metadata.json"
     async with aiofiles.open(combined_json_path, "w", encoding="utf-8") as f:
         await f.write(json.dumps(combined_metadata, indent=2))
     

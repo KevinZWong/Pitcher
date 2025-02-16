@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 import matplotlib
+import os
+import time
 matplotlib.use('Agg')
 def create_line_chart(x_values, y_values, labels=None, title="Line Chart",
                      xlabel="X Axis", ylabel="Y Axis", output_file="line_chart.png",
@@ -66,10 +68,10 @@ def create_line_chart(x_values, y_values, labels=None, title="Line Chart",
     plt.tight_layout()
     
     # Save the plot
-    plt.savefig(output_file, dpi=300, bbox_inches='tight')
-    # Open the saved image to get its dimensions
-    with Image.open(output_file) as img:
-        width, height = img.size
+    output_path = os.path.join("/Users/swastikagrawal/Documents/TreeHacks/Pitcher/pitcher/public",output_file)
+    fig = plt.gcf()  # Get current figure
+    width, height = fig.get_size_inches()
+    plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close()
     
     return width, height

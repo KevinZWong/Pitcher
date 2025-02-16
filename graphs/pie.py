@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 from PIL import Image
 import matplotlib
+import os
+import time
+
 matplotlib.use('Agg')
 def create_pie_chart(values, labels, title="Pie Chart", output_file="pie_chart.png", 
                      colors=None, show_percentages=True, show_legend=True):
@@ -58,11 +61,10 @@ def create_pie_chart(values, labels, title="Pie Chart", output_file="pie_chart.p
     plt.tight_layout()
     
     # Save the plot
-    plt.savefig(output_file, dpi=300, bbox_inches='tight')
-    
-    # Open the saved image to get its dimensions
-    with Image.open(output_file) as img:
-        width, height = img.size
+    output_path = os.path.join("/Users/swastikagrawal/Documents/TreeHacks/Pitcher/pitcher/public",output_file)
+    fig = plt.gcf()  # Get current figure
+    width, height = fig.get_size_inches()
+    plt.savefig(output_path, dpi=300, bbox_inches='tight')
     
     plt.close()
     

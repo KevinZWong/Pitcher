@@ -3,144 +3,108 @@ marp: true
 theme: default
 paginate: true
 size: 16:9
-
 ---
 
 <style>
   section {
     padding: 20px;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-  }
-
-  h1, h2, h3 {
+    font-family: 'Arial', sans-serif;
     color: #333;
   }
-
+  h1, h2 {
+    text-align: center;
+    color: #007BFF;
+  }
   ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  li {
     margin: 10px 0;
   }
 </style>
 
-# Sales Pitch for JournalAI
+# **Sales Pitch for JournalAI**
 
 ---
 
-## Introduction to JournalAI
-- AI-driven journaling platform  
-- Offers sentiment analysis, mood tracking, and personalized song recommendations  
-- Targeting mental health enthusiasts and professionals  
+## **Introduction**
+- AI-driven journaling platform.
+- Summarizes entries, analyzes sentiment, tracks mood, and recommends songs.
+- Targets individuals, mental health professionals, and music enthusiasts.
 
 ---
 
-## Business Model Overview
-- **Revenue Streams**:  
-  - Subscription plans ($9.99 - $19.99/month)  
-  - Affiliate marketing  
-  - In-app purchases  
-  - Corporate wellness programs  
-- **Initial Capital Requirement**:  
-  - Estimated at $1.5 million  
-  - Funding from angel investors and crowdfunding  
+## **Market Opportunity**
+- Mental health app market projected to reach **$4.2 billion by 2027** (CAGR: 24%).
+- **30%** of the population engages in journaling for self-improvement.
+- **90%** of users prefer personalized interactions in services.
+
+![w:800 h:400](graphs/pies/AI in MentalHealthMarketGrowth.png)
 
 ---
 
-## Target Market
-- **Demographics**:  
-  - Young adults (ages 15-40)  
-  - Individuals seeking mental wellness  
-- **Market Size**:  
-  - Digital mental health app market projected to reach **$4.2 billion by 2027**  
-  - 30% of the population engages in journaling  
+## **Key Features**
+- **AI Summarization**: Generates concise summaries of journal entries.
+- **Sentiment Analysis**: Tracks emotional trends over time.
+- **Mood Tracking**: Visual interfaces for mood changes.
+- **Personalized Music Recommendations**: Curated playlists based on mood.
+
+![w:800 h:400](graphs/pies/MoodTrackingFeatureAdoption.png)
 
 ---
 
-## Key Features of JournalAI
-- User authentication and rich text editor  
-- Visual mood tracker  
-- AI summaries using NLP models (spaCy, BERT)  
-- Music recommendations via Spotify API  
+## **Technical Overview**
+- **Frontend**: Built using **React.js** or **Vue.js**.
+- **Backend**: Powered by **Node.js** with **Express.js**.
+- **Database**: **MongoDB** for flexible document storage.
+- **NLP Processing**: Includes **spaCy** and **Hugging Face's Transformers**.
 
 ---
 
-## Technical Architecture
-- **Frontend**: React.js  
-- **Backend**: Node.js with Express  
-- **Database**: MongoDB for flexible storage  
-- **AI Services**:  
-  - NLP processing for entry analysis  
-  - Sentiment analysis for emotional insights  
+## **User Growth Strategy**
+- Targeting **10,000 registered users** in Year 1.
+- Aiming for **100,000 users** by Year 3.
+- Focused on **20%** monthly increase in organic traffic.
+
+![w:800 h:400](graphs/lines/ProjectedUserBase.png)
 
 ---
 
-## Scalability and Security
-- **Hosting**: Cloud services (AWS/Google Cloud) for scalability  
-- **Data Security**:  
-  - AES-256 encryption for user data  
-  - OAuth 2.0 for secure authentication  
+## **Revenue Model**
+- **Freemium Model**: Free basic access with premium features.
+- Subscription tiers ranging from **$9.99 to $19.99** per month.
+- Additional revenue through affiliate marketing and corporate wellness programs.
+
+![w:800 h:400](graphs/lines/RevenueProjection.png)
 
 ---
 
-## User Engagement Strategies
-- Content marketing to increase organic traffic (20% monthly)  
-- Social media campaigns targeting younger audiences  
-- Gamification strategies to enhance user retention (target churn rate < 5%)  
+## **Competitive Advantage**
+- Unique combination of AI summarization and mood tracking.
+- Personalized music recommendations enhance user experience.
+- Strong focus on data privacy and user engagement strategies.
 
 ---
 
-## Implementation Timeline
-1. **Research and Development** (0-3 months)  
-2. **Beta Launch** (4-6 months)  
-3. **Full Launch** (6-12 months)  
-4. **User Feedback and Enhancements**  
+## **Financial Projections**
+- Initial capital requirement: **$1.5 million**.
+- Projected annual revenue of approximately **$28 million** by Year 3.
+- Expected churn rate of less than **5%** in the first year.
+
+![w:800 h:400](graphs/bars/MarketValuation.png)
 
 ---
 
-## Financial Projections
-- Expected to reach **100,000 active users in 18 months**  
-- Projected annual revenue of **$28 million by Year 3**  
-- Customer acquisition cost (CAC) estimated at **$30/user**  
+## **Conclusion**
+- JournalAI combines technology and mental wellness.
+- Strong market potential with a tech-driven approach.
+- Join us in revolutionizing the journaling experience!
 
 ---
 
-## Market Opportunities
-- Growing demand for digital mental health solutions  
-- Potential partnerships with mental health organizations  
-- Opportunity to expand features based on user feedback  
+## **Q&A**
+- Thank you for your time! Any questions?  
 
----
-
-## Conclusion
-- JournalAI offers a unique blend of technology and mental wellness  
-- Strong market potential and growth strategies in place  
-- Join us in revolutionizing the journaling experience through AI!  
-
----
-
-## User Base Growth Projection
-![w:800 h:400](graphs/pies/UserBaseGrowth.png)
-
----
-
-## Revenue Growth Projection
-![w:800 h:400](graphs/bars/RevenueGrowth.png)
-
----
-
-## Digital Journaling Market Growth
-![w:800 h:400](graphs/bars/DigitalJournalingMarketGrowth.png)
-
----
-
-## User Engagement Trends
-![w:800 h:400](graphs/lines/UserEngagementTrends.png)
-
----
-
-## Mental Health App Market Growth
-![w:800 h:400](graphs/lines/MentalHealthAppMarketGrowth.png)
-
----
-
-## User Journey Flow
-![w:900](graphs/flows/AI-drivenJournalingPlatformFlow.png)
+![w:800 h:400](graphs/flows/StartupBusinessModel.png)

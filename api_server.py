@@ -1,3 +1,4 @@
+import traceback
 from flask import Flask, request, send_file
 from flask_cors import CORS
 import os
@@ -69,8 +70,9 @@ def create_slides(prompt):
         with open("presentation.md", "w") as file:
             file.write(result['slides']['marp_markdown'])
         
-        output_html = "presentation.html"
+        output_html = "pitcher/public/presentation.html"
         subprocess.run(["marp", "presentation.md", "-o", output_html], check=True)
+        time.sleep(2)
         return True
     except Exception as e:
         print(f"Error in slide creation: {e}")
@@ -90,10 +92,10 @@ def process_project():
             return {'error': 'No content to process'}, 400
 
         # Process sequentially instead of concurrently
-        if drive_url:
-            process_drive_data(drive_url)
-        if github_url:
-            process_github_data(github_url)
+        # if drive_url:
+        #     process_drive_data(drive_url)
+        # if github_url:
+        #     process_github_data(github_url)
         
         # Generate images
         image_gen()
@@ -106,8 +108,25 @@ def process_project():
                 'filename': 'presentation.html'}, 200
 
     except Exception as e:
+        
         print("An error occurred:", e)
+        print(traceback.format_exc())
         return {'error': str(e)}, 500
+
+@app.route('/api/presentation-status', methods=['GET'])
+def find_status():
+    try:
+        with open("status.txt", "r") as file:
+            content = file.read()
+            if "move" in content:
+                with open('status.txt', 'w') as f:
+                    f.write("not ready")
+                return {'status': 'Yes'}, 200
+            else:
+                return {'status': 'Wait'}, 200
+    except FileNotFoundError:
+        return {'error': 'status.txt file not found'}, 404
+
 
 if __name__ == '__main__':
     print("Starting server...")
