@@ -13,7 +13,7 @@ from typing import List, Dict
 import aiofiles
 from openai import AsyncOpenAI
 import glob
-
+from iris import load_docs
 
 # Load environment variables
 load_dotenv()
@@ -162,6 +162,7 @@ async def process_directory(input_dir: str = "image_data", output_dir: str = "ex
     
     total_images = sum(len(metadata) for metadata in all_results)
     print(f"Completed: {len(pdf_files)} PDFs, {total_images} images extracted")
+    load_docs(combined_json_path, "image_data")
 
 async def main():
     try:
