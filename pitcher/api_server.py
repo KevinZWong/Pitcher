@@ -69,6 +69,14 @@ def process_project():
             
     except Exception as e:
         return {'error': str(e)}, 500
+    
+@app.route('/api/presentation-status', methods=['GET'])
+def presentation_status():
+    if True:
+        return {'status': 'ready'}, 200
+    else:
+        return {'status': 'processing'}, 200
+
 
 if __name__ == '__main__':
     print("Starting server...")

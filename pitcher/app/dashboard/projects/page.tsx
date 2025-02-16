@@ -136,7 +136,7 @@ export default function CreateProjectPage() {
             
             async function checkStatus() {
               try {
-                const status = await fetch('/api/presentation-status').then(r => r.text());
+                const status = await fetch('http://127.0.0.1:5000/api/presentation-status').then(r => r.text());
                 if (status.includes('Y')) {
                   const iframe = document.getElementById('presentation');
                   const rightArrowEvent = new KeyboardEvent('keydown', {

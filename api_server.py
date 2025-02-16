@@ -70,6 +70,16 @@ def process_project():
     except Exception as e:
         print("An error occurred:", e)
         return {'error': str(e)}, 500
+    
+@app.route('/api/presentation-status', methods=['GET'])
+def get_presentation_status():
+    with open('status.txt', 'r') as f:
+        content = f.read()
+    if content=="Move":
+        with open('status.txt', 'w') as f:
+            f.write("Wait")
+        return {'status': 'Yes'}, 200
+    return {'status': 'pending'}, 200
 
 if __name__ == '__main__':
     print("Starting server...")
