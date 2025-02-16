@@ -52,6 +52,47 @@ export default function CreateProjectPage() {
   
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
+      /* Temporary test with local file
+      const newWindow = window.open('', '_blank', 'width=800,height=600');
+      if (!newWindow) throw new Error('Popup blocked');
+      
+      newWindow.document.write(`
+        <html>
+          <body style="margin:0">
+            <iframe id="presentation" src="/slides.html" 
+              style="width:100vw;height:100vh;border:none;">
+            </iframe>
+          </body>
+          <script>
+            let currentSlide = 0;
+            
+            async function checkStatus() {
+              try {
+                const status = 'N'; // Hardcoded for testing
+                if (status.includes('N')) {
+                  const iframe = document.getElementById('presentation');
+                  const rightArrowEvent = new KeyboardEvent('keydown', {
+                    key: 'ArrowRight',
+                    keyCode: 39,
+                    which: 39,
+                    bubbles: true
+                  });
+                  iframe.contentWindow.document.dispatchEvent(rightArrowEvent);
+                  currentSlide++;
+                }
+              } catch (error) {
+                console.error('Status check failed:', error);
+              }
+              setTimeout(checkStatus, 1000); // Poll every second
+            }
+            
+            checkStatus();
+          </script>
+        </html>
+      `);
+      newWindow.document.close();
+      */
+
       const response = await fetch('/api/projects', {
         method: 'POST',
         headers: {
@@ -61,10 +102,60 @@ export default function CreateProjectPage() {
       });
       
       if (!response.ok) throw new Error('Failed to create project');
+
+      const html = await response.text();
+      const newWindow = window.open('', '_blank', 'width=800,height=600');
+      if (!newWindow) throw new Error('Popup blocked');
+      
+      newWindow.document.write(`
+        <html>
+          <body style="margin:0">
+            <iframe id="presentation" src="data:text/html;charset=utf-8,${encodeURIComponent(html)}" 
+              style="width:100vw;height:100vh;border:none;">
+            </iframe>
+          </body>
+          <script>
+            document.addEventListener('DOMContentLoaded', () => {
+              const fullscreenEvent = new KeyboardEvent('keydown', {
+                key: 'f',
+                keyCode: 70,
+                which: 70,
+                bubbles: true
+              });
+              document.getElementById('presentation').contentWindow.document.dispatchEvent(fullscreenEvent);
+            });
+
+            let currentSlide = 0;
+            
+            async function checkStatus() {
+              try {
+                const status = await fetch('/api/presentation-status').then(r => r.text());
+                if (status.includes('N')) {
+                  const iframe = document.getElementById('presentation');
+                  const rightArrowEvent = new KeyboardEvent('keydown', {
+                    key: 'ArrowRight',
+                    keyCode: 39,
+                    which: 39,
+                    bubbles: true
+                  });
+                  iframe.contentWindow.document.dispatchEvent(rightArrowEvent);
+                  currentSlide++;
+                }
+              } catch (error) {
+                console.error('Status check failed:', error);
+              }
+              setTimeout(checkStatus, 1000); // Poll every second
+            }
+            
+            checkStatus();
+          </script>
+        </html>
+      `);
+      newWindow.document.close();
       
       toast({
         title: "Project created",
-        description: "Your project has been created successfully.",
+        description: "Your presentation has been generated successfully.",
       });
     } catch (error) {
       toast({
