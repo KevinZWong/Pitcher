@@ -59,46 +59,9 @@ messages=[{
                 Now I will provide you with the document and you return a list of all the charts that should be created with the appropriate required
                 data.
                 Make sure to fill in the correct values for each of the charts.
-                For flow chart you will need to return a dictopry of nodes, connections, and node styles.
-                here is an example 
-                nodes = {{
-                'start': 'Start',
-                'input': 'Enter Data',
-                'decision1': 'Is Data Valid?',
-                'process1': 'Process Data',
-                'db': 'Save to Database',
-                'output': 'Display Results',
-                'end': 'End'
-            }}
-            
-            connections = [
-                ('start', 'input'),
-                ('input', 'decision1'),
-                ('decision1', 'process1', 'Yes'),
-                ('decision1', 'input', 'No'),
-                ('process1', 'db'),
-                ('db', 'output'),
-                ('output', 'end')
-            ]
-            
-            node_styles = {{
-                'db': {{
-                    'shape': 'cylinder',
-                    'fillcolor': '#DDA0DD',
-                    'style': 'filled'
-                }},
-                'input': {{
-                    'shape': 'parallelogram',
-                    'fillcolor': '#FAFAD2',
-                    'style': 'filled'
-                }},
-                'output': {{
-                    'shape': 'parallelogram',
-                    'fillcolor': '#FAFAD2',
-                    'style': 'filled'
-                }}
-            }}
-
+                Do not use spaces between names.
+                Make as many meaningful graphs as you can
+           
                 """
             }]
 
