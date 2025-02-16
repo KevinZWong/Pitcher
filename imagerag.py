@@ -1,8 +1,7 @@
-from langchain.text_splitter import CharacterTextSplitter
 import json
 import os
 from dotenv import load_dotenv
-from langchain.text_splitter import CharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import JSONLoader
 import json
 from pathlib import Path
@@ -17,7 +16,7 @@ embeddings = OpenAIEmbeddings()
 def load_image_descriptins(name="images", filename="image_metadata.json"):
     with open(filename, 'r', encoding='utf-8') as file:
                 data = json.load(file)
-    text_splitter = CharacterTextSplitter(
+    text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=4000, 
         chunk_overlap=0,  
         length_function=len,
@@ -81,5 +80,5 @@ def search_q(query, k=4, coll="images"):
     print("out is",out)
     return out
 
-# load_image_descriptins()
+load_image_descriptins()
 # search_q("chlorophyl")

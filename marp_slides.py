@@ -62,7 +62,8 @@ def create_presentation_outline(context: dict) -> dict:
     2. Create a logical flow from introduction to conclusion
     3. Include image placeholders using standard markdown image syntax: ![alt_text](path)
     4. For each image placeholder:
-    - Use a unique identifier like {{"img_1.png"}}, {{"img_2.png"}} etc. as the path
+    - Use a folder for the paths named "imgs"
+    - Use a unique identifier like {{"imgs/img_1.png"}}, {{"imgs/img_2.png"}} etc. as the path (the folder is common however)
     - Provide a detailed description of what the image should contain in HTML comments below the image tag, this must be ~ 150 words
     <!-- Image description: A detailed explanation of what should be generated -->
     5. Every Slide should have one or more images, especially charts, schematics and diagrams
@@ -110,14 +111,16 @@ def rag_search_image(context: dict) -> dict:
         
         # Make the LLM calcdl
         response = structured_llm.invoke(prompt)
-        
+
         # Check if the response indicates relevance
-        if response['score'] > 0.6:
-            context['slides']['image_placeholder_filename'][i] = ret['filepath']
+        if response.score >= 0.0:
+            context['slides']['image_placeholder_filenames'][i] = ret['filepath']
+            filename = context['slides']['image_placeholder_filenames'][i]
             print(f"Image {filename} is relevant to the description: {desc}")
         else:
             print(f"Image {filename} is not relevant to the description: {desc}\n"
                   f"The score was {response['score']}")
+        return context
 
 # Example of creating the graph
 def create_presentation_graph() -> Graph:
@@ -130,7 +133,7 @@ def create_presentation_graph() -> Graph:
     # workflow.add_edge("create_outline", "create_mermaid_charts")
     workflow.set_entry_point("create_outline")
 
-    workflow.add_edge("create_outline", "rag_image")
+    workflow.add_edge("create_outline", 'rag_image')
     workflow.add_edge("rag_image", END)
     
     return workflow.compile()
