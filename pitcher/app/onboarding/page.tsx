@@ -19,7 +19,7 @@ export default function Onboarding() {
   const updateUser = useMutation(api.users.update)
 
   if (user && user.hasCompletedOnboarding) {
-    redirect('/dashboard')
+    redirect('/dashboard/projects')
   }
 
   return (
@@ -40,7 +40,7 @@ export default function Onboarding() {
                 email: user?.email, // Preserve existing email if any
                 hasCompletedOnboarding: true
               })
-              router.push("/dashboard")
+              router.push("/dashboard/projects")
             } finally {
               setIsLoading(false)
             }

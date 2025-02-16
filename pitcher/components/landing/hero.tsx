@@ -21,7 +21,7 @@ const Hero1 = () => {
             </p>
             <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
               <Button className="w-full sm:w-auto" asChild>
-                <a href="/dashboard">Create Your Pitch</a>
+                <a href="/dashboard/projects">Create Your Pitch</a>
               </Button>
               <Button variant="outline" className="w-full sm:w-auto">
                 Watch Demo

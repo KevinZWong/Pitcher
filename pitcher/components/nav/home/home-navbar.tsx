@@ -201,7 +201,7 @@ const Navbar1 = () => {
           </div>
           <div className="flex gap-2">
             <Button size="sm" asChild>
-              <a href="/dashboard">Dashboard</a>
+              <a href="/dashboard/projects">get started, be pitchtastic!!!</a>
             </Button>
           </div>
         </nav>
@@ -341,7 +341,7 @@ const Navbar1 = () => {
                 </div>
                 <div className="flex flex-col gap-3 mt-4">
                   <Button asChild>
-                    <a href="/dashboard">Dashboard</a>
+                    <a href="/dashboard/projects">Dashboard</a>
                   </Button>
                 </div>
               </SheetContent>

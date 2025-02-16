@@ -23,25 +23,10 @@ export function Sidebar() {
       href: "/dashboard",
     },
     {
-      icon: Users,
-      label: "Team",
-      href: "/team",
-    },
-    {
       icon: Folders,
       label: "Projects",
       href: "/dashboard/projects",
-    },
-    {
-      icon: BarChart3,
-      label: "Analytics",
-      href: "/analytics",
-    },
-    {
-      icon: Settings,
-      label: "Settings",
-      href: "/dashboard/settings",
-    },
+    }
   ];
   return (
     <aside
