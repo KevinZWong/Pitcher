@@ -56,7 +56,7 @@ def create_presentation_outline(context: dict) -> dict:
     paginate: true
     size: 16:9
     ---
-
+    
     Follow these key requirements:
     1. Include Marp headers (marp:true etc)
     2. Create a logical flow from introduction to conclusion
