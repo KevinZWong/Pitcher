@@ -20,9 +20,17 @@ from dotenv import load_dotenv
 import random
 
 class StartupDataGenerator:
-    def __init__(self, api_key: str):
+    def __init__(self, api_key: str, output_dir: str = "data"):
+        """
+        Initialize the StartupDataGenerator.
+        
+        Args:
+            api_key (str): OpenAI API key
+            output_dir (str): Directory where generated files will be saved
+        """
         self.api_key = api_key
         self.client = AsyncOpenAI(api_key=api_key)
+        self.output_dir = Path(output_dir)
         
     def create_section_pdf(self, section: str, content: str, output_path: str):
         """Create a PDF document for a specific section."""
@@ -173,12 +181,19 @@ Write a comprehensive, well-structured response that could serve as a standalone
         
         return all_data
 
-    async def generate_and_save_startup_data(self, idea: str) -> Dict:
+    async def generate_and_save_startup_data(self, idea: str, output_dir: str = None) -> Dict:
+        """
+        Generate and save startup data.
+        
+        Args:
+            idea (str): The startup idea to analyze
+            output_dir (str, optional): Override the default output directory
+        """
         # Create data directory
-        data_dir = Path("data")
+        data_dir = Path(output_dir) if output_dir else self.output_dir
         data_dir.mkdir(exist_ok=True)
         
-        print("\nGenerating sections and files in parallel...")
+        print(f"\nGenerating sections and files in parallel in: {data_dir}")
         all_data = await self.generate_all_subsections(idea, data_dir)
         
         # Create index file
@@ -293,6 +308,7 @@ async def main_async():
     
     # Get API keys from environment variables
     api_key = os.getenv("OPENAI_API_KEY")
+    output_dir = os.getenv("OUTPUT_DIR", "data")  # Allow setting output dir via env var
     
     # Check if all required API keys are present
     if not api_key:
@@ -300,7 +316,8 @@ async def main_async():
     
     # Initialize generator
     generator = StartupDataGenerator(
-        api_key=api_key
+        api_key=api_key,
+        output_dir=output_dir
     )
     
     # Get input from user
