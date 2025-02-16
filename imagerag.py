@@ -14,8 +14,8 @@ load_dotenv()
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 embeddings = OpenAIEmbeddings()
 
-def load_image_descriptins(name="images"):
-    with open("image_metadata.json", 'r', encoding='utf-8') as file:
+def load_image_descriptins(name="images", filename="image_metadata.json"):
+    with open(filename, 'r', encoding='utf-8') as file:
                 data = json.load(file)
     text_splitter = CharacterTextSplitter(
         chunk_size=4000, 
