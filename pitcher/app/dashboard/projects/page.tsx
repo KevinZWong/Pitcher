@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-import { useToast } from "@/components/ui/use-toast"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { useToast } from "@/components/ui/use-toast";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -21,22 +21,25 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { useUser } from "@/hooks/use-user"
-import router from "next/router"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useUser } from "@/hooks/use-user";
+import router from "next/router";
 
 const formSchema = z.object({
   githubLink: z.string().url({
     message: "Please enter a valid GitHub URL.",
   }),
-  driveLink: z.string().url({
-    message: "Please enter a valid Google Drive URL.",
-  }).optional(),
+  driveLink: z
+    .string()
+    .url({
+      message: "Please enter a valid Google Drive URL.",
+    })
+    .optional(),
   prompt: z.string().min(1, {
     message: "Please enter presentation specifications.",
   }),
-})
+});
 
 export default function CreateProjectPage() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -46,10 +49,10 @@ export default function CreateProjectPage() {
       driveLink: "",
       prompt: "",
     },
-  })
+  });
 
-  const { toast } = useToast()
-  
+  const { toast } = useToast();
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       /* Temporary test with local file
@@ -93,24 +96,24 @@ export default function CreateProjectPage() {
       newWindow.document.close();
       */
 
-      const response = await fetch('http://localhost:5000/api/projects', {
-        method: 'POST',
+      const response = await fetch("http://127.0.0.1:5000/api/projects", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           prompt: values.prompt,
           githubUrl: values.githubLink,
-          driveUrl: values.driveLink
+          driveUrl: values.driveLink,
         }),
       });
-      
-      if (!response.ok) throw new Error('Failed to create project');
+
+      if (!response.ok) throw new Error("Failed to create project");
 
       const data = await response.json();
-      const newWindow = window.open('', '_blank', 'width=800,height=600');
-      if (!newWindow) throw new Error('Popup blocked');
-      
+      const newWindow = window.open("", "_blank", "width=800,height=600");
+      if (!newWindow) throw new Error("Popup blocked");
+
       newWindow.document.write(`
         <html>
           <body style="margin:0">
@@ -156,7 +159,7 @@ export default function CreateProjectPage() {
         </html>
       `);
       newWindow.document.close();
-      
+
       toast({
         title: "Project created",
         description: "Your presentation has been generated successfully.",
@@ -164,7 +167,7 @@ export default function CreateProjectPage() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to create project. Please try again.",
+        description: error.message || "An error occurred while creating the project.",
         variant: "destructive",
       });
     }
@@ -176,7 +179,8 @@ export default function CreateProjectPage() {
         <div className="mb-4">
           <h2 className="text-xl font-semibold mb-1">Create New Project</h2>
           <p className="text-sm text-muted-foreground">
-            Add a new project by providing the GitHub repository link and optional files.
+            Add a new project by providing the GitHub repository link and
+            optional files.
           </p>
         </div>
         <div>
@@ -189,7 +193,10 @@ export default function CreateProjectPage() {
                   <FormItem>
                     <FormLabel>GitHub Repository URL</FormLabel>
                     <FormControl>
-                      <Input placeholder="https://github.com/username/repo" {...field} />
+                      <Input
+                        placeholder="https://github.com/username/repo"
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>
                       The link to your GitHub repository
@@ -205,7 +212,10 @@ export default function CreateProjectPage() {
                   <FormItem>
                     <FormLabel>Google Drive Link (Optional)</FormLabel>
                     <FormControl>
-                      <Input placeholder="https://drive.google.com/..." {...field} />
+                      <Input
+                        placeholder="https://drive.google.com/..."
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>
                       Optional: Link to your Google Drive folder or file
@@ -217,12 +227,12 @@ export default function CreateProjectPage() {
               <FormItem>
                 <FormLabel>Or Upload Files</FormLabel>
                 <FormControl>
-                  <Input 
-                    type="file" 
-                    multiple 
+                  <Input
+                    type="file"
+                    multiple
                     onChange={(e) => {
-                      console.log(e.target.files)
-                    }} 
+                      console.log(e.target.files);
+                    }}
                   />
                 </FormControl>
                 <FormDescription>
@@ -236,9 +246,9 @@ export default function CreateProjectPage() {
                   <FormItem>
                     <FormLabel>Presentation Specifications</FormLabel>
                     <FormControl>
-                      <Input 
-                        placeholder="Enter any specific requirements for the presentation..." 
-                        {...field} 
+                      <Input
+                        placeholder="Enter any specific requirements for the presentation..."
+                        {...field}
                       />
                     </FormControl>
                     <FormDescription>
@@ -254,5 +264,5 @@ export default function CreateProjectPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
