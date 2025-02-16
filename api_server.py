@@ -92,10 +92,10 @@ def process_project():
             return {'error': 'No content to process'}, 400
 
         # Process sequentially instead of concurrently
-        # if drive_url:
-        #     process_drive_data(drive_url)
-        # if github_url:
-        #     process_github_data(github_url)
+        if drive_url:
+            process_drive_data(drive_url)
+        if github_url:
+            process_github_data(github_url)
         
         # Generate images
         image_gen()
@@ -118,7 +118,7 @@ def find_status():
     try:
         with open("status.txt", "r") as file:
             content = file.read()
-            if "move" in content:
+            if "Move" in content:
                 with open('status.txt', 'w') as f:
                     f.write("not ready")
                 return {'status': 'Yes'}, 200
