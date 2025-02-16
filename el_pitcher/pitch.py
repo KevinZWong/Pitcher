@@ -11,7 +11,7 @@ import uvicorn
 import sys
 from dotenv import load_dotenv
 from rag import get_relevant_info
-
+from pgen import get_pitch
 load_dotenv()
 
 
@@ -190,7 +190,30 @@ async def handle_media_stream(websocket: WebSocket):
                                 }
                                 await openai_ws.send(json.dumps(conversation_item)) 
                                 await openai_ws.send(json.dumps({"type": "response.create"}))
-                                print("added info SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")  
+                                print("added info SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS") 
+                        if (response.get('type') == 'response.done' and 
+                            response.get("response", {}).get("output") and  # Check if output exists and is not empty
+                            len(response["response"]["output"]) > 1 and     # Check if output has at least one element
+                            response["response"]["output"][1].get("type") == "function_call"):
+                            if response["response"]["output"][1]["name"]=="move_to_next_slide":
+                                with open('../status.txt', 'w') as file:
+                                    file.write("Move")
+                                conversation_item = {
+                                        "type": "conversation.item.create",
+                                        "item": {
+                                        "type": "message",
+                                        "role": "user",
+                                        "content": [
+                                            {
+                                                "type": "input_text",
+                                                "text": f"Moved to next slide. Now catch up till here"
+                                            }
+                                        ]
+                                    }
+                                }
+                                await openai_ws.send(json.dumps(conversation_item)) 
+                                await openai_ws.send(json.dumps({"type": "response.create"}))
+                                print("changed slide SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")  
                         elif response['type']=='conversation.item.input_audio_transcription.completed':
                             conv_history.append(response)   
                         elif response["type"]=='response.audio_transcript.done ':
@@ -279,7 +302,7 @@ async def send_initial_conversation_item(openai_ws):
             "content": [
                 {
                     "type": "input_text",
-                    "text": "Greet the user with 'Hey hope you are having a wonderful day! How can I help you today?' in a really friendly and energetic tone"
+                    "text": "Greet the user with some enegetic hook that relates to the current pitch and start the presentation"
                 }
             ]
         }
@@ -291,12 +314,24 @@ async def send_initial_conversation_item(openai_ws):
 async def initialize_session(openai_ws):
     """Control initial session with OpenAI."""
     
-
+    pitch=get_pitch()
     SYSTEM_MESSAGE = (
        f"""You are Pitcher and you are the greatest presenter the world has ever seen. You can sell anything, explain any topic, go through any product document 
-           and do anything that it takes to make the audience understand your presentation. You will be going over some slides and you will be presenting them like
-           a natural human would and you will be answering any questions that the audience has. You will be using the information from the slides.
-           You have access to a lot of functions so make sure that you use them wisely.
+           and do anything that it takes to make the audience understand your presentation. You will be going over a pitch prepared by us and you will be presenting it to the audience.
+           Today you will be using this pitch guide to help you with your presentation.
+            {pitch}
+           
+           
+            There is an actual presenetation that will be running in the background which is exactly divided as the pitch is divided into different slides
+           Each slide is sperated by an indidicator.
+           FOLLOW THE SCRIPT AS MUCh AS POSSIBLE AND AFTER TALKING ABOUT EACH SLIDE ASK IF TEH USER HAS ANY QUESTIONS
+           ONLY MOVE FORWARD IF THEY DO NOT HAVE ANY QUESTIONS. YOU CAN MOVE FORWARD BY Calling the move to next slide function
+           CALLING THE MOVE TO NEXT SLIDE FUNCTION IS IMPORTANT AS IT WILL MOVE THE PRESENTATION FORWARD
+           YOU NEED TO DO IT
+
+           Be funny and pleasant
+
+          
             """
             )
     session_update = {
@@ -315,7 +350,7 @@ async def initialize_session(openai_ws):
             "tools":[
                 {"type": "function",
                     "name": "get_relevant_information",
-                    "description": """Get any kind of information from the database about solana.
+                    "description": """Get any kind of information from the database about the pitch.
                     Use this whenever the user asks any specific/non-general question.
                     Always let the user know that you are getting information so they can wait
 
@@ -330,7 +365,21 @@ async def initialize_session(openai_ws):
                     },
                     "required": [ "topic"]            
                     }
-                }
+                },
+                {"type": "function",
+                    "name": "move_to_next_slide",
+                    "description": """Move to the next slide. 
+                    YOU NEED TO SAY YOU ARE MOVING TO THE NEXT SLIDE beforee calling this function
+
+                     """,
+                    "parameters": {
+                    "type": "object",
+                    "properties": {
+
+                    },        
+                    }
+                },
+                
             ]
             
         }
@@ -340,7 +389,7 @@ async def initialize_session(openai_ws):
     await openai_ws.send(json.dumps(session_update))
 
     # Uncomment the next line to have the AI speak first
-    # await send_initial_conversation_item(openai_ws)
+    await send_initial_conversation_item(openai_ws)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=PORT)
